@@ -33,21 +33,21 @@ public class JwtUtils {
 
     /**
      * 生成token
-     * @param id  用户唯一id
-     * @param subject  邮箱 / 账号 ...
+     * @param employeeId  employeeId
+     * @param employeeName  employeeName
      * @return token
      */
-    public static String createToken(String id,String subject){
+    public static String createToken(String employeeId, String employeeName){
         Map<String,Object> headerMap = new HashMap<>();
         headerMap.put("typ","JWT");
         headerMap.put("alg","HS256");
         JwtBuilder builder = Jwts.builder().setHeader(headerMap)
                 //用户ID
-                .setId(id)
+                .setId(employeeId)
                 //token过期时间  当前时间+有效时间
                 .setExpiration(new Date(System.currentTimeMillis()+EXPIRE_TIME))
-                //邮箱
-                .setSubject(subject)
+                //employeeName
+                .setSubject(employeeName)
                 //创建时间
                 .setIssuedAt(new Date())
                 //加密方式
@@ -76,14 +76,15 @@ public class JwtUtils {
             return -2;
         }
 
-        //判断是不是邮箱，如果是邮箱表示会员，否则表示管理员
-        String subject = claims.getSubject();
+        //账号
+        String employeeId = claims.getId();
+        String employeeName = claims.getSubject();
 
         //从token中获取用户id，查询该Id的用户是否存在，存在则token验证通过
         Employee employee = null;
         try {
             //员工
-            employee = employeeMapper.selectEmployeeById(Long.valueOf(claims.getId()));
+            employee = employeeMapper.selectEmployeeById(Long.valueOf(employeeId));
         }catch (Exception e){
             //用户不存在
             return -3;

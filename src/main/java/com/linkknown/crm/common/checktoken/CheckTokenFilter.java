@@ -32,7 +32,7 @@ public class CheckTokenFilter implements Filter {
      * @return 是否
      */
     private boolean noNeedCheckToken(String requestUri) {
-        return requestUri.contains("/crmWebApi")
+        return requestUri.contains("/crmWebApi/login")
 
                 || requestUri.endsWith(".css")
                 || requestUri.endsWith(".js")
@@ -63,21 +63,18 @@ public class CheckTokenFilter implements Filter {
                     int verifyCode  = JwtUtils.verifyToken(token,httpServletRequest);
                     if (verifyCode == -1){
                         //验证失败
-                        map.put("code","303");
-                        map.put("message","token过期");
-                        httpServletResponse.setStatus(303);
+                        map.put("code","80003");
+                        map.put("msg","token过期");
 
                     }else if (verifyCode == -2){
                         //验证失败
-                        map.put("code","304");
-                        map.put("message","token解析失败");
-                        httpServletResponse.setStatus(304);
+                        map.put("code","80004");
+                        map.put("msg","token解析失败");
 
                     }else if (verifyCode == -3){
                         //验证失败
-                        map.put("code","305");
-                        map.put("message","用户不存在");
-                        httpServletResponse.setStatus(305);
+                        map.put("code","80005");
+                        map.put("msg","用户不存在");
 
                     }else if (verifyCode == 1){
                         //验证成功，放行
@@ -85,15 +82,13 @@ public class CheckTokenFilter implements Filter {
                         return;
 
                     }else if(verifyCode == 0){
-                        map.put("code","306");
-                        map.put("message","token认证失败");
-                        httpServletResponse.setStatus(306);
+                        map.put("code","80006");
+                        map.put("msg","token认证失败");
                     }
 
                 }else {
-                    map.put("code","307");
-                    map.put("message","当前请求未携带token信息");
-                    httpServletResponse.setStatus(307);
+                    map.put("code","80007");
+                    map.put("msg","当前请求未携带token信息");
                 }
             }
         }
