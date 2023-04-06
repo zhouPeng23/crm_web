@@ -61,7 +61,7 @@ public class JwtUtils {
     /**
      * 验证token是否有效
      * @param token  请求头中携带的token
-     * @return  token验证结果  1: token认证通过  0: token认证失败  -1: token过期  -2：token解析失败 -3：用户不存在
+     * @return  token验证结果  1: 认证通过  0: 用户不存在  -1: token过期  -2：token解析失败
      */
     static int verifyToken(String token, HttpServletRequest request, HttpServletResponse response){
         EmployeeMapper employeeMapper = getIocBean(EmployeeMapper.class,request);
