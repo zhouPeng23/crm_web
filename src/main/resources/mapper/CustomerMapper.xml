@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.linkknown.crm.mapper.CustomerMapper">
+    
+    <resultMap type="com.linkknown.crm.bean.dos.Customer" id="CustomerResult">
+        <result property="shopId"    column="shop_id"    />
+        <result property="customerId"    column="customer_id"    />
+        <result property="customerName"    column="customer_name"    />
+        <result property="sex"    column="sex"    />
+        <result property="phoneNumber"    column="phone_number"    />
+        <result property="birthday"    column="birthday"    />
+        <result property="customerMassLevel"    column="customer_mass_level"    />
+        <result property="belongToEmployeeId"    column="belong_to_employee_id"    />
+        <result property="belongToEmployeeName"    column="belong_to_employee_name"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <sql id="selectCustomerVo">
+        select shop_id, customer_id, customer_name, sex, phone_number, birthday, customer_mass_level, belong_to_employee_id, belong_to_employee_name, create_by, create_time, update_by, update_time from customer
+    </sql>
+
+    <select id="selectCustomerList" parameterType="com.linkknown.crm.bean.dos.Customer" resultMap="CustomerResult">
+        <include refid="selectCustomerVo"/>
+        <where>  
+            <if test="shopId != null "> and shop_id = #{shopId}</if>
+            <if test="customerName != null  and customerName != ''"> and customer_name like concat('%', #{customerName}, '%')</if>
+            <if test="sex != null "> and sex = #{sex}</if>
+            <if test="phoneNumber != null  and phoneNumber != ''"> and phone_number = #{phoneNumber}</if>
+            <if test="birthday != null "> and birthday = #{birthday}</if>
+            <if test="customerMassLevel != null  and customerMassLevel != ''"> and customer_mass_level = #{customerMassLevel}</if>
+            <if test="belongToEmployeeId != null "> and belong_to_employee_id = #{belongToEmployeeId}</if>
+            <if test="belongToEmployeeName != null  and belongToEmployeeName != ''"> and belong_to_employee_name like concat('%', #{belongToEmployeeName}, '%')</if>
+        </where>
+    </select>
+    
+    <select id="selectCustomerById" parameterType="Long" resultMap="CustomerResult">
+        <include refid="selectCustomerVo"/>
+        where customer_id = #{customerId}
+    </select>
+        
+    <insert id="insertCustomer" parameterType="com.linkknown.crm.bean.dos.Customer" useGeneratedKeys="true" keyProperty="customerId">
+        insert into customer
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="shopId != null ">shop_id,</if>
+            <if test="customerName != null  and customerName != ''">customer_name,</if>
+            <if test="sex != null ">sex,</if>
+            <if test="phoneNumber != null  and phoneNumber != ''">phone_number,</if>
+            <if test="birthday != null ">birthday,</if>
+            <if test="customerMassLevel != null  and customerMassLevel != ''">customer_mass_level,</if>
+            <if test="belongToEmployeeId != null ">belong_to_employee_id,</if>
+            <if test="belongToEmployeeName != null  and belongToEmployeeName != ''">belong_to_employee_name,</if>
+            <if test="createBy != null  and createBy != ''">create_by,</if>
+            <if test="createTime != null ">create_time,</if>
+            <if test="updateBy != null  and updateBy != ''">update_by,</if>
+            <if test="updateTime != null ">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="shopId != null ">#{shopId},</if>
+            <if test="customerName != null  and customerName != ''">#{customerName},</if>
+            <if test="sex != null ">#{sex},</if>
+            <if test="phoneNumber != null  and phoneNumber != ''">#{phoneNumber},</if>
+            <if test="birthday != null ">#{birthday},</if>
+            <if test="customerMassLevel != null  and customerMassLevel != ''">#{customerMassLevel},</if>
+            <if test="belongToEmployeeId != null ">#{belongToEmployeeId},</if>
+            <if test="belongToEmployeeName != null  and belongToEmployeeName != ''">#{belongToEmployeeName},</if>
+            <if test="createBy != null  and createBy != ''">#{createBy},</if>
+            <if test="createTime != null ">#{createTime},</if>
+            <if test="updateBy != null  and updateBy != ''">#{updateBy},</if>
+            <if test="updateTime != null ">#{updateTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateCustomer" parameterType="com.linkknown.crm.bean.dos.Customer">
+        update customer
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="shopId != null ">shop_id = #{shopId},</if>
+            <if test="customerName != null  and customerName != ''">customer_name = #{customerName},</if>
+            <if test="sex != null ">sex = #{sex},</if>
+            <if test="phoneNumber != null  and phoneNumber != ''">phone_number = #{phoneNumber},</if>
+            <if test="birthday != null ">birthday = #{birthday},</if>
+            <if test="customerMassLevel != null  and customerMassLevel != ''">customer_mass_level = #{customerMassLevel},</if>
+            <if test="belongToEmployeeId != null ">belong_to_employee_id = #{belongToEmployeeId},</if>
+            <if test="belongToEmployeeName != null  and belongToEmployeeName != ''">belong_to_employee_name = #{belongToEmployeeName},</if>
+            <if test="createBy != null  and createBy != ''">create_by = #{createBy},</if>
+            <if test="createTime != null ">create_time = #{createTime},</if>
+            <if test="updateBy != null  and updateBy != ''">update_by = #{updateBy},</if>
+            <if test="updateTime != null ">update_time = #{updateTime},</if>
+        </trim>
+        where customer_id = #{customerId}
+    </update>
+
+    <delete id="deleteCustomerById" parameterType="Long">
+        delete from customer where customer_id = #{customerId}
+    </delete>
+
+    <delete id="deleteCustomerByIds" parameterType="String">
+        delete from customer where customer_id in 
+        <foreach item="customerId" collection="array" open="(" separator="," close=")">
+            #{customerId}
+        </foreach>
+    </delete>
+    
+</mapper>

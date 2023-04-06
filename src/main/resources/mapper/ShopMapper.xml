@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.linkknown.crm.mapper.ShopMapper">
+    
+    <resultMap type="com.linkknown.crm.bean.dos.Shop" id="ShopResult">
+        <result property="shopId"    column="shop_id"    />
+        <result property="shopName"    column="shop_name"    />
+        <result property="shopWeizhi"    column="shop_weizhi"    />
+        <result property="shopJingyingType"    column="shop_jingying_type"    />
+        <result property="shopJingyingBrand"    column="shop_jingying_brand"    />
+        <result property="shopOpeningDate"    column="shop_opening_date"    />
+        <result property="shopLeaderName"    column="shop_leader_name"    />
+        <result property="shopLeaderSex"    column="shop_leader_sex"    />
+        <result property="shopLeaderPhoneNumber"    column="shop_leader_phone_number"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="selected"    column="selected"    />
+    </resultMap>
+
+    <sql id="selectShopVo">
+        select shop_id, shop_name, shop_weizhi, shop_jingying_type, shop_jingying_brand, shop_opening_date, shop_leader_name, shop_leader_sex, shop_leader_phone_number, create_by, create_time, update_by, update_time, selected from shop
+    </sql>
+
+    <select id="selectShopList" parameterType="com.linkknown.crm.bean.dos.Shop" resultMap="ShopResult">
+        <include refid="selectShopVo"/>
+        <where>  
+            <if test="shopName != null  and shopName != ''"> and shop_name like concat('%', #{shopName}, '%')</if>
+            <if test="shopWeizhi != null  and shopWeizhi != ''"> and shop_weizhi = #{shopWeizhi}</if>
+            <if test="shopJingyingType != null  and shopJingyingType != ''"> and shop_jingying_type = #{shopJingyingType}</if>
+            <if test="shopJingyingBrand != null  and shopJingyingBrand != ''"> and shop_jingying_brand = #{shopJingyingBrand}</if>
+            <if test="shopOpeningDate != null "> and shop_opening_date = #{shopOpeningDate}</if>
+            <if test="shopLeaderName != null  and shopLeaderName != ''"> and shop_leader_name like concat('%', #{shopLeaderName}, '%')</if>
+            <if test="shopLeaderSex != null "> and shop_leader_sex = #{shopLeaderSex}</if>
+            <if test="shopLeaderPhoneNumber != null  and shopLeaderPhoneNumber != ''"> and shop_leader_phone_number = #{shopLeaderPhoneNumber}</if>
+            <if test="selected != null "> and selected = #{selected}</if>
+        </where>
+    </select>
+    
+    <select id="selectShopById" parameterType="Long" resultMap="ShopResult">
+        <include refid="selectShopVo"/>
+        where shop_id = #{shopId}
+    </select>
+        
+    <insert id="insertShop" parameterType="com.linkknown.crm.bean.dos.Shop" useGeneratedKeys="true" keyProperty="shopId">
+        insert into shop
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="shopName != null  and shopName != ''">shop_name,</if>
+            <if test="shopWeizhi != null  and shopWeizhi != ''">shop_weizhi,</if>
+            <if test="shopJingyingType != null  and shopJingyingType != ''">shop_jingying_type,</if>
+            <if test="shopJingyingBrand != null  and shopJingyingBrand != ''">shop_jingying_brand,</if>
+            <if test="shopOpeningDate != null ">shop_opening_date,</if>
+            <if test="shopLeaderName != null  and shopLeaderName != ''">shop_leader_name,</if>
+            <if test="shopLeaderSex != null ">shop_leader_sex,</if>
+            <if test="shopLeaderPhoneNumber != null  and shopLeaderPhoneNumber != ''">shop_leader_phone_number,</if>
+            <if test="createBy != null  and createBy != ''">create_by,</if>
+            <if test="createTime != null ">create_time,</if>
+            <if test="updateBy != null  and updateBy != ''">update_by,</if>
+            <if test="updateTime != null ">update_time,</if>
+            <if test="selected != null ">selected,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="shopName != null  and shopName != ''">#{shopName},</if>
+            <if test="shopWeizhi != null  and shopWeizhi != ''">#{shopWeizhi},</if>
+            <if test="shopJingyingType != null  and shopJingyingType != ''">#{shopJingyingType},</if>
+            <if test="shopJingyingBrand != null  and shopJingyingBrand != ''">#{shopJingyingBrand},</if>
+            <if test="shopOpeningDate != null ">#{shopOpeningDate},</if>
+            <if test="shopLeaderName != null  and shopLeaderName != ''">#{shopLeaderName},</if>
+            <if test="shopLeaderSex != null ">#{shopLeaderSex},</if>
+            <if test="shopLeaderPhoneNumber != null  and shopLeaderPhoneNumber != ''">#{shopLeaderPhoneNumber},</if>
+            <if test="createBy != null  and createBy != ''">#{createBy},</if>
+            <if test="createTime != null ">#{createTime},</if>
+            <if test="updateBy != null  and updateBy != ''">#{updateBy},</if>
+            <if test="updateTime != null ">#{updateTime},</if>
+            <if test="selected != null ">#{selected},</if>
+         </trim>
+    </insert>
+
+    <update id="updateShop" parameterType="com.linkknown.crm.bean.dos.Shop">
+        update shop
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="shopName != null  and shopName != ''">shop_name = #{shopName},</if>
+            <if test="shopWeizhi != null  and shopWeizhi != ''">shop_weizhi = #{shopWeizhi},</if>
+            <if test="shopJingyingType != null  and shopJingyingType != ''">shop_jingying_type = #{shopJingyingType},</if>
+            <if test="shopJingyingBrand != null  and shopJingyingBrand != ''">shop_jingying_brand = #{shopJingyingBrand},</if>
+            <if test="shopOpeningDate != null ">shop_opening_date = #{shopOpeningDate},</if>
+            <if test="shopLeaderName != null  and shopLeaderName != ''">shop_leader_name = #{shopLeaderName},</if>
+            <if test="shopLeaderSex != null ">shop_leader_sex = #{shopLeaderSex},</if>
+            <if test="shopLeaderPhoneNumber != null  and shopLeaderPhoneNumber != ''">shop_leader_phone_number = #{shopLeaderPhoneNumber},</if>
+            <if test="createBy != null  and createBy != ''">create_by = #{createBy},</if>
+            <if test="createTime != null ">create_time = #{createTime},</if>
+            <if test="updateBy != null  and updateBy != ''">update_by = #{updateBy},</if>
+            <if test="updateTime != null ">update_time = #{updateTime},</if>
+            <if test="selected != null ">selected = #{selected},</if>
+        </trim>
+        where shop_id = #{shopId}
+    </update>
+
+    <delete id="deleteShopById" parameterType="Long">
+        delete from shop where shop_id = #{shopId}
+    </delete>
+
+    <delete id="deleteShopByIds" parameterType="String">
+        delete from shop where shop_id in 
+        <foreach item="shopId" collection="array" open="(" separator="," close=")">
+            #{shopId}
+        </foreach>
+    </delete>
+    
+</mapper>

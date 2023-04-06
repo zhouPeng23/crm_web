@@ -1,0 +1,117 @@
+package com.linkknown.crm.service.impl;
+
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.linkknown.crm.bean.dos.Customer;
+import com.linkknown.crm.bean.dos.Employee;
+import com.linkknown.crm.bean.dos.EnumsObject;
+import com.linkknown.crm.bean.req.QueryCustomerPage;
+import com.linkknown.crm.common.enums.CustomerMassLevelEnum;
+import com.linkknown.crm.mapper.CustomerMapper;
+import com.linkknown.crm.mapper.EmployeeMapper;
+import com.linkknown.crm.service.ICustomerService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+
+import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+/**
+ * @author zhoupeng
+ * @date 2022/6/10 15:21
+ */
+@Service
+public class CustomerServiceImpl implements ICustomerService {
+
+    @Autowired
+    private CustomerMapper customerMapper;
+
+    @Resource
+    private EmployeeMapper employeeMapper;
+
+
+    @Override
+    public Page<Customer> queryCustomerList(QueryCustomerPage queryCustomerPage) {
+        //入参 - 店铺id
+        Integer shopId = queryCustomerPage.getShopId();
+        //入参 - 查询条件
+        String customerName = queryCustomerPage.getCustomerName().trim();
+        String phoneNumber = queryCustomerPage.getPhoneNumber().trim();
+        Integer sex = queryCustomerPage.getSex();
+        String customerMassLevel = queryCustomerPage.getCustomerMassLevel();
+        Integer belongToEmployeeId = queryCustomerPage.getBelongToEmployeeId();
+        //入参 - 页码
+        Integer pageNo = queryCustomerPage.getPageNo();
+        Integer pageSize = queryCustomerPage.getPageSize();
+
+        //分页查询
+        QueryWrapper<Customer> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("shop_id",shopId)
+                .like(!StringUtils.isEmpty(customerName),"customer_name",customerName)
+                .like(!StringUtils.isEmpty(phoneNumber),"phone_number",phoneNumber)
+                .eq(!StringUtils.isEmpty(sex),"sex",sex)
+                .eq(!StringUtils.isEmpty(customerMassLevel),"customer_mass_level",customerMassLevel)
+                .eq(!StringUtils.isEmpty(belongToEmployeeId),"belong_to_employee_id",belongToEmployeeId)
+                .orderByDesc("create_time");
+
+        //返回
+        return  customerMapper.selectPage(new Page<>(pageNo, pageSize), queryWrapper);
+    }
+
+    @Override
+    public void addCustomer(Customer customer) {
+        //设置创建人和时间
+        customer.setCreateBy("SYSTEM");
+        customer.setCreateTime(System.currentTimeMillis());
+
+        //根据顾客所属员工，设置所属员工姓名
+        Employee employee = employeeMapper.selectEmployeeById(Long.valueOf(customer.getBelongToEmployeeId()));
+        customer.setBelongToEmployeeName(employee.getEmployeeName());
+
+        //插入
+        customerMapper.insertCustomer(customer);
+    }
+
+
+    @Override
+    public List<EnumsObject> getAllCustomerMassLevelList() {
+        //源数据
+        CustomerMassLevelEnum[] enums = CustomerMassLevelEnum.values();
+        //返回集合
+        List<EnumsObject> enumsObjectList = new ArrayList<>();
+        //装配数据
+        Arrays.stream(enums).forEach(customerMassLevelEnum -> {
+            EnumsObject enumsObject = new EnumsObject();
+            enumsObject.setCode(customerMassLevelEnum.getCode());
+            enumsObject.setMsg(customerMassLevelEnum.getMsg());
+            enumsObjectList.add(enumsObject);
+        });
+        //返回
+        return enumsObjectList;
+    }
+
+    @Override
+    public void updateCustomer(Customer customer) {
+        //设置更新人和时间
+        customer.setUpdateBy("SYSTEM");
+        customer.setUpdateTime(System.currentTimeMillis());
+
+        //根据顾客所属员工,设置所属员工姓名
+        Employee employee = employeeMapper.selectEmployeeById(Long.valueOf(customer.getBelongToEmployeeId()));
+        customer.setBelongToEmployeeName(employee.getEmployeeName());
+
+        //更新
+        customerMapper.updateCustomer(customer);
+    }
+
+
+    @Override
+    public void deleteCustomer(Customer customer) {
+        customerMapper.deleteCustomerById(Long.valueOf(customer.getCustomerId()));
+    }
+
+
+}

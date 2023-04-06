@@ -1,0 +1,49 @@
+package com.linkknown.crm.common.util;
+
+import com.linkknown.crm.bean.dos.Employee;
+import com.linkknown.crm.common.aspect.exception.WebException;
+import com.linkknown.crm.common.enums.ResponseEnum;
+import org.springframework.util.StringUtils;
+
+/**
+ * @author zhoupeng
+ * @date 2023/4/4 14:55
+ */
+public class EmployeeParamUtils {
+
+
+    /**
+     * 添加或者更新员工校验参数
+     * @param employee employee
+     */
+    public static void addOrUpdateEmployeeValidate(Employee employee) {
+        //店铺id不能为空
+        if (StringUtils.isEmpty(employee.getShopId())){
+            throw new WebException(ResponseEnum.shop_id_can_not_be_empty);
+        }
+        //员工姓名不能为空
+        if (StringUtils.isEmpty(employee.getEmployeeName())){
+            throw new WebException(ResponseEnum.employee_name_can_not_be_empty);
+        }
+        //员工性别不能为空
+        if (StringUtils.isEmpty(employee.getSex())){
+            throw new WebException(ResponseEnum.employee_sex_can_not_be_empty);
+        }
+        //员工手机号码格式错误
+        if (!RegexUtils.checkPhoneNumber(employee.getPhoneNumber())){
+            throw new WebException(ResponseEnum.epmloyee_phone_number_style_error);
+        }
+        //员工生日日期不能为空
+        if (StringUtils.isEmpty(employee.getBirthday())){
+            throw new WebException(ResponseEnum.employee_birthday_can_not_be_empty);
+        }
+        //员工角色不能为空
+        if (StringUtils.isEmpty(employee.getRoleId())){
+            throw new WebException(ResponseEnum.employee_role_can_not_be_empty);
+        }
+
+    }
+
+
+
+}

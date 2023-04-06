@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.linkknown.crm.mapper.EmployeeMapper">
+    
+    <resultMap type="com.linkknown.crm.bean.dos.Employee" id="EmployeeResult">
+        <result property="shopId"    column="shop_id"    />
+        <result property="employeeId"    column="employee_id"    />
+        <result property="employeeName"    column="employee_name"    />
+        <result property="sex"    column="sex"    />
+        <result property="phoneNumber"    column="phone_number"    />
+        <result property="birthday"    column="birthday"    />
+        <result property="roleId"    column="role_id"    />
+        <result property="roleName"    column="role_name"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <sql id="selectEmployeeVo">
+        select shop_id, employee_id, employee_name, sex, phone_number, birthday, role_id, role_name, create_by, create_time, update_by, update_time from employee
+    </sql>
+
+    <select id="selectEmployeeList" parameterType="com.linkknown.crm.bean.dos.Employee" resultMap="EmployeeResult">
+        <include refid="selectEmployeeVo"/>
+        <where>  
+            <if test="shopId != null "> and shop_id = #{shopId}</if>
+            <if test="employeeName != null  and employeeName != ''"> and employee_name like concat('%', #{employeeName}, '%')</if>
+            <if test="sex != null "> and sex = #{sex}</if>
+            <if test="phoneNumber != null  and phoneNumber != ''"> and phone_number = #{phoneNumber}</if>
+            <if test="birthday != null "> and birthday = #{birthday}</if>
+            <if test="roleId != null "> and role_id = #{roleId}</if>
+            <if test="roleName != null  and roleName != ''"> and role_name like concat('%', #{roleName}, '%')</if>
+        </where>
+    </select>
+    
+    <select id="selectEmployeeById" parameterType="Long" resultMap="EmployeeResult">
+        <include refid="selectEmployeeVo"/>
+        where employee_id = #{employeeId}
+    </select>
+        
+    <insert id="insertEmployee" parameterType="com.linkknown.crm.bean.dos.Employee" useGeneratedKeys="true" keyProperty="employeeId">
+        insert into employee
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="shopId != null ">shop_id,</if>
+            <if test="employeeName != null  and employeeName != ''">employee_name,</if>
+            <if test="sex != null ">sex,</if>
+            <if test="phoneNumber != null  and phoneNumber != ''">phone_number,</if>
+            <if test="birthday != null ">birthday,</if>
+            <if test="roleId != null ">role_id,</if>
+            <if test="roleName != null  and roleName != ''">role_name,</if>
+            <if test="createBy != null  and createBy != ''">create_by,</if>
+            <if test="createTime != null ">create_time,</if>
+            <if test="updateBy != null  and updateBy != ''">update_by,</if>
+            <if test="updateTime != null ">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="shopId != null ">#{shopId},</if>
+            <if test="employeeName != null  and employeeName != ''">#{employeeName},</if>
+            <if test="sex != null ">#{sex},</if>
+            <if test="phoneNumber != null  and phoneNumber != ''">#{phoneNumber},</if>
+            <if test="birthday != null ">#{birthday},</if>
+            <if test="roleId != null ">#{roleId},</if>
+            <if test="roleName != null  and roleName != ''">#{roleName},</if>
+            <if test="createBy != null  and createBy != ''">#{createBy},</if>
+            <if test="createTime != null ">#{createTime},</if>
+            <if test="updateBy != null  and updateBy != ''">#{updateBy},</if>
+            <if test="updateTime != null ">#{updateTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateEmployee" parameterType="com.linkknown.crm.bean.dos.Employee">
+        update employee
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="shopId != null ">shop_id = #{shopId},</if>
+            <if test="employeeName != null  and employeeName != ''">employee_name = #{employeeName},</if>
+            <if test="sex != null ">sex = #{sex},</if>
+            <if test="phoneNumber != null  and phoneNumber != ''">phone_number = #{phoneNumber},</if>
+            <if test="birthday != null ">birthday = #{birthday},</if>
+            <if test="roleId != null ">role_id = #{roleId},</if>
+            <if test="roleName != null  and roleName != ''">role_name = #{roleName},</if>
+            <if test="createBy != null  and createBy != ''">create_by = #{createBy},</if>
+            <if test="createTime != null ">create_time = #{createTime},</if>
+            <if test="updateBy != null  and updateBy != ''">update_by = #{updateBy},</if>
+            <if test="updateTime != null ">update_time = #{updateTime},</if>
+        </trim>
+        where employee_id = #{employeeId}
+    </update>
+
+    <delete id="deleteEmployeeById" parameterType="Long">
+        delete from employee where employee_id = #{employeeId}
+    </delete>
+
+    <delete id="deleteEmployeeByIds" parameterType="String">
+        delete from employee where employee_id in 
+        <foreach item="employeeId" collection="array" open="(" separator="," close=")">
+            #{employeeId}
+        </foreach>
+    </delete>
+    
+</mapper>
