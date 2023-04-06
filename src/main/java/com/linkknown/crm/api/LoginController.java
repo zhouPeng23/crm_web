@@ -38,6 +38,15 @@ public class LoginController {
     }
 
 
+    @PostMapping(value = "/logout")
+    @WebParamsLog(description = "退出登录")
+    public BaseResponse<Boolean> logout(){
+        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        HttpServletResponse response = attributes.getResponse();
+        //退出登录后设置token为空字符串
+        JwtUtils.setResponseHeaderTokenEmpty(response);
+        return BaseResponse.success(true);
+    }
 
 
 }

@@ -107,6 +107,15 @@ public class JwtUtils {
     }
 
 
+    /**
+     * 给响应头设置空token
+     * @param response 响应
+     */
+    public static void setResponseHeaderTokenEmpty(HttpServletResponse response) {
+        response.setHeader("token","");
+    }
+
+
     //因为过滤器是在ApplicationContext前面加载的，获取不到IOC容器里面的bean，可以用这种方法获取
     private static  <T> T getIocBean(Class<T> beanClazz, HttpServletRequest request){
         WebApplicationContext applicationContext = WebApplicationContextUtils.getRequiredWebApplicationContext(request.getServletContext());
@@ -137,7 +146,6 @@ public class JwtUtils {
             return "token解析失败";
         }
     }
-
 
 
 }
