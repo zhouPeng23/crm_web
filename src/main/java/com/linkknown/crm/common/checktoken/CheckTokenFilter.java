@@ -32,7 +32,7 @@ public class CheckTokenFilter implements Filter {
      * @return 是否
      */
     private boolean noNeedCheckToken(String requestUri) {
-        return requestUri.contains("/crmWebApi/login")
+        return requestUri.contains("/crmWebApi/user/login")
 
                 || requestUri.endsWith(".css")
                 || requestUri.endsWith(".js")
@@ -60,7 +60,7 @@ public class CheckTokenFilter implements Filter {
                 String token = (httpServletRequest).getHeader("token");
                 if(!StringUtils.isEmpty(token)){
                     //token验证结果
-                    int verifyCode  = JwtUtils.verifyToken(token,httpServletRequest);
+                    int verifyCode  = JwtUtils.verifyToken(token,httpServletRequest,httpServletResponse);
                     if (verifyCode == -1){
                         //验证失败
                         map.put("code","403");
@@ -73,12 +73,6 @@ public class CheckTokenFilter implements Filter {
                         map.put("msg","token解析失败");
                         httpServletResponse.setStatus(403);
 
-                    }else if (verifyCode == -3){
-                        //验证失败
-                        map.put("code","403");
-                        map.put("msg","用户不存在");
-                        httpServletResponse.setStatus(403);
-
                     }else if (verifyCode == 1){
                         //验证成功，放行
                         filterChain.doFilter(httpServletRequest,httpServletResponse);
@@ -86,7 +80,7 @@ public class CheckTokenFilter implements Filter {
 
                     }else if(verifyCode == 0){
                         map.put("code","403");
-                        map.put("msg","token认证失败");
+                        map.put("msg","用户不存在");
                         httpServletResponse.setStatus(403);
                     }
 

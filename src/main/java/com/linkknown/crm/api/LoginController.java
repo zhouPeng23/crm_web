@@ -1,21 +1,17 @@
 package com.linkknown.crm.api;
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.linkknown.crm.bean.dos.Customer;
-import com.linkknown.crm.bean.req.QueryCustomerPage;
 import com.linkknown.crm.bean.req.UserLoginReq;
 import com.linkknown.crm.common.aspect.exception.WebExceptionService;
 import com.linkknown.crm.common.aspect.paramslog.WebParamsLog;
-import com.linkknown.crm.common.enums.ResponseEnum;
+import com.linkknown.crm.common.checktoken.JwtUtils;
 import com.linkknown.crm.common.response.BaseResponse;
-import com.linkknown.crm.common.util.CustomerParamUtils;
 import com.linkknown.crm.service.ICustomerService;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author zhoupeng
@@ -23,17 +19,21 @@ import javax.annotation.Resource;
  */
 @WebExceptionService
 @RestController
-@RequestMapping("/crmWebApi/login")
+@RequestMapping("/crmWebApi/user")
 @Validated
 public class LoginController {
 
     @Resource
     private ICustomerService customService;
 
-    @PostMapping(value = "/userLogin")
+    @PostMapping(value = "/login")
     @WebParamsLog(description = "用户登录")
-    public BaseResponse<Boolean> userLogin(UserLoginReq userLoginReq){
+    public BaseResponse<Boolean> login(UserLoginReq userLoginReq){
+        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        HttpServletResponse response = attributes.getResponse();
 
+        //登录成功后设置token
+        JwtUtils.setResponseHeaderToken(response,"1","张三");
         return BaseResponse.success(true);
     }
 

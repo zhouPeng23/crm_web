@@ -9,6 +9,7 @@ import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -24,6 +25,7 @@ public class JwtUtils {
      * 过期时间30分钟
      */
     private static final long EXPIRE_TIME = 30*60*1000;
+//    private static final long EXPIRE_TIME = 60*1000;
 
     /**
      * 加密密钥
@@ -37,7 +39,7 @@ public class JwtUtils {
      * @param employeeName  employeeName
      * @return token
      */
-    public static String createToken(String employeeId, String employeeName){
+    private static String createToken(String employeeId, String employeeName){
         Map<String,Object> headerMap = new HashMap<>();
         headerMap.put("typ","JWT");
         headerMap.put("alg","HS256");
@@ -61,7 +63,7 @@ public class JwtUtils {
      * @param token  请求头中携带的token
      * @return  token验证结果  1: token认证通过  0: token认证失败  -1: token过期  -2：token解析失败 -3：用户不存在
      */
-    public static int verifyToken(String token,HttpServletRequest request){
+    static int verifyToken(String token, HttpServletRequest request, HttpServletResponse response){
         EmployeeMapper employeeMapper = getIocBean(EmployeeMapper.class,request);
         Claims claims = null;
         try {
@@ -76,29 +78,32 @@ public class JwtUtils {
             return -2;
         }
 
-        //账号
+        //employeeId
         String employeeId = claims.getId();
-        String employeeName = claims.getSubject();
 
         //从token中获取用户id，查询该Id的用户是否存在，存在则token验证通过
-        Employee employee = null;
-        try {
-            //员工
-            employee = employeeMapper.selectEmployeeById(Long.valueOf(employeeId));
-        }catch (Exception e){
-            //用户不存在
-            return -3;
-        }
-
+        Employee employee = employeeMapper.selectEmployeeById(Long.valueOf(employeeId));
         if(employee!=null){
             //认证通过
+            setResponseHeaderToken(response,String.valueOf(employee.getEmployeeId()),employee.getEmployeeName());
             return 1;
 
         }else {
-            //认证失败
+            //用户不存在
             return 0;
         }
 
+    }
+
+
+    /**
+     * 给响应头设置token
+     * @param response 响应
+     * @param employeeId id
+     * @param employeeName name
+     */
+    public static void setResponseHeaderToken(HttpServletResponse response, String employeeId, String employeeName){
+        response.setHeader("token",createToken(employeeId, employeeName));
     }
 
 
