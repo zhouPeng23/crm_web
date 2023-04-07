@@ -1,6 +1,7 @@
 package com.linkknown.crm.common.util;
 
 import com.linkknown.crm.bean.dos.Employee;
+import com.linkknown.crm.bean.req.UserLoginReq;
 import com.linkknown.crm.common.aspect.exception.WebException;
 import com.linkknown.crm.common.enums.ResponseEnum;
 import org.springframework.util.StringUtils;
@@ -29,7 +30,7 @@ public class EmployeeParamUtils {
         if (StringUtils.isEmpty(employee.getSex())){
             throw new WebException(ResponseEnum.employee_sex_can_not_be_empty);
         }
-        //员工手机号码格式错误
+        //员工手机号格式错误
         if (!RegexUtils.checkPhoneNumber(employee.getPhoneNumber())){
             throw new WebException(ResponseEnum.epmloyee_phone_number_style_error);
         }
@@ -43,6 +44,25 @@ public class EmployeeParamUtils {
         }
 
     }
+
+
+    /**
+     * 登录校验
+     * @param userLoginReq 请求
+     */
+    public static void loginValidate(UserLoginReq userLoginReq) {
+        //员工手机号格式错误
+        if (!RegexUtils.checkPhoneNumber(userLoginReq.getPhoneNumber())){
+            throw new WebException(ResponseEnum.epmloyee_phone_number_style_error);
+        }
+        //密码不能为空
+        if (StringUtils.isEmpty(userLoginReq.getPassword())){
+            throw new WebException(ResponseEnum.employee_password_can_not_be_empty);
+        }
+    }
+
+
+
 
 
 

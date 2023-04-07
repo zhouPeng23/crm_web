@@ -29,7 +29,7 @@ public class CustomerParamUtils {
         if (StringUtils.isEmpty(customer.getSex())){
             throw new WebException(ResponseEnum.customer_sex_can_not_be_empty);
         }
-        //顾客手机号码格式错误
+        //顾客手机号格式错误
         if (!RegexUtils.checkPhoneNumber(customer.getPhoneNumber())){
             throw new WebException(ResponseEnum.customer_phone_number_style_error);
         }

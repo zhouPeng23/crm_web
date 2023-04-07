@@ -32,19 +32,23 @@ public enum ResponseEnum {
     shop_leader_name_can_not_be_enpty                                   ("0209", "店长名称不能为空"),
     shop_leader_sex_can_not_be_enpty                                    ("0210", "店长性别不能为空"),
     shop_leader_phone_number_can_not_be_enpty                          ("0211", "店长手机号不能为空"),
-    shop_leader_phone_number_style_error                                ("0212", "店长手机号格式错误"),
+    shop_leader_phone_number_style_error                                ("0212", "手机号格式错误"),
 
     //================================================员工==============================================================
     employee_name_can_not_be_empty                                      ("0301", "员工姓名不能为空"),
     employee_sex_can_not_be_empty                                       ("0302", "员工性别不能为空"),
-    epmloyee_phone_number_style_error                                   ("0303", "员工手机号码格式错误"),
+    epmloyee_phone_number_style_error                                   ("0303", "手机号格式错误"),
     employee_role_can_not_be_empty                                      ("0304", "员工角色不能为空"),
     employee_birthday_can_not_be_empty                                  ("0305", "员工生日日期不能为空"),
+    employee_not_exist                                                    ("0306", "用户不存在"),
+    employee_number_error                                                 ("0307", "用户数量错误，请联系管理员"),
+    employee_phone_number_or_password_error                             ("0308", "手机号或密码错误"),
+    employee_password_can_not_be_empty                                  ("0309", "密码不能为空"),
 
     //================================================顾客==============================================================
     customer_name_can_not_be_empty                                      ("0401", "顾客姓名不能为空"),
     customer_sex_can_not_be_empty                                        ("0402", "顾客性别不能为空"),
-    customer_phone_number_style_error                                   ("0403", "顾客手机号码格式错误"),
+    customer_phone_number_style_error                                   ("0403", "顾客手机号格式错误"),
     customer_birthday_can_not_be_empty                                  ("0404", "顾客生日日期不能为空"),
     customer_mass_level_can_not_be_empty                                ("0405", "顾客等级不能为空"),
     customer_belong_to_employee_id_can_not_be_empty                    ("0406", "顾客所属员工不能为空"),

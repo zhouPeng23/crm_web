@@ -15,6 +15,8 @@ public class Employee {
 
     private String phoneNumber;
 
+    private String password;
+
     private Long birthday;
 
     private Integer roleId;

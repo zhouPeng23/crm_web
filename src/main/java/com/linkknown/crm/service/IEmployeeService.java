@@ -1,6 +1,7 @@
 package com.linkknown.crm.service;
 
 import com.linkknown.crm.bean.dos.Employee;
+import com.linkknown.crm.bean.req.UserLoginReq;
 
 import java.util.List;
 
@@ -17,4 +18,6 @@ public interface IEmployeeService {
     void updateEmployee(Employee employee);
 
     void deleteEmployee(Employee employee);
+
+    Employee login(UserLoginReq userLoginReq);
 }

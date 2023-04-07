@@ -65,12 +65,14 @@ public class CheckTokenFilter implements Filter {
                         //验证失败
                         map.put("code","403");
                         map.put("msg","token过期");
+                        logger.info("====================token过期");
                         httpServletResponse.setStatus(403);
 
                     }else if (verifyCode == -2){
                         //验证失败
                         map.put("code","403");
                         map.put("msg","token解析失败");
+                        logger.info("====================token解析失败");
                         httpServletResponse.setStatus(403);
 
                     }else if (verifyCode == 1){
@@ -81,12 +83,14 @@ public class CheckTokenFilter implements Filter {
                     }else if(verifyCode == 0){
                         map.put("code","403");
                         map.put("msg","用户不存在");
+                        logger.info("====================用户不存在");
                         httpServletResponse.setStatus(403);
                     }
 
                 }else {
                     map.put("code","403");
                     map.put("msg","当前请求未携带token信息");
+                    logger.info("====================当前请求未携带token信息");
                     httpServletResponse.setStatus(403);
                 }
             }
