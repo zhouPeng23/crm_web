@@ -43,7 +43,7 @@ public enum ResponseEnum {
     employee_number_error                                                 ("0307", "用户数量错误，请联系管理员"),
     employee_phone_number_or_password_error                             ("0308", "手机号或密码错误"),
     employee_password_can_not_be_empty                                  ("0309", "密码不能为空"),
-    employee_phone_number_has_allready_exist                            ("0340", "手机号已注册"),
+    employee_phone_number_has_allready_exist                           ("0340", "手机号已注册"),
 
     //================================================顾客==============================================================
     customer_name_can_not_be_empty                                      ("0401", "顾客姓名不能为空"),
@@ -52,6 +52,7 @@ public enum ResponseEnum {
     customer_birthday_can_not_be_empty                                  ("0404", "顾客生日日期不能为空"),
     customer_mass_level_can_not_be_empty                                ("0405", "顾客等级不能为空"),
     customer_belong_to_employee_id_can_not_be_empty                    ("0406", "顾客所属员工不能为空"),
+    customer_phone_number_has_allready_exist                           ("0407", "手机号已注册"),
 
 
 

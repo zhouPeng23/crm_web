@@ -6,12 +6,15 @@ import com.linkknown.crm.bean.dos.Customer;
 import com.linkknown.crm.bean.dos.Employee;
 import com.linkknown.crm.bean.dos.EnumsObject;
 import com.linkknown.crm.bean.req.QueryCustomerPage;
+import com.linkknown.crm.common.aspect.exception.WebException;
 import com.linkknown.crm.common.enums.CustomerMassLevelEnum;
+import com.linkknown.crm.common.enums.ResponseEnum;
 import com.linkknown.crm.mapper.CustomerMapper;
 import com.linkknown.crm.mapper.EmployeeMapper;
 import com.linkknown.crm.service.ICustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
@@ -73,6 +76,14 @@ public class CustomerServiceImpl implements ICustomerService {
      */
     @Override
     public void addCustomer(Customer customer) {
+        //根据手机号,校验用户是否已存在
+        Customer customerSearch = new Customer();
+        customerSearch.setPhoneNumber(customer.getPhoneNumber());
+        List<Customer> customerSearchList = customerMapper.selectCustomerList(customerSearch);
+        if (!CollectionUtils.isEmpty(customerSearchList)){
+            throw new WebException(ResponseEnum.customer_phone_number_has_allready_exist);
+        }
+
         //设置创建人和时间
         customer.setCreateBy("SYSTEM");
         customer.setCreateTime(System.currentTimeMillis());
@@ -114,6 +125,18 @@ public class CustomerServiceImpl implements ICustomerService {
      */
     @Override
     public void updateCustomer(Customer customer) {
+        //校验用户是否修改了手机号
+        Customer customerDb = customerMapper.selectCustomerById(Long.valueOf(customer.getCustomerId()));
+        if (!customer.getPhoneNumber().equals(customerDb.getPhoneNumber())){
+            //修改了手机号
+            Customer customerSearch = new Customer();
+            customerSearch.setPhoneNumber(customer.getPhoneNumber());
+            List<Customer> customerSearchList = customerMapper.selectCustomerList(customerSearch);
+            if (!CollectionUtils.isEmpty(customerSearchList)){
+                throw new WebException(ResponseEnum.customer_phone_number_has_allready_exist);
+            }
+        }
+
         //设置更新人和时间
         customer.setUpdateBy("SYSTEM");
         customer.setUpdateTime(System.currentTimeMillis());
