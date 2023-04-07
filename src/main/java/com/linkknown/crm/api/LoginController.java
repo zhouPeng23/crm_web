@@ -31,7 +31,7 @@ public class LoginController {
 
     @PostMapping(value = "/login")
     @WebParamsLog(description = "用户登录")
-    public BaseResponse<Boolean> login(UserLoginReq userLoginReq){
+    public BaseResponse<Object> login(UserLoginReq userLoginReq){
         //入参非空校验
         EmployeeParamUtils.loginValidate(userLoginReq);
 
@@ -44,7 +44,7 @@ public class LoginController {
 
         //登录成功后设置token
         JwtUtils.setResponseHeaderToken(response,String.valueOf(employee.getEmployeeId()),employee.getEmployeeName());
-        return BaseResponse.success(true);
+        return BaseResponse.success(employee);
     }
 
 
