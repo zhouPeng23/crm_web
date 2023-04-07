@@ -56,7 +56,8 @@ public enum ResponseEnum {
     customer_belong_to_employee_id_can_not_be_empty                     ("0406", "顾客所属员工不能为空"),
     customer_phone_number_has_allready_exist                             ("0407", "手机号已注册"),
 
-
+    //================================================角色==============================================================
+    role_shop_id_can_not_be_empty                                         ("0501", "店铺id不能为空"),
 
 
 

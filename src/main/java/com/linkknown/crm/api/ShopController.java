@@ -5,7 +5,7 @@ import com.linkknown.crm.common.aspect.exception.WebExceptionService;
 import com.linkknown.crm.common.aspect.paramslog.WebParamsLog;
 import com.linkknown.crm.common.enums.ResponseEnum;
 import com.linkknown.crm.common.response.BaseResponse;
-import com.linkknown.crm.common.util.ShopParamUtils;
+import com.linkknown.crm.common.util.paramutil.ShopParamUtils;
 import com.linkknown.crm.service.IShopService;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;

@@ -4,6 +4,7 @@ import com.linkknown.crm.bean.dos.Role;
 import com.linkknown.crm.common.aspect.exception.WebExceptionService;
 import com.linkknown.crm.common.aspect.paramslog.WebParamsLog;
 import com.linkknown.crm.common.response.BaseResponse;
+import com.linkknown.crm.common.util.paramutil.RoleParamUtils;
 import com.linkknown.crm.service.IRoleService;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,6 +30,7 @@ public class RoleController {
     @PostMapping(value = "/queryRoleList")
     @WebParamsLog(description = "查询角色集合")
     public BaseResponse<List<Role>> queryRoleList(Role role){
+        RoleParamUtils.queryAllRolesValidate(role);
         List<Role> roleList = roleService.queryRoleList(role);
         return BaseResponse.success(roleList);
     }

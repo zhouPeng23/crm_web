@@ -25,7 +25,7 @@ public class RoleServiceImpl implements IRoleService {
      */
     @Override
     public List<Role> queryRoleList(Role role) {
-        return roleMapper.selectRoleList(null);
+        return roleMapper.selectRoleList(role);
     }
 
 

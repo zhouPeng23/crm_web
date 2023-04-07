@@ -1,8 +1,9 @@
-package com.linkknown.crm.common.util;
+package com.linkknown.crm.common.util.paramutil;
 
 import com.linkknown.crm.bean.dos.Shop;
 import com.linkknown.crm.common.aspect.exception.WebException;
 import com.linkknown.crm.common.enums.ResponseEnum;
+import com.linkknown.crm.common.util.RegexUtils;
 import org.springframework.util.StringUtils;
 
 /**
