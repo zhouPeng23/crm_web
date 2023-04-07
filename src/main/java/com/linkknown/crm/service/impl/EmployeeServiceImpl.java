@@ -55,10 +55,6 @@ public class EmployeeServiceImpl implements IEmployeeService {
         //设置初始密码
         employee.setPassword(MD5Utils.md5(Constants.employee_default_password));
 
-        //根据角色id，设置角色名称
-        Role role = roleMapper.selectRoleById(Long.valueOf(employee.getRoleId()));
-        employee.setRoleName(role.getRoleName());
-
         //插入
         employeeMapper.insertEmployee(employee);
     }
@@ -96,10 +92,6 @@ public class EmployeeServiceImpl implements IEmployeeService {
         //设置修改人和时间
         employee.setUpdateBy("SYSTEM");
         employee.setUpdateTime(System.currentTimeMillis());
-
-        //根据角色id，设置角色名称
-        Role role = roleMapper.selectRoleById(Long.valueOf(employee.getRoleId()));
-        employee.setRoleName(role.getRoleName());
 
         //更新
         employeeMapper.updateEmployee(employee);

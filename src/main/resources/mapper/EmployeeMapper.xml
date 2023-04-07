@@ -13,7 +13,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="password"    column="password"    />
         <result property="birthday"    column="birthday"    />
         <result property="roleId"    column="role_id"    />
-        <result property="roleName"    column="role_name"    />
         <result property="createBy"    column="create_by"    />
         <result property="createTime"    column="create_time"    />
         <result property="updateBy"    column="update_by"    />
@@ -21,7 +20,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectEmployeeVo">
-        select shop_id, employee_id, employee_name, sex, phone_number,password, birthday, role_id, role_name, create_by, create_time, update_by, update_time from employee
+        select shop_id, employee_id, employee_name, sex, phone_number,password, birthday, role_id, create_by, create_time, update_by, update_time from employee
     </sql>
 
     <select id="selectEmployeeList" parameterType="com.linkknown.crm.bean.dos.Employee" resultMap="EmployeeResult">
@@ -34,7 +33,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="password != null  and password != ''"> and password = #{password}</if>
             <if test="birthday != null "> and birthday = #{birthday}</if>
             <if test="roleId != null "> and role_id = #{roleId}</if>
-            <if test="roleName != null  and roleName != ''"> and role_name like concat('%', #{roleName}, '%')</if>
         </where>
     </select>
     
@@ -53,7 +51,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="password != null  and password != ''">password,</if>
             <if test="birthday != null ">birthday,</if>
             <if test="roleId != null ">role_id,</if>
-            <if test="roleName != null  and roleName != ''">role_name,</if>
             <if test="createBy != null  and createBy != ''">create_by,</if>
             <if test="createTime != null ">create_time,</if>
             <if test="updateBy != null  and updateBy != ''">update_by,</if>
@@ -67,7 +64,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="password != null  and password != ''">#{password},</if>
             <if test="birthday != null ">#{birthday},</if>
             <if test="roleId != null ">#{roleId},</if>
-            <if test="roleName != null  and roleName != ''">#{roleName},</if>
             <if test="createBy != null  and createBy != ''">#{createBy},</if>
             <if test="createTime != null ">#{createTime},</if>
             <if test="updateBy != null  and updateBy != ''">#{updateBy},</if>
@@ -85,7 +81,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="password != null  and password != ''">password = #{password},</if>
             <if test="birthday != null ">birthday = #{birthday},</if>
             <if test="roleId != null ">role_id = #{roleId},</if>
-            <if test="roleName != null  and roleName != ''">role_name = #{roleName},</if>
             <if test="createBy != null  and createBy != ''">create_by = #{createBy},</if>
             <if test="createTime != null ">create_time = #{createTime},</if>
             <if test="updateBy != null  and updateBy != ''">update_by = #{updateBy},</if>

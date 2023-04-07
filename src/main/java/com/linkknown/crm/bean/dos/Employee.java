@@ -21,8 +21,6 @@ public class Employee {
 
     private Integer roleId;
 
-    private String roleName;
-
     private String createBy;
 
     private Long createTime;
