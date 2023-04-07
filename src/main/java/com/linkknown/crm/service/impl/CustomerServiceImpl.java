@@ -32,9 +32,6 @@ public class CustomerServiceImpl implements ICustomerService {
     @Resource
     private CustomerMapper customerMapper;
 
-    @Resource
-    private EmployeeMapper employeeMapper;
-
 
     /**
      * 查询顾客分页

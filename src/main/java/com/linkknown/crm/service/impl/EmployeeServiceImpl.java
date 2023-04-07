@@ -30,9 +30,6 @@ public class EmployeeServiceImpl implements IEmployeeService {
     @Resource
     private EmployeeMapper employeeMapper;
 
-    @Resource
-    private RoleMapper roleMapper;
-
 
     /**
      * 添加员工
