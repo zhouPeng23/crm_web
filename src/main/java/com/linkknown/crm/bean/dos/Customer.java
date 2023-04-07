@@ -21,8 +21,6 @@ public class Customer {
 
     private Integer belongToEmployeeId;
 
-    private String belongToEmployeeName;
-
     private String createBy;
 
     private Long createTime;

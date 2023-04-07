@@ -13,7 +13,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="birthday"    column="birthday"    />
         <result property="customerMassLevel"    column="customer_mass_level"    />
         <result property="belongToEmployeeId"    column="belong_to_employee_id"    />
-        <result property="belongToEmployeeName"    column="belong_to_employee_name"    />
         <result property="createBy"    column="create_by"    />
         <result property="createTime"    column="create_time"    />
         <result property="updateBy"    column="update_by"    />
@@ -21,7 +20,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectCustomerVo">
-        select shop_id, customer_id, customer_name, sex, phone_number, birthday, customer_mass_level, belong_to_employee_id, belong_to_employee_name, create_by, create_time, update_by, update_time from customer
+        select shop_id, customer_id, customer_name, sex, phone_number, birthday, customer_mass_level, belong_to_employee_id, create_by, create_time, update_by, update_time from customer
     </sql>
 
     <select id="selectCustomerList" parameterType="com.linkknown.crm.bean.dos.Customer" resultMap="CustomerResult">
@@ -34,7 +33,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="birthday != null "> and birthday = #{birthday}</if>
             <if test="customerMassLevel != null  and customerMassLevel != ''"> and customer_mass_level = #{customerMassLevel}</if>
             <if test="belongToEmployeeId != null "> and belong_to_employee_id = #{belongToEmployeeId}</if>
-            <if test="belongToEmployeeName != null  and belongToEmployeeName != ''"> and belong_to_employee_name like concat('%', #{belongToEmployeeName}, '%')</if>
         </where>
     </select>
     
@@ -53,7 +51,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="birthday != null ">birthday,</if>
             <if test="customerMassLevel != null  and customerMassLevel != ''">customer_mass_level,</if>
             <if test="belongToEmployeeId != null ">belong_to_employee_id,</if>
-            <if test="belongToEmployeeName != null  and belongToEmployeeName != ''">belong_to_employee_name,</if>
             <if test="createBy != null  and createBy != ''">create_by,</if>
             <if test="createTime != null ">create_time,</if>
             <if test="updateBy != null  and updateBy != ''">update_by,</if>
@@ -67,7 +64,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="birthday != null ">#{birthday},</if>
             <if test="customerMassLevel != null  and customerMassLevel != ''">#{customerMassLevel},</if>
             <if test="belongToEmployeeId != null ">#{belongToEmployeeId},</if>
-            <if test="belongToEmployeeName != null  and belongToEmployeeName != ''">#{belongToEmployeeName},</if>
             <if test="createBy != null  and createBy != ''">#{createBy},</if>
             <if test="createTime != null ">#{createTime},</if>
             <if test="updateBy != null  and updateBy != ''">#{updateBy},</if>
@@ -85,7 +81,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="birthday != null ">birthday = #{birthday},</if>
             <if test="customerMassLevel != null  and customerMassLevel != ''">customer_mass_level = #{customerMassLevel},</if>
             <if test="belongToEmployeeId != null ">belong_to_employee_id = #{belongToEmployeeId},</if>
-            <if test="belongToEmployeeName != null  and belongToEmployeeName != ''">belong_to_employee_name = #{belongToEmployeeName},</if>
             <if test="createBy != null  and createBy != ''">create_by = #{createBy},</if>
             <if test="createTime != null ">create_time = #{createTime},</if>
             <if test="updateBy != null  and updateBy != ''">update_by = #{updateBy},</if>

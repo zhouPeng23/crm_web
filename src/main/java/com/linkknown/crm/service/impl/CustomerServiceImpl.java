@@ -88,10 +88,6 @@ public class CustomerServiceImpl implements ICustomerService {
         customer.setCreateBy("SYSTEM");
         customer.setCreateTime(System.currentTimeMillis());
 
-        //根据顾客所属员工，设置所属员工姓名
-        Employee employee = employeeMapper.selectEmployeeById(Long.valueOf(customer.getBelongToEmployeeId()));
-        customer.setBelongToEmployeeName(employee.getEmployeeName());
-
         //插入
         customerMapper.insertCustomer(customer);
     }
@@ -140,10 +136,6 @@ public class CustomerServiceImpl implements ICustomerService {
         //设置更新人和时间
         customer.setUpdateBy("SYSTEM");
         customer.setUpdateTime(System.currentTimeMillis());
-
-        //根据顾客所属员工,设置所属员工姓名
-        Employee employee = employeeMapper.selectEmployeeById(Long.valueOf(customer.getBelongToEmployeeId()));
-        customer.setBelongToEmployeeName(employee.getEmployeeName());
 
         //更新
         customerMapper.updateCustomer(customer);
