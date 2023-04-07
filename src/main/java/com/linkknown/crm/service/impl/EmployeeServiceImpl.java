@@ -1,5 +1,6 @@
 package com.linkknown.crm.service.impl;
 
+import com.linkknown.crm.bean.dos.Customer;
 import com.linkknown.crm.bean.dos.Employee;
 import com.linkknown.crm.bean.dos.Role;
 import com.linkknown.crm.bean.req.UserLoginReq;
@@ -7,6 +8,7 @@ import com.linkknown.crm.common.aspect.exception.WebException;
 import com.linkknown.crm.common.constants.Constants;
 import com.linkknown.crm.common.enums.ResponseEnum;
 import com.linkknown.crm.common.util.MD5Utils;
+import com.linkknown.crm.mapper.CustomerMapper;
 import com.linkknown.crm.mapper.EmployeeMapper;
 import com.linkknown.crm.mapper.RoleMapper;
 import com.linkknown.crm.service.IEmployeeService;
@@ -29,6 +31,9 @@ public class EmployeeServiceImpl implements IEmployeeService {
 
     @Resource
     private EmployeeMapper employeeMapper;
+
+    @Resource
+    private CustomerMapper customerMapper;
 
 
     /**
@@ -101,6 +106,15 @@ public class EmployeeServiceImpl implements IEmployeeService {
      */
     @Override
     public void deleteEmployee(Employee employee) {
+        //查看员工名下是否有顾客
+        Customer customer = new Customer();
+        customer.setBelongToEmployeeId(employee.getEmployeeId());
+        List<Customer> customerList = customerMapper.selectCustomerList(customer);
+        if (!CollectionUtils.isEmpty(customerList)){
+            throw new WebException(ResponseEnum.employee_has_customer_can_not_delete);
+        }
+
+        //删除
         employeeMapper.deleteEmployeeById(Long.valueOf(employee.getEmployeeId()));
     }
 
