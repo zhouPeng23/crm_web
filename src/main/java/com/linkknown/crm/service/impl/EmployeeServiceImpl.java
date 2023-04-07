@@ -5,10 +5,15 @@ import com.linkknown.crm.bean.dos.Role;
 import com.linkknown.crm.bean.req.UserLoginReq;
 import com.linkknown.crm.common.aspect.exception.WebException;
 import com.linkknown.crm.common.enums.ResponseEnum;
+import com.linkknown.crm.common.util.MD5Utils;
 import com.linkknown.crm.mapper.EmployeeMapper;
 import com.linkknown.crm.mapper.RoleMapper;
 import com.linkknown.crm.service.IEmployeeService;
+import org.apache.commons.codec.digest.Md5Crypt;
+import org.apache.tomcat.util.security.MD5Encoder;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import sun.security.provider.MD5;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -26,6 +31,9 @@ public class EmployeeServiceImpl implements IEmployeeService {
     @Resource
     private RoleMapper roleMapper;
 
+    @Value("${employee.password.defaultPassword}")
+    private String defaultPassword;
+
 
     /**
      * 添加员工
@@ -36,6 +44,9 @@ public class EmployeeServiceImpl implements IEmployeeService {
         //设置创建人和时间
         employee.setCreateBy("SYSTEM");
         employee.setCreateTime(System.currentTimeMillis());
+
+        //设置初始密码
+        employee.setPassword(MD5Utils.md5(defaultPassword));
 
         //根据角色id，设置角色名称
         Role role = roleMapper.selectRoleById(Long.valueOf(employee.getRoleId()));
