@@ -1,47 +1,52 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
-PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.linkknown.crm.mapper.RoleMapper">
-    
+
     <resultMap type="com.linkknown.crm.bean.dos.Role" id="RoleResult">
+        <result property="shopId"    column="shop_id"    />
         <result property="roleId"    column="role_id"    />
         <result property="roleName"    column="role_name"    />
         <result property="authMenu"    column="auth_menu"    />
     </resultMap>
 
     <sql id="selectRoleVo">
-        select role_id, role_name, auth_menu from role
+        select shop_id, role_id, role_name, auth_menu from role
     </sql>
 
     <select id="selectRoleList" parameterType="com.linkknown.crm.bean.dos.Role" resultMap="RoleResult">
         <include refid="selectRoleVo"/>
-        <where>  
+        <where>
+            <if test="shopId != null "> and shop_id = #{shopId}</if>
             <if test="roleName != null  and roleName != ''"> and role_name like concat('%', #{roleName}, '%')</if>
             <if test="authMenu != null  and authMenu != ''"> and auth_menu = #{authMenu}</if>
         </where>
     </select>
-    
+
     <select id="selectRoleById" parameterType="Long" resultMap="RoleResult">
         <include refid="selectRoleVo"/>
         where role_id = #{roleId}
     </select>
-        
+
     <insert id="insertRole" parameterType="com.linkknown.crm.bean.dos.Role" useGeneratedKeys="true" keyProperty="roleId">
         insert into role
         <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="shopId != null ">shop_id,</if>
             <if test="roleName != null  and roleName != ''">role_name,</if>
             <if test="authMenu != null  and authMenu != ''">auth_menu,</if>
-         </trim>
+        </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="shopId != null ">#{shopId},</if>
             <if test="roleName != null  and roleName != ''">#{roleName},</if>
             <if test="authMenu != null  and authMenu != ''">#{authMenu},</if>
-         </trim>
+        </trim>
     </insert>
 
     <update id="updateRole" parameterType="com.linkknown.crm.bean.dos.Role">
         update role
         <trim prefix="SET" suffixOverrides=",">
+            <if test="shopId != null ">shop_id = #{shopId},</if>
             <if test="roleName != null  and roleName != ''">role_name = #{roleName},</if>
             <if test="authMenu != null  and authMenu != ''">auth_menu = #{authMenu},</if>
         </trim>
@@ -53,10 +58,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </delete>
 
     <delete id="deleteRoleByIds" parameterType="String">
-        delete from role where role_id in 
+        delete from role where role_id in
         <foreach item="roleId" collection="array" open="(" separator="," close=")">
             #{roleId}
         </foreach>
     </delete>
-    
+
 </mapper>
