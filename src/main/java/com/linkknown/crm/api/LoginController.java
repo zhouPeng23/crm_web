@@ -44,6 +44,9 @@ public class LoginController {
 
         //登录成功后设置token
         JwtUtils.setResponseHeaderToken(response,String.valueOf(employee.getEmployeeId()),employee.getEmployeeName());
+
+        //密码就不返回了
+        employee.setPassword("");
         return BaseResponse.success(employee);
     }
 
