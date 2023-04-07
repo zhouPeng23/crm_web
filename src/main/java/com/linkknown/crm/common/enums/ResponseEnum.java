@@ -31,7 +31,6 @@ public enum ResponseEnum {
     shop_opening_date_can_not_be_enpty                                  ("0208", "店铺开业日期不能为空"),
     shop_leader_name_can_not_be_enpty                                   ("0209", "店长名称不能为空"),
     shop_leader_sex_can_not_be_enpty                                    ("0210", "店长性别不能为空"),
-    shop_leader_phone_number_can_not_be_enpty                          ("0211", "店长手机号不能为空"),
     shop_leader_phone_number_style_error                                ("0212", "手机号格式错误"),
 
     //================================================员工==============================================================
@@ -44,6 +43,7 @@ public enum ResponseEnum {
     employee_number_error                                                 ("0307", "用户数量错误，请联系管理员"),
     employee_phone_number_or_password_error                             ("0308", "手机号或密码错误"),
     employee_password_can_not_be_empty                                  ("0309", "密码不能为空"),
+    employee_phone_number_has_allready_exist                            ("0340", "手机号已注册"),
 
     //================================================顾客==============================================================
     customer_name_can_not_be_empty                                      ("0401", "顾客姓名不能为空"),

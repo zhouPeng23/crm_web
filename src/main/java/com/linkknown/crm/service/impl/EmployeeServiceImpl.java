@@ -14,6 +14,7 @@ import org.apache.commons.codec.digest.Md5Crypt;
 import org.apache.tomcat.util.security.MD5Encoder;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 import sun.security.provider.MD5;
 
 import javax.annotation.Resource;
@@ -39,6 +40,14 @@ public class EmployeeServiceImpl implements IEmployeeService {
      */
     @Override
     public void addEmployee(Employee employee) {
+        //根据手机号,校验用户是否已存在
+        Employee employeeSearch = new Employee();
+        employeeSearch.setPhoneNumber(employee.getPhoneNumber());
+        List<Employee> employeeSearchList = employeeMapper.selectEmployeeList(employeeSearch);
+        if (!CollectionUtils.isEmpty(employeeSearchList)){
+            throw new WebException(ResponseEnum.employee_phone_number_has_allready_exist);
+        }
+
         //设置创建人和时间
         employee.setCreateBy("SYSTEM");
         employee.setCreateTime(System.currentTimeMillis());
