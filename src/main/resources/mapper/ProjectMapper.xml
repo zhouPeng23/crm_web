@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.linkknown.crm.mapper.ProjectMapper">
+    
+    <resultMap type="com.linkknown.crm.bean.dos.Project" id="ProjectResult">
+        <result property="shopId"    column="shop_id"    />
+        <result property="projectId"    column="project_id"    />
+        <result property="projectName"    column="project_name"    />
+        <result property="projectPrice"    column="project_price"    />
+    </resultMap>
+
+    <sql id="selectProjectVo">
+        select shop_id, project_id, project_name, project_price from project
+    </sql>
+
+    <select id="selectProjectList" parameterType="com.linkknown.crm.bean.dos.Project" resultMap="ProjectResult">
+        <include refid="selectProjectVo"/>
+        <where>  
+            <if test="shopId != null "> and shop_id = #{shopId}</if>
+            <if test="projectName != null  and projectName != ''"> and project_name like concat('%', #{projectName}, '%')</if>
+            <if test="projectPrice != null "> and project_price = #{projectPrice}</if>
+        </where>
+    </select>
+    
+    <select id="selectProjectById" parameterType="Long" resultMap="ProjectResult">
+        <include refid="selectProjectVo"/>
+        where project_id = #{projectId}
+    </select>
+        
+    <insert id="insertProject" parameterType="com.linkknown.crm.bean.dos.Project" useGeneratedKeys="true" keyProperty="projectId">
+        insert into project
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="shopId != null ">shop_id,</if>
+            <if test="projectName != null  and projectName != ''">project_name,</if>
+            <if test="projectPrice != null ">project_price,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="shopId != null ">#{shopId},</if>
+            <if test="projectName != null  and projectName != ''">#{projectName},</if>
+            <if test="projectPrice != null ">#{projectPrice},</if>
+         </trim>
+    </insert>
+
+    <update id="updateProject" parameterType="com.linkknown.crm.bean.dos.Project">
+        update project
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="shopId != null ">shop_id = #{shopId},</if>
+            <if test="projectName != null  and projectName != ''">project_name = #{projectName},</if>
+            <if test="projectPrice != null ">project_price = #{projectPrice},</if>
+        </trim>
+        where project_id = #{projectId}
+    </update>
+
+    <delete id="deleteProjectById" parameterType="Long">
+        delete from project where project_id = #{projectId}
+    </delete>
+
+    <delete id="deleteProjectByIds" parameterType="String">
+        delete from project where project_id in 
+        <foreach item="projectId" collection="array" open="(" separator="," close=")">
+            #{projectId}
+        </foreach>
+    </delete>
+    
+</mapper>

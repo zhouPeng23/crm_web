@@ -2,7 +2,7 @@ package com.linkknown.crm.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.linkknown.crm.bean.dos.Customer;
-import com.linkknown.crm.bean.dos.EnumsObject;
+import com.linkknown.crm.common.enums.EnumsObject;
 import com.linkknown.crm.bean.req.QueryCustomerPage;
 
 import java.util.List;

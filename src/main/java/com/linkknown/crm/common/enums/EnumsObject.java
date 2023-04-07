@@ -1,4 +1,4 @@
-package com.linkknown.crm.bean.dos;
+package com.linkknown.crm.common.enums;
 
 import lombok.Data;
 
