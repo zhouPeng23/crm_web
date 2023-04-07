@@ -26,13 +26,18 @@ import java.util.List;
 @Service
 public class CustomerServiceImpl implements ICustomerService {
 
-    @Autowired
+    @Resource
     private CustomerMapper customerMapper;
 
     @Resource
     private EmployeeMapper employeeMapper;
 
 
+    /**
+     * 查询顾客分页
+     * @param queryCustomerPage 请求
+     * @return 分页集合
+     */
     @Override
     public Page<Customer> queryCustomerList(QueryCustomerPage queryCustomerPage) {
         //入参 - 店铺id
@@ -61,6 +66,11 @@ public class CustomerServiceImpl implements ICustomerService {
         return  customerMapper.selectPage(new Page<>(pageNo, pageSize), queryWrapper);
     }
 
+
+    /**
+     * 添加顾客
+     * @param customer 顾客
+     */
     @Override
     public void addCustomer(Customer customer) {
         //设置创建人和时间
@@ -76,6 +86,10 @@ public class CustomerServiceImpl implements ICustomerService {
     }
 
 
+    /**
+     * 获取顾客等级
+     * @return 等级集合
+     */
     @Override
     public List<EnumsObject> getAllCustomerMassLevelList() {
         //源数据
@@ -93,6 +107,11 @@ public class CustomerServiceImpl implements ICustomerService {
         return enumsObjectList;
     }
 
+
+    /**
+     * 更新顾客
+     * @param customer 顾客
+     */
     @Override
     public void updateCustomer(Customer customer) {
         //设置更新人和时间
@@ -108,6 +127,10 @@ public class CustomerServiceImpl implements ICustomerService {
     }
 
 
+    /**
+     * 删除顾客
+     * @param customer 顾客
+     */
     @Override
     public void deleteCustomer(Customer customer) {
         customerMapper.deleteCustomerById(Long.valueOf(customer.getCustomerId()));

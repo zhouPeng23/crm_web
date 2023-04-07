@@ -23,12 +23,22 @@ public class ShopServiceImpl implements IShopService {
     @Resource
     private ShopMapper shopMapper;
 
+
+    /**
+     * 查询店铺集合
+     * @param shop 店铺
+     * @return 店铺集合
+     */
     @Override
     public List<Shop> queryShopList(Shop shop){
         return shopMapper.selectShopList(null);
     }
 
 
+    /**
+     * 查询选中的店铺
+     * @return 选中的店铺
+     */
     @Override
     public Shop querySelectedShop(){
         Shop selectedShop = null;
@@ -48,6 +58,11 @@ public class ShopServiceImpl implements IShopService {
     }
 
 
+    /**
+     * 选择这个店铺
+     * @param shop 店铺
+     * @return 店铺
+     */
     @Override
     public Shop selectThisShop(Shop shop) {
         //传过来的shopId参数
@@ -74,6 +89,10 @@ public class ShopServiceImpl implements IShopService {
     }
 
 
+    /**
+     * 添加店铺
+     * @param shop 店铺
+     */
     @Override
     public void addShop(Shop shop) {
         //默认设置未选择
@@ -92,6 +111,10 @@ public class ShopServiceImpl implements IShopService {
     }
 
 
+    /**
+     * 删除店铺
+     * @param shop 店铺
+     */
     @Override
     public void deleteShop(Shop shop) {
         Shop shopDb = shopMapper.selectShopById(Long.valueOf(shop.getShopId()));
@@ -102,6 +125,10 @@ public class ShopServiceImpl implements IShopService {
     }
 
 
+    /**
+     * 更新店铺
+     * @param shop 店铺
+     */
     @Override
     public void updateShop(Shop shop) {
         //设置更新人和时间

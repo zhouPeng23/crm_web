@@ -11,13 +11,39 @@ import java.util.List;
  */
 public interface IEmployeeService {
 
+    /**
+     * 添加员工
+     * @param employee 员工
+     */
     void addEmployee(Employee employee);
 
+
+    /**
+     * 查询员工集合
+     * @param employee 员工
+     * @return 集合
+     */
     List<Employee> queryEmployeeList(Employee employee);
 
+
+    /**
+     * 更新员工
+     * @param employee 员工
+     */
     void updateEmployee(Employee employee);
 
+
+    /**
+     * 删除员工
+     * @param employee 员工
+     */
     void deleteEmployee(Employee employee);
 
+
+    /**
+     * 登录
+     * @param userLoginReq 请求
+     * @return 用户
+     */
     Employee login(UserLoginReq userLoginReq);
 }

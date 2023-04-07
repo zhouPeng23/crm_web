@@ -13,14 +13,39 @@ import java.util.List;
  */
 public interface ICustomerService {
 
+    /**
+     * 查询顾客分页
+     * @param queryCustomerPage 请求
+     * @return 分页集合
+     */
     Page<Customer> queryCustomerList(QueryCustomerPage queryCustomerPage);
 
+
+    /**
+     * 添加顾客
+     * @param customer 顾客
+     */
     void addCustomer(Customer customer);
 
+
+    /**
+     * 获取顾客等级
+     * @return 等级集合
+     */
     List<EnumsObject> getAllCustomerMassLevelList();
 
+
+    /**
+     * 更新顾客
+     * @param customer 顾客
+     */
     void updateCustomer(Customer customer);
 
+
+    /**
+     * 删除顾客
+     * @param customer 顾客
+     */
     void deleteCustomer(Customer customer);
 
 }

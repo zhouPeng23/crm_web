@@ -26,12 +26,11 @@ public class EmployeeServiceImpl implements IEmployeeService {
     @Resource
     private RoleMapper roleMapper;
 
-    @Override
-    public List<Employee> queryEmployeeList(Employee employee) {
-        return employeeMapper.selectEmployeeList(employee);
-    }
 
-
+    /**
+     * 添加员工
+     * @param employee 员工
+     */
     @Override
     public void addEmployee(Employee employee) {
         //设置创建人和时间
@@ -47,6 +46,21 @@ public class EmployeeServiceImpl implements IEmployeeService {
     }
 
 
+    /**
+     * 查询员工集合
+     * @param employee 员工
+     * @return 集合
+     */
+    @Override
+    public List<Employee> queryEmployeeList(Employee employee) {
+        return employeeMapper.selectEmployeeList(employee);
+    }
+
+
+    /**
+     * 更新员工
+     * @param employee 员工
+     */
     @Override
     public void updateEmployee(Employee employee) {
         //设置修改人和时间
@@ -62,12 +76,21 @@ public class EmployeeServiceImpl implements IEmployeeService {
     }
 
 
+    /**
+     * 删除员工
+     * @param employee 员工
+     */
     @Override
     public void deleteEmployee(Employee employee) {
         employeeMapper.deleteEmployeeById(Long.valueOf(employee.getEmployeeId()));
     }
 
 
+    /**
+     * 登录
+     * @param userLoginReq 请求
+     * @return 用户
+     */
     @Override
     public Employee login(UserLoginReq userLoginReq) {
         //入参
