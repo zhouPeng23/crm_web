@@ -31,6 +31,7 @@ public class EmployeeController {
     @PostMapping(value = "/queryEmployeeList")
     @WebParamsLog(description = "查询员工集合")
     public BaseResponse<List<Employee>> queryEmployeeList(Employee employee){
+        EmployeeParamUtils.queryEmployeeListValidate(employee);
         List<Employee> employeeList = employeeService.queryEmployeeList(employee);
         return BaseResponse.success(employeeList);
     }

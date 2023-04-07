@@ -31,6 +31,7 @@ public class CustomerController {
     @PostMapping(value = "/queryCustomerList")
     @WebParamsLog(description = "查询顾客集合")
     public BaseResponse<Page<Customer>> queryCustomerList(QueryCustomerPage queryCustomerPage){
+        CustomerParamUtils.queryCustomerListValidate(queryCustomerPage);
         Page<Customer> page = customService.queryCustomerList(queryCustomerPage);
         return BaseResponse.success(page);
     }

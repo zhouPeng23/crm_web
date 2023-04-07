@@ -1,6 +1,7 @@
 package com.linkknown.crm.common.util.paramutil;
 
 import com.linkknown.crm.bean.dos.Customer;
+import com.linkknown.crm.bean.req.QueryCustomerPage;
 import com.linkknown.crm.common.aspect.exception.WebException;
 import com.linkknown.crm.common.enums.ResponseEnum;
 import com.linkknown.crm.common.util.RegexUtils;
@@ -11,6 +12,17 @@ import org.springframework.util.StringUtils;
  * @date 2023/4/4 14:55
  */
 public class CustomerParamUtils {
+
+    /**
+     * 查询顾客集合校验
+     * @param queryCustomerPage 分页查询入参
+     */
+    public static void queryCustomerListValidate(QueryCustomerPage queryCustomerPage) {
+        //店铺id不能为空
+        if (StringUtils.isEmpty(queryCustomerPage.getShopId())){
+            throw new WebException(ResponseEnum.shop_id_can_not_be_empty);
+        }
+    }
 
 
     /**

@@ -15,6 +15,18 @@ public class EmployeeParamUtils {
 
 
     /**
+     * 查询员工集合校验
+     * @param employee employee
+     */
+    public static void queryEmployeeListValidate(Employee employee) {
+        //店铺id不能为空
+        if (StringUtils.isEmpty(employee.getShopId())){
+            throw new WebException(ResponseEnum.shop_id_can_not_be_empty);
+        }
+    }
+
+
+    /**
      * 添加或者更新员工校验参数
      * @param employee employee
      */
