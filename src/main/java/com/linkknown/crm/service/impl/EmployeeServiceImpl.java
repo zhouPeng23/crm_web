@@ -81,6 +81,18 @@ public class EmployeeServiceImpl implements IEmployeeService {
      */
     @Override
     public void updateEmployee(Employee employee) {
+        //校验用户是否修改了手机号
+        Employee employeeDb = employeeMapper.selectEmployeeById(Long.valueOf(employee.getEmployeeId()));
+        if (!employee.getPhoneNumber().equals(employeeDb.getPhoneNumber())){
+            //修改了手机号
+            Employee employeeSearch = new Employee();
+            employeeSearch.setPhoneNumber(employee.getPhoneNumber());
+            List<Employee> employeeSearchList = employeeMapper.selectEmployeeList(employeeSearch);
+            if (!CollectionUtils.isEmpty(employeeSearchList)){
+                throw new WebException(ResponseEnum.employee_phone_number_has_allready_exist);
+            }
+        }
+
         //设置修改人和时间
         employee.setUpdateBy("SYSTEM");
         employee.setUpdateTime(System.currentTimeMillis());
