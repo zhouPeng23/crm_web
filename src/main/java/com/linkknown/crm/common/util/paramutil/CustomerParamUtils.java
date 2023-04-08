@@ -18,7 +18,7 @@ public class CustomerParamUtils {
      * @param queryCustomerPage 分页查询入参
      */
     public static void queryCustomerList(QueryCustomerPage queryCustomerPage) {
-        //店铺id不能为空
+        //门店id不能为空
         if (StringUtils.isEmpty(queryCustomerPage.getShopId())){
             throw new WebException(ResponseEnum.shop_id_can_not_be_empty);
         }
@@ -30,7 +30,7 @@ public class CustomerParamUtils {
      * @param customer customer
      */
     public static void addCustomer(Customer customer) {
-        //店铺id不能为空
+        //门店id不能为空
         if (StringUtils.isEmpty(customer.getShopId())){
             throw new WebException(ResponseEnum.shop_id_can_not_be_empty);
         }
@@ -67,7 +67,7 @@ public class CustomerParamUtils {
      * @param customer customer
      */
     public static void updateCustomer(Customer customer) {
-        //店铺id不能为空
+        //门店id不能为空
         if (StringUtils.isEmpty(customer.getShopId())){
             throw new WebException(ResponseEnum.shop_id_can_not_be_empty);
         }

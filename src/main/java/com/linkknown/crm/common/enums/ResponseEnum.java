@@ -19,18 +19,18 @@ public enum ResponseEnum {
      * 失败提示信息，三位数开头
      */
     web_is_busy("0101", "系统忙,请稍候"),
-    //================================================店铺==============================================================
-    shop_name_can_not_be_empty                                           ("0201", "店铺名称不能为空"),
-    shop_id_can_not_be_empty                                             ("0202", "店铺id不能为空"),
-    shop_weizhi_can_not_be_enpty                                         ("0205", "店铺位置不能为空"),
-    shop_jingying_type_can_not_be_enpty                                 ("0206", "店铺经营类型不能为空"),
-    shop_jingying_brand_can_not_be_enpty                                ("0207", "店铺经营品牌不能为空"),
-    shop_opening_date_can_not_be_enpty                                  ("0208", "店铺开业日期不能为空"),
+    //================================================门店==============================================================
+    shop_name_can_not_be_empty                                           ("0201", "门店名称不能为空"),
+    shop_id_can_not_be_empty                                             ("0202", "门店id不能为空"),
+    shop_weizhi_can_not_be_enpty                                         ("0205", "门店位置不能为空"),
+    shop_jingying_type_can_not_be_enpty                                 ("0206", "门店经营类型不能为空"),
+    shop_jingying_brand_can_not_be_enpty                                ("0207", "门店经营品牌不能为空"),
+    shop_opening_date_can_not_be_enpty                                  ("0208", "门店开业日期不能为空"),
     shop_leader_name_can_not_be_enpty                                   ("0209", "店长名称不能为空"),
     shop_leader_sex_can_not_be_enpty                                    ("0210", "店长性别不能为空"),
     shop_leader_phone_number_style_error                                ("0212", "手机号格式错误"),
-    shop_has_employee_can_not_delete                                     ("0213", "店铺下有员工，无法删除"),
-    shop_has_project_can_not_delete                                     ("0214", "店铺下有项目，无法删除"),
+    shop_has_employee_can_not_delete                                     ("0213", "门店下有员工，无法删除"),
+    shop_has_project_can_not_delete                                     ("0214", "门店下有项目，无法删除"),
 
     //================================================员工==============================================================
     employee_name_can_not_be_empty                                       ("0301", "员工姓名不能为空"),
@@ -62,10 +62,10 @@ public enum ResponseEnum {
     customer_id_can_not_be_empty                                          ("0408", "顾客id不能为空"),
 
     //================================================角色==============================================================
-    role_shop_id_can_not_be_empty                                         ("0501", "店铺id不能为空"),
+    role_shop_id_can_not_be_empty                                         ("0501", "门店id不能为空"),
 
     //================================================项目==============================================================
-    project_shop_id_can_not_be_empty                                      ("0601", "店铺id不能为空"),
+    project_shop_id_can_not_be_empty                                      ("0601", "门店id不能为空"),
     project_project_name_can_not_be_empty                                 ("0602", "项目名称不能为空"),
     project_project_price_style_error                                     ("0603", "项目价格格式错误"),
     project_project_id_can_not_be_empty                                   ("0604", "项目id不能为空"),

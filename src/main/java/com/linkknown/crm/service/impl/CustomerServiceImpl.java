@@ -37,7 +37,7 @@ public class CustomerServiceImpl implements ICustomerService {
      */
     @Override
     public Page<Customer> queryCustomerList(QueryCustomerPage queryCustomerPage) {
-        //入参 - 店铺id
+        //入参 - 门店id
         Integer shopId = queryCustomerPage.getShopId();
         //入参 - 查询条件
         String customerName = queryCustomerPage.getCustomerName().trim();

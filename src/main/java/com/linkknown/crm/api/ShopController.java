@@ -28,7 +28,7 @@ public class ShopController {
     private IShopService shopService;
 
     @PostMapping(value = "/queryShopList")
-    @WebParamsLog(description = "查询店铺集合")
+    @WebParamsLog(description = "查询门店集合")
     public BaseResponse<List<Shop>> queryShopList(Shop shop){
         List<Shop> shopList = shopService.queryShopList(shop);
         return BaseResponse.success(shopList);
@@ -36,7 +36,7 @@ public class ShopController {
 
 
     @PostMapping(value = "/addShop")
-    @WebParamsLog(description = "添加店铺")
+    @WebParamsLog(description = "添加门店")
     public BaseResponse<Object> addShop(Shop shop){
         ShopParamUtils.addShop(shop);
         shopService.addShop(shop);
@@ -45,7 +45,7 @@ public class ShopController {
 
 
     @PostMapping(value = "/deleteShop")
-    @WebParamsLog(description = "删除店铺")
+    @WebParamsLog(description = "删除门店")
     public BaseResponse<Object> deleteShop(Shop shop){
         ShopParamUtils.deleteShop(shop);
         shopService.deleteShop(shop);
@@ -54,7 +54,7 @@ public class ShopController {
 
 
     @PostMapping(value = "/updateShop")
-    @WebParamsLog(description = "更新店铺")
+    @WebParamsLog(description = "更新门店")
     public BaseResponse<Object> updateShop(Shop shop){
         ShopParamUtils.updateShop(shop);
         shopService.updateShop(shop);

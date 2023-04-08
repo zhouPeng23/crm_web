@@ -11,30 +11,30 @@ import java.util.List;
 public interface IShopService {
 
     /**
-     * 查询店铺集合
-     * @param shop 店铺
-     * @return 店铺集合
+     * 查询门店集合
+     * @param shop 门店
+     * @return 门店集合
      */
     List<Shop> queryShopList(Shop shop);
 
 
     /**
-     * 添加店铺
-     * @param shop 店铺
+     * 添加门店
+     * @param shop 门店
      */
     void addShop(Shop shop);
 
 
     /**
-     * 删除店铺
-     * @param shop 店铺
+     * 删除门店
+     * @param shop 门店
      */
     void deleteShop(Shop shop);
 
 
     /**
-     * 更新店铺
-     * @param shop 店铺
+     * 更新门店
+     * @param shop 门店
      */
     void updateShop(Shop shop);
 

@@ -20,7 +20,7 @@ public class EmployeeParamUtils {
      * @param employee employee
      */
     public static void queryEmployeeList(Employee employee) {
-        //店铺id不能为空
+        //门店id不能为空
         if (StringUtils.isEmpty(employee.getShopId())){
             throw new WebException(ResponseEnum.shop_id_can_not_be_empty);
         }
@@ -32,7 +32,7 @@ public class EmployeeParamUtils {
      * @param employee employee
      */
     public static void addEmployee(Employee employee) {
-        //店铺id不能为空
+        //门店id不能为空
         if (StringUtils.isEmpty(employee.getShopId())){
             throw new WebException(ResponseEnum.shop_id_can_not_be_empty);
         }
@@ -65,7 +65,7 @@ public class EmployeeParamUtils {
      * @param employee employee
      */
     public static void updateEmployee(Employee employee) {
-        //店铺id不能为空
+        //门店id不能为空
         if (StringUtils.isEmpty(employee.getShopId())){
             throw new WebException(ResponseEnum.shop_id_can_not_be_empty);
         }

@@ -34,9 +34,9 @@ public class ShopServiceImpl implements IShopService {
 
 
     /**
-     * 查询店铺集合
-     * @param shop 店铺
-     * @return 店铺集合
+     * 查询门店集合
+     * @param shop 门店
+     * @return 门店集合
      */
     @Override
     public List<Shop> queryShopList(Shop shop){
@@ -45,8 +45,8 @@ public class ShopServiceImpl implements IShopService {
 
 
     /**
-     * 添加店铺
-     * @param shop 店铺
+     * 添加门店
+     * @param shop 门店
      */
     @Override
     public void addShop(Shop shop) {
@@ -60,12 +60,12 @@ public class ShopServiceImpl implements IShopService {
 
 
     /**
-     * 删除店铺
-     * @param shop 店铺
+     * 删除门店
+     * @param shop 门店
      */
     @Override
     public void deleteShop(Shop shop) {
-        //查看店铺下是否还有员工
+        //查看门店下是否还有员工
         Employee employee = new Employee();
         employee.setShopId(shop.getShopId());
         List<Employee> employeeList = employeeMapper.selectEmployeeList(employee);
@@ -73,7 +73,7 @@ public class ShopServiceImpl implements IShopService {
             throw new WebException(ResponseEnum.shop_has_employee_can_not_delete);
         }
 
-        //查看店铺下是否有项目
+        //查看门店下是否有项目
         Project project = new Project();
         project.setShopId(shop.getShopId());
         List<Project> projectList = projectMapper.selectProjectList(project);
@@ -87,8 +87,8 @@ public class ShopServiceImpl implements IShopService {
 
 
     /**
-     * 更新店铺
-     * @param shop 店铺
+     * 更新门店
+     * @param shop 门店
      */
     @Override
     public void updateShop(Shop shop) {

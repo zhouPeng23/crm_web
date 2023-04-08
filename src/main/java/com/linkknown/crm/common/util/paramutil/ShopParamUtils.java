@@ -14,27 +14,27 @@ public class ShopParamUtils {
 
 
     /**
-     * 添加店铺校验参数
+     * 添加门店校验参数
      * @param shop shop
      */
     public static void addShop(Shop shop) {
-        //店铺名称不能为空
+        //门店名称不能为空
         if (StringUtils.isEmpty(shop.getShopName())){
             throw new WebException(ResponseEnum.shop_name_can_not_be_empty);
         }
-        //店铺位置不能为空
+        //门店位置不能为空
         if (StringUtils.isEmpty(shop.getShopWeizhi())){
             throw new WebException(ResponseEnum.shop_weizhi_can_not_be_enpty);
         }
-        //店铺经营类型不能为空
+        //门店经营类型不能为空
         if (StringUtils.isEmpty(shop.getShopJingyingType())){
             throw new WebException(ResponseEnum.shop_jingying_type_can_not_be_enpty);
         }
-        //店铺经营品牌不能为空
+        //门店经营品牌不能为空
         if (StringUtils.isEmpty(shop.getShopJingyingBrand())){
             throw new WebException(ResponseEnum.shop_jingying_brand_can_not_be_enpty);
         }
-        //店铺开业日期不能为空
+        //门店开业日期不能为空
         if (StringUtils.isEmpty(shop.getShopOpeningDate())){
             throw new WebException(ResponseEnum.shop_opening_date_can_not_be_enpty);
         }
@@ -54,31 +54,31 @@ public class ShopParamUtils {
 
 
     /**
-     * 更新店铺校验参数
+     * 更新门店校验参数
      * @param shop shop
      */
     public static void updateShop(Shop shop) {
-        //店铺名称不能为空
+        //门店名称不能为空
         if (StringUtils.isEmpty(shop.getShopName())){
             throw new WebException(ResponseEnum.shop_name_can_not_be_empty);
         }
-        //店铺id不能为空
+        //门店id不能为空
         if (StringUtils.isEmpty(shop.getShopId())){
             throw new WebException(ResponseEnum.shop_id_can_not_be_empty);
         }
-        //店铺位置不能为空
+        //门店位置不能为空
         if (StringUtils.isEmpty(shop.getShopWeizhi())){
             throw new WebException(ResponseEnum.shop_weizhi_can_not_be_enpty);
         }
-        //店铺经营类型不能为空
+        //门店经营类型不能为空
         if (StringUtils.isEmpty(shop.getShopJingyingType())){
             throw new WebException(ResponseEnum.shop_jingying_type_can_not_be_enpty);
         }
-        //店铺经营品牌不能为空
+        //门店经营品牌不能为空
         if (StringUtils.isEmpty(shop.getShopJingyingBrand())){
             throw new WebException(ResponseEnum.shop_jingying_brand_can_not_be_enpty);
         }
-        //店铺开业日期不能为空
+        //门店开业日期不能为空
         if (StringUtils.isEmpty(shop.getShopOpeningDate())){
             throw new WebException(ResponseEnum.shop_opening_date_can_not_be_enpty);
         }
@@ -98,11 +98,11 @@ public class ShopParamUtils {
 
 
     /**
-     * 删除店铺校验参数
+     * 删除门店校验参数
      * @param shop shop
      */
     public static void deleteShop(Shop shop) {
-        //店铺id不能为空
+        //门店id不能为空
         if (StringUtils.isEmpty(shop.getShopId())){
             throw new WebException(ResponseEnum.shop_id_can_not_be_empty);
         }

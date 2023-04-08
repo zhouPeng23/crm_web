@@ -17,7 +17,7 @@ public class ProjectParamUtils {
      * @param project 入参
      */
     public static void queryProjectList(Project project) {
-        //店铺id不能为空
+        //门店id不能为空
         if (StringUtils.isEmpty(project.getShopId())){
             throw new WebException(ResponseEnum.project_shop_id_can_not_be_empty);
         }
@@ -29,7 +29,7 @@ public class ProjectParamUtils {
      * @param project 项目
      */
     public static void addProject(Project project) {
-        //店铺id不能为空
+        //门店id不能为空
         if (StringUtils.isEmpty(project.getShopId())){
             throw new WebException(ResponseEnum.project_shop_id_can_not_be_empty);
         }
@@ -49,7 +49,7 @@ public class ProjectParamUtils {
      * @param project 项目
      */
     public static void updateProject(Project project) {
-        //店铺id不能为空
+        //门店id不能为空
         if (StringUtils.isEmpty(project.getShopId())){
             throw new WebException(ResponseEnum.project_shop_id_can_not_be_empty);
         }
