@@ -19,7 +19,7 @@ public class RoleParamUtils {
      * 查询所有角色校验
      * @param role role
      */
-    public static void queryAllRolesValidate(Role role) {
+    public static void queryRoleList(Role role) {
         //店铺id不能为空
         if (StringUtils.isEmpty(role.getShopId())){
             throw new WebException(ResponseEnum.role_shop_id_can_not_be_empty);

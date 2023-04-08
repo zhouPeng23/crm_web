@@ -30,7 +30,7 @@ public class RoleController {
     @PostMapping(value = "/queryRoleList")
     @WebParamsLog(description = "查询角色集合")
     public BaseResponse<List<Role>> queryRoleList(Role role){
-        RoleParamUtils.queryAllRolesValidate(role);
+        RoleParamUtils.queryRoleList(role);
         List<Role> roleList = roleService.queryRoleList(role);
         return BaseResponse.success(roleList);
     }

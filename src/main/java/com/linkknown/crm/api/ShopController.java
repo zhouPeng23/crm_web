@@ -54,7 +54,7 @@ public class ShopController {
     @PostMapping(value = "/addShop")
     @WebParamsLog(description = "添加店铺")
     public BaseResponse<Object> addShop(Shop shop){
-        ShopParamUtils.addOrUpdateShopValidate(shop);
+        ShopParamUtils.addShop(shop);
         shopService.addShop(shop);
         return BaseResponse.success(ResponseEnum.add_success);
     }
@@ -63,6 +63,7 @@ public class ShopController {
     @PostMapping(value = "/deleteShop")
     @WebParamsLog(description = "删除店铺")
     public BaseResponse<Object> deleteShop(Shop shop){
+        ShopParamUtils.deleteShop(shop);
         shopService.deleteShop(shop);
         return BaseResponse.success(ResponseEnum.delete_success);
     }
@@ -71,7 +72,7 @@ public class ShopController {
     @PostMapping(value = "/updateShop")
     @WebParamsLog(description = "更新店铺")
     public BaseResponse<Object> updateShop(Shop shop){
-        ShopParamUtils.addOrUpdateShopValidate(shop);
+        ShopParamUtils.updateShop(shop);
         shopService.updateShop(shop);
         return BaseResponse.success(ResponseEnum.update_success);
     }

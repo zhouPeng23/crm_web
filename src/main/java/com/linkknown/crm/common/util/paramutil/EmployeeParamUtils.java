@@ -18,7 +18,7 @@ public class EmployeeParamUtils {
      * 查询员工集合校验
      * @param employee employee
      */
-    public static void queryEmployeeListValidate(Employee employee) {
+    public static void queryEmployeeList(Employee employee) {
         //店铺id不能为空
         if (StringUtils.isEmpty(employee.getShopId())){
             throw new WebException(ResponseEnum.shop_id_can_not_be_empty);
@@ -27,10 +27,10 @@ public class EmployeeParamUtils {
 
 
     /**
-     * 添加或者更新员工校验参数
+     * 添加员工校验参数
      * @param employee employee
      */
-    public static void addOrUpdateEmployeeValidate(Employee employee) {
+    public static void addEmployee(Employee employee) {
         //店铺id不能为空
         if (StringUtils.isEmpty(employee.getShopId())){
             throw new WebException(ResponseEnum.shop_id_can_not_be_empty);
@@ -56,6 +56,55 @@ public class EmployeeParamUtils {
             throw new WebException(ResponseEnum.employee_role_can_not_be_empty);
         }
 
+    }
+
+
+    /**
+     * 更新员工校验参数
+     * @param employee employee
+     */
+    public static void updateEmployee(Employee employee) {
+        //店铺id不能为空
+        if (StringUtils.isEmpty(employee.getShopId())){
+            throw new WebException(ResponseEnum.shop_id_can_not_be_empty);
+        }
+        //员工id不能为空
+        if (StringUtils.isEmpty(employee.getEmployeeId())){
+            throw new WebException(ResponseEnum.employee_id_can_not_be_empty);
+        }
+        //员工姓名不能为空
+        if (StringUtils.isEmpty(employee.getEmployeeName())){
+            throw new WebException(ResponseEnum.employee_name_can_not_be_empty);
+        }
+        //员工性别不能为空
+        if (StringUtils.isEmpty(employee.getSex())){
+            throw new WebException(ResponseEnum.employee_sex_can_not_be_empty);
+        }
+        //员工手机号格式错误
+        if (RegexUtils.checkPhoneNumber(employee.getPhoneNumber())){
+            throw new WebException(ResponseEnum.epmloyee_phone_number_style_error);
+        }
+        //员工生日日期不能为空
+        if (StringUtils.isEmpty(employee.getBirthday())){
+            throw new WebException(ResponseEnum.employee_birthday_can_not_be_empty);
+        }
+        //员工角色不能为空
+        if (StringUtils.isEmpty(employee.getRoleId())){
+            throw new WebException(ResponseEnum.employee_role_can_not_be_empty);
+        }
+
+    }
+
+
+    /**
+     * 删除员工
+     * @param employee employee
+     */
+    public static void deleteEmployee(Employee employee) {
+        //员工id不能为空
+        if (StringUtils.isEmpty(employee.getEmployeeId())){
+            throw new WebException(ResponseEnum.employee_id_can_not_be_empty);
+        }
     }
 
 

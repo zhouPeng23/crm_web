@@ -31,7 +31,7 @@ public class EmployeeController {
     @PostMapping(value = "/queryEmployeeList")
     @WebParamsLog(description = "查询员工集合")
     public BaseResponse<List<Employee>> queryEmployeeList(Employee employee){
-        EmployeeParamUtils.queryEmployeeListValidate(employee);
+        EmployeeParamUtils.queryEmployeeList(employee);
         List<Employee> employeeList = employeeService.queryEmployeeList(employee);
         return BaseResponse.success(employeeList);
     }
@@ -40,7 +40,7 @@ public class EmployeeController {
     @PostMapping(value = "/addEmployee")
     @WebParamsLog(description = "添加员工")
     public BaseResponse<Object> addEmployee(Employee employee){
-        EmployeeParamUtils.addOrUpdateEmployeeValidate(employee);
+        EmployeeParamUtils.addEmployee(employee);
         employeeService.addEmployee(employee);
         return BaseResponse.success(ResponseEnum.add_success);
     }
@@ -49,7 +49,7 @@ public class EmployeeController {
     @PostMapping(value = "/updateEmployee")
     @WebParamsLog(description = "修改员工")
     public BaseResponse<Object> updateEmployee(Employee employee){
-        EmployeeParamUtils.addOrUpdateEmployeeValidate(employee);
+        EmployeeParamUtils.updateEmployee(employee);
         employeeService.updateEmployee(employee);
         return BaseResponse.success(ResponseEnum.update_success);
     }
@@ -58,6 +58,7 @@ public class EmployeeController {
     @PostMapping(value = "/deleteEmployee")
     @WebParamsLog(description = "删除员工")
     public BaseResponse<Object> deleteEmployee(Employee employee){
+        EmployeeParamUtils.deleteEmployee(employee);
         employeeService.deleteEmployee(employee);
         return BaseResponse.success(ResponseEnum.delete_success);
     }

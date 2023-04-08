@@ -31,7 +31,7 @@ public class CustomerController {
     @PostMapping(value = "/queryCustomerList")
     @WebParamsLog(description = "查询顾客集合")
     public BaseResponse<Page<Customer>> queryCustomerList(QueryCustomerPage queryCustomerPage){
-        CustomerParamUtils.queryCustomerListValidate(queryCustomerPage);
+        CustomerParamUtils.queryCustomerList(queryCustomerPage);
         Page<Customer> page = customService.queryCustomerList(queryCustomerPage);
         return BaseResponse.success(page);
     }
@@ -40,7 +40,7 @@ public class CustomerController {
     @PostMapping(value = "/addCustomer")
     @WebParamsLog(description = "添加顾客")
     public BaseResponse<Object> addCustomer(Customer customer){
-        CustomerParamUtils.addOrUpdateCustomerValidate(customer);
+        CustomerParamUtils.addCustomer(customer);
         customService.addCustomer(customer);
         return BaseResponse.success(ResponseEnum.add_success);
     }
@@ -49,7 +49,7 @@ public class CustomerController {
     @PostMapping(value = "/updateCustomer")
     @WebParamsLog(description = "更新顾客")
     public BaseResponse<Object> updateCustomer(Customer customer){
-        CustomerParamUtils.addOrUpdateCustomerValidate(customer);
+        CustomerParamUtils.updateCustomer(customer);
         customService.updateCustomer(customer);
         return BaseResponse.success(ResponseEnum.update_success);
     }
@@ -65,6 +65,7 @@ public class CustomerController {
     @PostMapping(value = "/deleteCustomer")
     @WebParamsLog(description = "删除顾客")
     public BaseResponse<Object> deleteCustomer(Customer customer){
+        CustomerParamUtils.deleteCustomer(customer);
         customService.deleteCustomer(customer);
         return BaseResponse.success(ResponseEnum.delete_success);
     }

@@ -46,6 +46,7 @@ public enum ResponseEnum {
     employee_password_can_not_be_empty                                   ("0309", "密码不能为空"),
     employee_phone_number_has_allready_exist                            ("0310", "手机号已注册"),
     employee_has_customer_can_not_delete                                 ("0311", "员工名下有顾客，无法删除"),
+    employee_id_can_not_be_empty                                          ("0312", "员工id不能为空"),
 
     //================================================顾客==============================================================
     customer_name_can_not_be_empty                                        ("0401", "顾客姓名不能为空"),
@@ -55,6 +56,7 @@ public enum ResponseEnum {
     customer_mass_level_can_not_be_empty                                 ("0405", "顾客等级不能为空"),
     customer_belong_to_employee_id_can_not_be_empty                     ("0406", "顾客所属员工不能为空"),
     customer_phone_number_has_allready_exist                             ("0407", "手机号已注册"),
+    customer_id_can_not_be_empty                                          ("0408", "顾客id不能为空"),
 
     //================================================角色==============================================================
     role_shop_id_can_not_be_empty                                         ("0501", "店铺id不能为空"),
