@@ -63,7 +63,6 @@ public class LoginController {
     }
 
 
-
     @PostMapping(value = "/modifyPassword")
     @WebParamsLog(description = "修改密码")
     public BaseResponse<Boolean> modifyPassword(ModifyPasswordReq modifyPasswordReq){
