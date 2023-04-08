@@ -39,7 +39,7 @@ public class ProjectParamUtils {
             throw new WebException(ResponseEnum.project_project_name_can_not_be_empty);
         }
         //项目价格格式错误
-        if (RegexUtils.checkPrice(String.valueOf(project.getProjectPrice()))){
+        if (!RegexUtils.checkPrice(String.valueOf(project.getProjectPrice()))){
             throw new WebException(ResponseEnum.project_project_price_style_error);
         }
     }
@@ -63,7 +63,7 @@ public class ProjectParamUtils {
             throw new WebException(ResponseEnum.project_project_name_can_not_be_empty);
         }
         //项目价格格式错误
-        if (RegexUtils.checkPrice(String.valueOf(project.getProjectPrice()))){
+        if (!RegexUtils.checkPrice(String.valueOf(project.getProjectPrice()))){
             throw new WebException(ResponseEnum.project_project_price_style_error);
         }
     }

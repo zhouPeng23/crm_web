@@ -44,7 +44,7 @@ public class EmployeeParamUtils {
             throw new WebException(ResponseEnum.employee_sex_can_not_be_empty);
         }
         //员工手机号格式错误
-        if (RegexUtils.checkPhoneNumber(employee.getPhoneNumber())){
+        if (!RegexUtils.checkPhoneNumber(employee.getPhoneNumber())){
             throw new WebException(ResponseEnum.epmloyee_phone_number_style_error);
         }
         //员工生日日期不能为空
@@ -81,7 +81,7 @@ public class EmployeeParamUtils {
             throw new WebException(ResponseEnum.employee_sex_can_not_be_empty);
         }
         //员工手机号格式错误
-        if (RegexUtils.checkPhoneNumber(employee.getPhoneNumber())){
+        if (!RegexUtils.checkPhoneNumber(employee.getPhoneNumber())){
             throw new WebException(ResponseEnum.epmloyee_phone_number_style_error);
         }
         //员工生日日期不能为空
@@ -114,7 +114,7 @@ public class EmployeeParamUtils {
      */
     public static void loginValidate(UserLoginReq userLoginReq) {
         //员工手机号格式错误
-        if (RegexUtils.checkPhoneNumber(userLoginReq.getPhoneNumber())){
+        if (!RegexUtils.checkPhoneNumber(userLoginReq.getPhoneNumber())){
             throw new WebException(ResponseEnum.epmloyee_phone_number_style_error);
         }
         //密码不能为空

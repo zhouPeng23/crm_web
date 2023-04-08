@@ -24,7 +24,7 @@ public class RegexUtils {
      * @param str 入参
      */
     public static boolean checkPhoneNumber(String str) {
-        return !Pattern.matches(PHONE_NUMBER, str);
+        return Pattern.matches(PHONE_NUMBER, str);
     }
 
 
@@ -33,7 +33,7 @@ public class RegexUtils {
      * @param str 入参
      */
     public static boolean checkPrice(String str) {
-        return !Pattern.matches(PRICE, str);
+        return Pattern.matches(PRICE, str);
     }
 
 
