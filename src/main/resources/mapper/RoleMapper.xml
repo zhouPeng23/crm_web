@@ -24,7 +24,7 @@
         </where>
     </select>
 
-    <select id="selectRoleById" parameterType="Long" resultMap="RoleResult">
+    <select id="selectRoleById" parameterType="Integer" resultMap="RoleResult">
         <include refid="selectRoleVo"/>
         where role_id = #{roleId}
     </select>
@@ -53,7 +53,7 @@
         where role_id = #{roleId}
     </update>
 
-    <delete id="deleteRoleById" parameterType="Long">
+    <delete id="deleteRoleById" parameterType="Integer">
         delete from role where role_id = #{roleId}
     </delete>
 

@@ -81,7 +81,7 @@ public class JwtUtils {
         String employeeId = claims.getId();
 
         //从token中获取用户id，查询该Id的用户是否存在，存在则token验证通过
-        Employee employee = employeeMapper.selectEmployeeById(Long.valueOf(employeeId));
+        Employee employee = employeeMapper.selectEmployeeById(Integer.valueOf(employeeId));
         if(employee!=null){
             //认证通过
             setResponseHeaderToken(response,String.valueOf(employee.getEmployeeId()),employee.getEmployeeName());

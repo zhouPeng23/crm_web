@@ -81,7 +81,7 @@ public class EmployeeServiceImpl implements IEmployeeService {
     @Override
     public void updateEmployee(Employee employee) {
         //校验用户是否修改了手机号
-        Employee employeeDb = employeeMapper.selectEmployeeById(Long.valueOf(employee.getEmployeeId()));
+        Employee employeeDb = employeeMapper.selectEmployeeById(employee.getEmployeeId());
         if (!employee.getPhoneNumber().equals(employeeDb.getPhoneNumber())){
             //修改了手机号
             Employee employeeSearch = new Employee();
@@ -116,7 +116,7 @@ public class EmployeeServiceImpl implements IEmployeeService {
         }
 
         //删除
-        employeeMapper.deleteEmployeeById(Long.valueOf(employee.getEmployeeId()));
+        employeeMapper.deleteEmployeeById(employee.getEmployeeId());
     }
 
 
@@ -166,7 +166,7 @@ public class EmployeeServiceImpl implements IEmployeeService {
         String newPasswordSecond = modifyPasswordReq.getNewPasswordSecond();
 
         //判断原密码是否正确
-        Employee employee = employeeMapper.selectEmployeeById(Long.valueOf(employeeId));
+        Employee employee = employeeMapper.selectEmployeeById(employeeId);
         if (!oldPassword.equals(employee.getPassword())){
             throw new WebException(ResponseEnum.employee_org_password_is_not_right);
         }

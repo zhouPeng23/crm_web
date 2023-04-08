@@ -24,7 +24,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         </where>
     </select>
     
-    <select id="selectProjectById" parameterType="Long" resultMap="ProjectResult">
+    <select id="selectProjectById" parameterType="Integer" resultMap="ProjectResult">
         <include refid="selectProjectVo"/>
         where project_id = #{projectId}
     </select>
@@ -53,7 +53,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where project_id = #{projectId}
     </update>
 
-    <delete id="deleteProjectById" parameterType="Long">
+    <delete id="deleteProjectById" parameterType="Integer">
         delete from project where project_id = #{projectId}
     </delete>
 

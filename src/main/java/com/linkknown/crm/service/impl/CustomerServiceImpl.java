@@ -116,7 +116,7 @@ public class CustomerServiceImpl implements ICustomerService {
     @Override
     public void updateCustomer(Customer customer) {
         //校验用户是否修改了手机号
-        Customer customerDb = customerMapper.selectCustomerById(Long.valueOf(customer.getCustomerId()));
+        Customer customerDb = customerMapper.selectCustomerById(customer.getCustomerId());
         if (!customer.getPhoneNumber().equals(customerDb.getPhoneNumber())){
             //修改了手机号
             Customer customerSearch = new Customer();
@@ -142,7 +142,7 @@ public class CustomerServiceImpl implements ICustomerService {
      */
     @Override
     public void deleteCustomer(Customer customer) {
-        customerMapper.deleteCustomerById(Long.valueOf(customer.getCustomerId()));
+        customerMapper.deleteCustomerById(customer.getCustomerId());
     }
 
 

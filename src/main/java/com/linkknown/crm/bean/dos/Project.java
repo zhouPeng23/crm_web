@@ -4,6 +4,10 @@ import lombok.Data;
 
 import java.math.BigDecimal;
 
+/**
+ * 项目
+ * @author zhoupeng
+ */
 @Data
 public class Project {
 

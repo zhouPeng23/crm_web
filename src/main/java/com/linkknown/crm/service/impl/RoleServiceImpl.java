@@ -36,7 +36,7 @@ public class RoleServiceImpl implements IRoleService {
      */
     @Override
     public Role queryRoleById(Role role) {
-        return roleMapper.selectRoleById(Long.valueOf(role.getRoleId()));
+        return roleMapper.selectRoleById(role.getRoleId());
     }
 
 

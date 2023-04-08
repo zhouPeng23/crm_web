@@ -12,7 +12,7 @@ import java.util.List;
 @Repository
 public interface EmployeeMapper extends BaseMapper<Employee> {
 
-    public Employee selectEmployeeById(Long employeeId);
+    public Employee selectEmployeeById(Integer employeeId);
 
     public List<Employee> selectEmployeeList(Employee employee);
 
@@ -20,7 +20,7 @@ public interface EmployeeMapper extends BaseMapper<Employee> {
 
     public int updateEmployee(Employee employee);
 
-    public int deleteEmployeeById(Long employeeId);
+    public int deleteEmployeeById(Integer employeeId);
 
     public int deleteEmployeeByIds(String[] employeeIds);
 }

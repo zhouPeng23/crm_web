@@ -56,7 +56,7 @@ public class ProjectServiceImpl implements IProjectService {
      */
     @Override
     public void deleteProject(Project project) {
-        projectMapper.deleteProjectById(Long.valueOf(project.getProjectId()));
+        projectMapper.deleteProjectById(project.getProjectId());
     }
 
 

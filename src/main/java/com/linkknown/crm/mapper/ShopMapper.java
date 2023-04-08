@@ -12,7 +12,7 @@ import java.util.List;
 @Repository
 public interface ShopMapper extends BaseMapper<Shop> {
 
-    public Shop selectShopById(Long shopId);
+    public Shop selectShopById(Integer shopId);
 
     public List<Shop> selectShopList(Shop shop);
 
@@ -20,7 +20,7 @@ public interface ShopMapper extends BaseMapper<Shop> {
 
     public int updateShop(Shop shop);
 
-    public int deleteShopById(Long shopId);
+    public int deleteShopById(Integer shopId);
 
     public int deleteShopByIds(String[] shopIds);
 }

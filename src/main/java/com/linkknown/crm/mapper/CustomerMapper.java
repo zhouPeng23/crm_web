@@ -12,7 +12,7 @@ import java.util.List;
 @Repository
 public interface CustomerMapper extends BaseMapper<Customer> {
 
-    public Customer selectCustomerById(Long customerId);
+    public Customer selectCustomerById(Integer customerId);
 
     public List<Customer> selectCustomerList(Customer customer);
 
@@ -20,7 +20,7 @@ public interface CustomerMapper extends BaseMapper<Customer> {
 
     public int updateCustomer(Customer customer);
 
-    public int deleteCustomerById(Long customerId);
+    public int deleteCustomerById(Integer customerId);
 
     public int deleteCustomerByIds(String[] customerIds);
 }

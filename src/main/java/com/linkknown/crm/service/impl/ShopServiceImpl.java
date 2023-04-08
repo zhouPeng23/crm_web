@@ -82,7 +82,7 @@ public class ShopServiceImpl implements IShopService {
         }
 
         //删除
-        shopMapper.deleteShopById(Long.valueOf(shop.getShopId()));
+        shopMapper.deleteShopById(shop.getShopId());
     }
 
 

@@ -38,7 +38,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         </where>
     </select>
     
-    <select id="selectShopById" parameterType="Long" resultMap="ShopResult">
+    <select id="selectShopById" parameterType="Integer" resultMap="ShopResult">
         <include refid="selectShopVo"/>
         where shop_id = #{shopId}
     </select>
@@ -94,7 +94,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where shop_id = #{shopId}
     </update>
 
-    <delete id="deleteShopById" parameterType="Long">
+    <delete id="deleteShopById" parameterType="Integer">
         delete from shop where shop_id = #{shopId}
     </delete>
 

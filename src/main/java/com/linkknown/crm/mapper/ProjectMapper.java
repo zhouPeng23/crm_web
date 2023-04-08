@@ -12,7 +12,7 @@ import java.util.List;
 @Repository
 public interface ProjectMapper extends BaseMapper<Project> {
 
-    public Project selectProjectById(Long projectId);
+    public Project selectProjectById(Integer projectId);
 
     public List<Project> selectProjectList(Project project);
 
@@ -20,7 +20,7 @@ public interface ProjectMapper extends BaseMapper<Project> {
 
     public int updateProject(Project project);
 
-    public int deleteProjectById(Long projectId);
+    public int deleteProjectById(Integer projectId);
 
     public int deleteProjectByIds(String[] projectIds);
 }

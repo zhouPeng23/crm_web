@@ -12,7 +12,7 @@ import java.util.List;
 @Repository
 public interface RoleMapper extends BaseMapper<Role> {
 
-    public Role selectRoleById(Long roleId);
+    public Role selectRoleById(Integer roleId);
 
     public List<Role> selectRoleList(Role role);
 
@@ -20,7 +20,7 @@ public interface RoleMapper extends BaseMapper<Role> {
 
     public int updateRole(Role role);
 
-    public int deleteRoleById(Long roleId);
+    public int deleteRoleById(Integer roleId);
 
     public int deleteRoleByIds(String[] roleIds);
 }

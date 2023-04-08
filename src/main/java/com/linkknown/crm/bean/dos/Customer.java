@@ -2,6 +2,10 @@ package com.linkknown.crm.bean.dos;
 
 import lombok.Data;
 
+/**
+ * 顾客
+ * @author zhoupeng
+ */
 @Data
 public class Customer {
 

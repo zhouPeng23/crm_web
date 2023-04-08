@@ -36,7 +36,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         </where>
     </select>
     
-    <select id="selectEmployeeById" parameterType="Long" resultMap="EmployeeResult">
+    <select id="selectEmployeeById" parameterType="Integer" resultMap="EmployeeResult">
         <include refid="selectEmployeeVo"/>
         where employee_id = #{employeeId}
     </select>
@@ -89,7 +89,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where employee_id = #{employeeId}
     </update>
 
-    <delete id="deleteEmployeeById" parameterType="Long">
+    <delete id="deleteEmployeeById" parameterType="Integer">
         delete from employee where employee_id = #{employeeId}
     </delete>
 
