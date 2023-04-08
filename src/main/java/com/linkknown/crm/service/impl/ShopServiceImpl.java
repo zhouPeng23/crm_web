@@ -1,10 +1,12 @@
 package com.linkknown.crm.service.impl;
 
 import com.linkknown.crm.bean.dos.Employee;
+import com.linkknown.crm.bean.dos.Project;
 import com.linkknown.crm.bean.dos.Shop;
 import com.linkknown.crm.common.aspect.exception.WebException;
 import com.linkknown.crm.common.enums.ResponseEnum;
 import com.linkknown.crm.mapper.EmployeeMapper;
+import com.linkknown.crm.mapper.ProjectMapper;
 import com.linkknown.crm.mapper.ShopMapper;
 import com.linkknown.crm.service.IShopService;
 import org.springframework.stereotype.Service;
@@ -26,6 +28,9 @@ public class ShopServiceImpl implements IShopService {
 
     @Resource
     private EmployeeMapper employeeMapper;
+
+    @Resource
+    private ProjectMapper projectMapper;
 
 
     /**
@@ -66,6 +71,14 @@ public class ShopServiceImpl implements IShopService {
         List<Employee> employeeList = employeeMapper.selectEmployeeList(employee);
         if (!CollectionUtils.isEmpty(employeeList)){
             throw new WebException(ResponseEnum.shop_has_employee_can_not_delete);
+        }
+
+        //查看店铺下是否有项目
+        Project project = new Project();
+        project.setShopId(shop.getShopId());
+        List<Project> projectList = projectMapper.selectProjectList(project);
+        if (!CollectionUtils.isEmpty(projectList)){
+            throw new WebException(ResponseEnum.shop_has_project_can_not_delete);
         }
 
         //删除

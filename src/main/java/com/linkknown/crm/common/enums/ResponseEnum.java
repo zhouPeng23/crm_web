@@ -30,6 +30,7 @@ public enum ResponseEnum {
     shop_leader_sex_can_not_be_enpty                                    ("0210", "店长性别不能为空"),
     shop_leader_phone_number_style_error                                ("0212", "手机号格式错误"),
     shop_has_employee_can_not_delete                                     ("0213", "店铺下有员工，无法删除"),
+    shop_has_project_can_not_delete                                     ("0214", "店铺下有项目，无法删除"),
 
     //================================================员工==============================================================
     employee_name_can_not_be_empty                                       ("0301", "员工姓名不能为空"),
