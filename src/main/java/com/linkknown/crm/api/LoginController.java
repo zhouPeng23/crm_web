@@ -1,10 +1,12 @@
 package com.linkknown.crm.api;
 
 import com.linkknown.crm.bean.dos.Employee;
+import com.linkknown.crm.bean.req.ModifyPasswordReq;
 import com.linkknown.crm.bean.req.UserLoginReq;
 import com.linkknown.crm.common.aspect.exception.WebExceptionService;
 import com.linkknown.crm.common.aspect.paramslog.WebParamsLog;
 import com.linkknown.crm.common.checktoken.JwtUtils;
+import com.linkknown.crm.common.enums.ResponseEnum;
 import com.linkknown.crm.common.response.BaseResponse;
 import com.linkknown.crm.common.util.paramutil.EmployeeParamUtils;
 import com.linkknown.crm.service.IEmployeeService;
@@ -58,6 +60,19 @@ public class LoginController {
         //退出登录后设置token为空字符串
         JwtUtils.setResponseHeaderTokenEmpty(response);
         return BaseResponse.success(true);
+    }
+
+
+
+    @PostMapping(value = "/modifyPassword")
+    @WebParamsLog(description = "修改密码")
+    public BaseResponse<Boolean> modifyPassword(ModifyPasswordReq modifyPasswordReq){
+        //入参非空校验
+        EmployeeParamUtils.modifyPassword(modifyPasswordReq);
+        //修改密码
+        employeeService.modifyPassword(modifyPasswordReq);
+        //返回
+        return BaseResponse.success(ResponseEnum.web_success);
     }
 
 

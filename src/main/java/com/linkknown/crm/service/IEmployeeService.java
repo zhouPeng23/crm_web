@@ -1,6 +1,7 @@
 package com.linkknown.crm.service;
 
 import com.linkknown.crm.bean.dos.Employee;
+import com.linkknown.crm.bean.req.ModifyPasswordReq;
 import com.linkknown.crm.bean.req.UserLoginReq;
 
 import java.util.List;
@@ -46,4 +47,11 @@ public interface IEmployeeService {
      * @return 用户
      */
     Employee login(UserLoginReq userLoginReq);
+
+
+    /**
+     * 修改密码
+     * @param modifyPasswordReq 请求
+     */
+    void modifyPassword(ModifyPasswordReq modifyPasswordReq);
 }

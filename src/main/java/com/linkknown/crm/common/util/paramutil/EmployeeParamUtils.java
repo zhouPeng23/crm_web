@@ -1,6 +1,7 @@
 package com.linkknown.crm.common.util.paramutil;
 
 import com.linkknown.crm.bean.dos.Employee;
+import com.linkknown.crm.bean.req.ModifyPasswordReq;
 import com.linkknown.crm.bean.req.UserLoginReq;
 import com.linkknown.crm.common.aspect.exception.WebException;
 import com.linkknown.crm.common.enums.ResponseEnum;
@@ -122,6 +123,40 @@ public class EmployeeParamUtils {
             throw new WebException(ResponseEnum.employee_password_can_not_be_empty);
         }
     }
+
+
+    /**
+     * 修改密码
+     * @param modifyPasswordReq 请求
+     */
+    public static void modifyPassword(ModifyPasswordReq modifyPasswordReq) {
+        //员工id不能为空
+        if (StringUtils.isEmpty(modifyPasswordReq.getEmployeeId())){
+            throw new WebException(ResponseEnum.employee_id_can_not_be_empty);
+        }
+        //原密码不能为空
+        if (StringUtils.isEmpty(modifyPasswordReq.getOldPassword())){
+            throw new WebException(ResponseEnum.employee_org_password_can_not_be_empty);
+        }
+        //新密码不能为空
+        if (StringUtils.isEmpty(modifyPasswordReq.getNewPassword())){
+            throw new WebException(ResponseEnum.employee_new_password_can_not_be_empty);
+        }
+        //再次输入的密码不能为空
+        if (StringUtils.isEmpty(modifyPasswordReq.getNewPasswordSecond())){
+            throw new WebException(ResponseEnum.employee_new_second_password_can_not_be_empty);
+        }
+    }
+
+
+
+
+
+
+
+
+
+
 
 
 

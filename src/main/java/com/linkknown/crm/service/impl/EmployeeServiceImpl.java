@@ -3,6 +3,7 @@ package com.linkknown.crm.service.impl;
 import com.linkknown.crm.bean.dos.Customer;
 import com.linkknown.crm.bean.dos.Employee;
 import com.linkknown.crm.bean.dos.Role;
+import com.linkknown.crm.bean.req.ModifyPasswordReq;
 import com.linkknown.crm.bean.req.UserLoginReq;
 import com.linkknown.crm.common.aspect.exception.WebException;
 import com.linkknown.crm.common.constants.Constants;
@@ -152,23 +153,35 @@ public class EmployeeServiceImpl implements IEmployeeService {
     }
 
 
+    /**
+     * 修改密码
+     * @param modifyPasswordReq 请求
+     */
+    @Override
+    public void modifyPassword(ModifyPasswordReq modifyPasswordReq) {
+        //入参
+        Integer employeeId = modifyPasswordReq.getEmployeeId();
+        String oldPassword = modifyPasswordReq.getOldPassword();
+        String newPassword = modifyPasswordReq.getNewPassword();
+        String newPasswordSecond = modifyPasswordReq.getNewPasswordSecond();
 
+        //判断原密码是否正确
+        Employee employee = employeeMapper.selectEmployeeById(Long.valueOf(employeeId));
+        if (!oldPassword.equals(employee.getPassword())){
+            throw new WebException(ResponseEnum.employee_org_password_is_not_right);
+        }
 
+        //判断两次输入的新密码是否一致
+        if (!newPassword.equals(newPasswordSecond)){
+            throw new WebException(ResponseEnum.employee_new_password_and_second_is_not_same);
+        }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        //入库新密码
+        Employee employeeModify = new Employee();
+        employeeModify.setEmployeeId(employeeId);
+        employeeModify.setPassword(newPassword);
+        employeeMapper.updateEmployee(employeeModify);
+    }
 
 
 }
