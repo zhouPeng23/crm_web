@@ -35,22 +35,6 @@ public class ShopController {
     }
 
 
-    @PostMapping(value = "/querySelectedShop")
-    @WebParamsLog(description = "查询选中的店铺")
-    public BaseResponse<Shop> querySelectedShop(){
-        Shop shopDb = shopService.querySelectedShop();
-        return BaseResponse.success(ResponseEnum.web_success,shopDb);
-    }
-
-
-    @PostMapping(value = "/selectThisShop")
-    @WebParamsLog(description = "选择此店铺")
-    public BaseResponse<Object> selectThisShop(Shop shop){
-        Shop selectedShop = shopService.selectThisShop(shop);
-        return BaseResponse.success(ResponseEnum.selected_success,selectedShop);
-    }
-
-
     @PostMapping(value = "/addShop")
     @WebParamsLog(description = "添加店铺")
     public BaseResponse<Object> addShop(Shop shop){

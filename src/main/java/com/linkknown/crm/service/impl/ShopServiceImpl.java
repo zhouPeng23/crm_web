@@ -4,7 +4,6 @@ import com.linkknown.crm.bean.dos.Employee;
 import com.linkknown.crm.bean.dos.Shop;
 import com.linkknown.crm.common.aspect.exception.WebException;
 import com.linkknown.crm.common.enums.ResponseEnum;
-import com.linkknown.crm.common.enums.SelectedEnum;
 import com.linkknown.crm.mapper.EmployeeMapper;
 import com.linkknown.crm.mapper.ShopMapper;
 import com.linkknown.crm.service.IShopService;
@@ -41,77 +40,16 @@ public class ShopServiceImpl implements IShopService {
 
 
     /**
-     * 查询选中的店铺
-     * @return 选中的店铺
-     */
-    @Override
-    public Shop querySelectedShop(){
-        Shop selectedShop = null;
-        List<Shop> shopList = shopMapper.selectShopList(null).stream()
-                .filter(s -> s.getSelected().equals(SelectedEnum.yes.getCode()))
-                .collect(Collectors.toList());
-
-        if (!CollectionUtils.isEmpty(shopList)){
-            if (shopList.size()==1){
-                selectedShop = shopList.get(0);
-            }else{
-                throw new WebException(ResponseEnum.selected_shop_number_in_db_error);
-            }
-        }
-        //返回已选择的shop，如果没有选择的返回null
-        return selectedShop;
-    }
-
-
-    /**
-     * 选择这个店铺
-     * @param shop 店铺
-     * @return 店铺
-     */
-    @Override
-    public Shop selectThisShop(Shop shop) {
-        //传过来的shopId参数
-        Integer shopIdParam = shop.getShopId();
-
-        //查询现有的已选择的店铺 设置为未选择
-        Shop selectedShop = this.querySelectedShop();
-        if (selectedShop!=null){
-            //设置为未选择状态
-            Shop toNotChooseShop = new Shop();
-            toNotChooseShop.setShopId(selectedShop.getShopId());
-            toNotChooseShop.setSelected(SelectedEnum.no.getCode());
-            shopMapper.updateShop(toNotChooseShop);
-        }
-
-        //将选中的app设置为已选择
-        Shop toChooseShop = new Shop();
-        toChooseShop.setShopId(shopIdParam);
-        toChooseShop.setSelected(SelectedEnum.yes.getCode());
-        shopMapper.updateShop(toChooseShop);
-
-        //返回库里已选择的店铺
-        return this.querySelectedShop();
-    }
-
-
-    /**
      * 添加店铺
      * @param shop 店铺
      */
     @Override
     public void addShop(Shop shop) {
-        //默认设置未选择
-        shop.setSelected(SelectedEnum.no.getCode());
         //设置创建人和时间
         shop.setCreateBy("SYSTEM");
         shop.setCreateTime(System.currentTimeMillis());
 
-        //如果是插入的第一条数据，那么设置为“已选择”
-        List<Shop> shopList = shopMapper.selectShopList(null);
-        if (CollectionUtils.isEmpty(shopList)){
-            shop.setSelected(SelectedEnum.yes.getCode());
-        }
-
+        //插入
         shopMapper.insertShop(shop);
     }
 
@@ -122,12 +60,6 @@ public class ShopServiceImpl implements IShopService {
      */
     @Override
     public void deleteShop(Shop shop) {
-        //查看是否正在被选择
-        Shop shopDb = shopMapper.selectShopById(Long.valueOf(shop.getShopId()));
-        if (SelectedEnum.yes.getCode().equals(shopDb.getSelected())){
-            throw new WebException(ResponseEnum.shop_is_selected_can_not_delete);
-        }
-
         //查看店铺下是否还有员工
         Employee employee = new Employee();
         employee.setShopId(shop.getShopId());

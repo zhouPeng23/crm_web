@@ -18,11 +18,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="createTime"    column="create_time"    />
         <result property="updateBy"    column="update_by"    />
         <result property="updateTime"    column="update_time"    />
-        <result property="selected"    column="selected"    />
     </resultMap>
 
     <sql id="selectShopVo">
-        select shop_id, shop_name, shop_weizhi, shop_jingying_type, shop_jingying_brand, shop_opening_date, shop_leader_name, shop_leader_sex, shop_leader_phone_number, create_by, create_time, update_by, update_time, selected from shop
+        select shop_id, shop_name, shop_weizhi, shop_jingying_type, shop_jingying_brand, shop_opening_date, shop_leader_name, shop_leader_sex, shop_leader_phone_number, create_by, create_time, update_by, update_time from shop
     </sql>
 
     <select id="selectShopList" parameterType="com.linkknown.crm.bean.dos.Shop" resultMap="ShopResult">
@@ -36,7 +35,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="shopLeaderName != null  and shopLeaderName != ''"> and shop_leader_name like concat('%', #{shopLeaderName}, '%')</if>
             <if test="shopLeaderSex != null "> and shop_leader_sex = #{shopLeaderSex}</if>
             <if test="shopLeaderPhoneNumber != null  and shopLeaderPhoneNumber != ''"> and shop_leader_phone_number = #{shopLeaderPhoneNumber}</if>
-            <if test="selected != null "> and selected = #{selected}</if>
         </where>
     </select>
     
@@ -60,7 +58,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="createTime != null ">create_time,</if>
             <if test="updateBy != null  and updateBy != ''">update_by,</if>
             <if test="updateTime != null ">update_time,</if>
-            <if test="selected != null ">selected,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="shopName != null  and shopName != ''">#{shopName},</if>
@@ -75,7 +72,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="createTime != null ">#{createTime},</if>
             <if test="updateBy != null  and updateBy != ''">#{updateBy},</if>
             <if test="updateTime != null ">#{updateTime},</if>
-            <if test="selected != null ">#{selected},</if>
          </trim>
     </insert>
 
@@ -94,7 +90,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="createTime != null ">create_time = #{createTime},</if>
             <if test="updateBy != null  and updateBy != ''">update_by = #{updateBy},</if>
             <if test="updateTime != null ">update_time = #{updateTime},</if>
-            <if test="selected != null ">selected = #{selected},</if>
         </trim>
         where shop_id = #{shopId}
     </update>

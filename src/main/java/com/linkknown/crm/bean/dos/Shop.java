@@ -31,6 +31,4 @@ public class Shop {
 
     private Long updateTime;
 
-    private Integer selected;
-
 }

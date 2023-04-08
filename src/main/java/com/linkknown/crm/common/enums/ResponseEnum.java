@@ -13,7 +13,6 @@ public enum ResponseEnum {
     add_success                                                            ("0000", "添加成功"),
     delete_success                                                         ("0000", "删除成功"),
     update_success                                                         ("0000", "更新成功"),
-    selected_success                                                       ("0000", "选择成功"),
 
 
     /**
@@ -23,8 +22,6 @@ public enum ResponseEnum {
     //================================================店铺==============================================================
     shop_name_can_not_be_empty                                           ("0201", "店铺名称不能为空"),
     shop_id_can_not_be_empty                                             ("0202", "店铺id不能为空"),
-    selected_shop_number_in_db_error                                    ("0203", "数据库中已选择的店铺数量错误"),
-    shop_is_selected_can_not_delete                                     ("0204", "店铺正在被选择，无法删除"),
     shop_weizhi_can_not_be_enpty                                         ("0205", "店铺位置不能为空"),
     shop_jingying_type_can_not_be_enpty                                 ("0206", "店铺经营类型不能为空"),
     shop_jingying_brand_can_not_be_enpty                                ("0207", "店铺经营品牌不能为空"),

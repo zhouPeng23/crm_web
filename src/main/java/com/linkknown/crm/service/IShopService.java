@@ -19,21 +19,6 @@ public interface IShopService {
 
 
     /**
-     * 查询选中的店铺
-     * @return 选中的店铺
-     */
-    Shop querySelectedShop();
-
-
-    /**
-     * 选择这个店铺
-     * @param shop 店铺
-     * @return 店铺
-     */
-    Shop selectThisShop(Shop shop);
-
-
-    /**
      * 添加店铺
      * @param shop 店铺
      */
