@@ -19,4 +19,24 @@ public interface IProjectService {
     List<Project> queryProjectList(Project project);
 
 
+    /**
+     * 添加项目
+     * @param project 项目
+     */
+    void addProject(Project project);
+
+
+    /**
+     * 更新项目
+     * @param project 项目
+     */
+    void updateProject(Project project);
+
+
+    /**
+     * 删除项目
+     * @param project 项目
+     */
+    void deleteProject(Project project);
+
 }

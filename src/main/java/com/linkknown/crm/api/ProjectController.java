@@ -4,6 +4,7 @@ import com.linkknown.crm.bean.dos.Project;
 import com.linkknown.crm.bean.dos.Role;
 import com.linkknown.crm.common.aspect.exception.WebExceptionService;
 import com.linkknown.crm.common.aspect.paramslog.WebParamsLog;
+import com.linkknown.crm.common.enums.ResponseEnum;
 import com.linkknown.crm.common.response.BaseResponse;
 import com.linkknown.crm.common.util.paramutil.ProjectParamUtils;
 import com.linkknown.crm.common.util.paramutil.RoleParamUtils;
@@ -33,9 +34,36 @@ public class ProjectController {
     @PostMapping(value = "/queryProjectList")
     @WebParamsLog(description = "查询店里项目集合")
     public BaseResponse<List<Project>> queryProjectList(Project project){
-        ProjectParamUtils.queryAllProjectsValidate(project);
+        ProjectParamUtils.queryProjectList(project);
         List<Project> projectList = projectService.queryProjectList(project);
         return BaseResponse.success(projectList);
+    }
+
+
+    @PostMapping(value = "/addProject")
+    @WebParamsLog(description = "添加项目")
+    public BaseResponse<Object> addProject(Project project){
+        ProjectParamUtils.addProject(project);
+        projectService.addProject(project);
+        return BaseResponse.success(ResponseEnum.add_success);
+    }
+
+
+    @PostMapping(value = "/updateProject")
+    @WebParamsLog(description = "修改项目")
+    public BaseResponse<Object> updateProject(Project project){
+        ProjectParamUtils.updateProject(project);
+        projectService.updateProject(project);
+        return BaseResponse.success(ResponseEnum.update_success);
+    }
+
+
+    @PostMapping(value = "/deleteProject")
+    @WebParamsLog(description = "删除项目")
+    public BaseResponse<Object> deleteProject(Project project){
+        ProjectParamUtils.deleteProject(project);
+        projectService.deleteProject(project);
+        return BaseResponse.success(ResponseEnum.delete_success);
     }
 
 

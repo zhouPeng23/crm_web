@@ -47,7 +47,7 @@ public class ShopParamUtils {
             throw new WebException(ResponseEnum.shop_leader_sex_can_not_be_enpty);
         }
         //店长手机号格式错误
-        if (!RegexUtils.checkPhoneNumber(shop.getShopLeaderPhoneNumber())){
+        if (RegexUtils.checkPhoneNumber(shop.getShopLeaderPhoneNumber())){
             throw new WebException(ResponseEnum.shop_leader_phone_number_style_error);
         }
     }

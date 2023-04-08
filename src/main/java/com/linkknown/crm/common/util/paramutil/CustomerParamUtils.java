@@ -43,7 +43,7 @@ public class CustomerParamUtils {
             throw new WebException(ResponseEnum.customer_sex_can_not_be_empty);
         }
         //顾客手机号格式错误
-        if (!RegexUtils.checkPhoneNumber(customer.getPhoneNumber())){
+        if (RegexUtils.checkPhoneNumber(customer.getPhoneNumber())){
             throw new WebException(ResponseEnum.customer_phone_number_style_error);
         }
         //顾客生日日期不能为空

@@ -59,6 +59,11 @@ public enum ResponseEnum {
     //================================================角色==============================================================
     role_shop_id_can_not_be_empty                                         ("0501", "店铺id不能为空"),
 
+    //================================================项目==============================================================
+    project_shop_id_can_not_be_empty                                      ("0601", "店铺id不能为空"),
+    project_project_name_can_not_be_empty                                 ("0602", "项目名称不能为空"),
+    project_project_price_style_error                                     ("0603", "项目价格格式错误"),
+    project_project_id_can_not_be_empty                                   ("0604", "项目id不能为空"),
 
 
 
