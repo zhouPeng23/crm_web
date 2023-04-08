@@ -23,7 +23,7 @@ public class RegexUtils {
      * 校验手机号
      * @param str 入参
      */
-    public static boolean checkPhoneNumber(String str) {
+    public static boolean validatePhoneNumber(String str) {
         return Pattern.matches(PHONE_NUMBER, str);
     }
 
@@ -32,7 +32,7 @@ public class RegexUtils {
      * 校验价格
      * @param str 入参
      */
-    public static boolean checkPrice(String str) {
+    public static boolean validateAmount(String str) {
         return Pattern.matches(PRICE, str);
     }
 
