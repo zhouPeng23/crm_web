@@ -37,7 +37,6 @@ public enum ResponseEnum {
     employee_sex_can_not_be_empty                                        ("0302", "员工性别不能为空"),
     epmloyee_phone_number_style_error                                    ("0303", "手机号格式错误"),
     employee_role_can_not_be_empty                                       ("0304", "员工角色不能为空"),
-    employee_birthday_can_not_be_empty                                   ("0305", "员工生日日期不能为空"),
     employee_not_exist                                                    ("0306", "用户不存在"),
     employee_number_error                                                 ("0307", "用户数量错误，请联系管理员"),
     employee_phone_number_or_password_error                             ("0308", "手机号或密码错误"),
