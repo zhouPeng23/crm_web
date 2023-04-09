@@ -31,7 +31,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="customerId != null "> and customer_id = #{customerId}</if>
             <if test="appointmentDate != null "> and appointment_date = #{appointmentDate}</if>
             <if test="appointmentTime != null "> and appointment_time = #{appointmentTime}</if>
-            <if test="projectId != null  and projectId != ''"> and project_id = #{projectId}</if>
+            <if test="projectId != null "> and project_id = #{projectId}</if>
             <if test="projectPrice != null "> and project_price = #{projectPrice}</if>
             <if test="employeeId != null "> and employee_id = #{employeeId}</if>
             <if test="appointmentStatus != null  and appointmentStatus != ''"> and appointment_status = #{appointmentStatus}</if>
@@ -50,7 +50,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="customerId != null ">customer_id,</if>
             <if test="appointmentDate != null ">appointment_date,</if>
             <if test="appointmentTime != null ">appointment_time,</if>
-            <if test="projectId != null  and projectId != ''">project_id,</if>
+            <if test="projectId != null ">project_id,</if>
             <if test="projectPrice != null ">project_price,</if>
             <if test="employeeId != null ">employee_id,</if>
             <if test="appointmentStatus != null  and appointmentStatus != ''">appointment_status,</if>
@@ -64,7 +64,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="customerId != null ">#{customerId},</if>
             <if test="appointmentDate != null ">#{appointmentDate},</if>
             <if test="appointmentTime != null ">#{appointmentTime},</if>
-            <if test="projectId != null  and projectId != ''">#{projectId},</if>
+            <if test="projectId != null ">#{projectId},</if>
             <if test="projectPrice != null ">#{projectPrice},</if>
             <if test="employeeId != null ">#{employeeId},</if>
             <if test="appointmentStatus != null  and appointmentStatus != ''">#{appointmentStatus},</if>
@@ -82,7 +82,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="customerId != null ">customer_id = #{customerId},</if>
             <if test="appointmentDate != null ">appointment_date = #{appointmentDate},</if>
             <if test="appointmentTime != null ">appointment_time = #{appointmentTime},</if>
-            <if test="projectId != null  and projectId != ''">project_id = #{projectId},</if>
+            <if test="projectId != null ">project_id = #{projectId},</if>
             <if test="projectPrice != null ">project_price = #{projectPrice},</if>
             <if test="employeeId != null ">employee_id = #{employeeId},</if>
             <if test="appointmentStatus != null  and appointmentStatus != ''">appointment_status = #{appointmentStatus},</if>

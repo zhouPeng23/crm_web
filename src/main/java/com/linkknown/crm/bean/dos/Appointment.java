@@ -22,7 +22,7 @@ public class Appointment{
 
     private Date appointmentTime;
 
-    private String projectId;
+    private Integer projectId;
 
     private BigDecimal projectPrice;
 
