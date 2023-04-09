@@ -23,6 +23,7 @@ import javax.annotation.Resource;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.sql.Time;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -91,7 +92,7 @@ public class AppointmentServiceImpl implements IAppointmentService {
             appointment.setCustomerId(customer.getCustomerId());
             //设置创建人和时间
             appointment.setCreateBy("SYSTEM");
-            appointment.setCreateTime(new Date(System.currentTimeMillis()));
+            appointment.setCreateTime(LocalDateTime.now());
             appointmentMapper.insertAppointment(appointment);
 
         }else{
@@ -109,7 +110,7 @@ public class AppointmentServiceImpl implements IAppointmentService {
             appointment.setCustomerId(customer.getCustomerId());
             //设置创建人和时间
             appointment.setCreateBy("SYSTEM");
-            appointment.setCreateTime(new Date(System.currentTimeMillis()));
+            appointment.setCreateTime(LocalDateTime.now());
             appointmentMapper.insertAppointment(appointment);
         }
     }
@@ -127,7 +128,7 @@ public class AppointmentServiceImpl implements IAppointmentService {
 
         //设置创建人和时间
         appointment.setUpdateBy("SYSTEM");
-        appointment.setUpdateTime(new Date(System.currentTimeMillis()));
+        appointment.setUpdateTime(LocalDateTime.now());
         appointmentMapper.updateAppointment(appointment);
     }
 

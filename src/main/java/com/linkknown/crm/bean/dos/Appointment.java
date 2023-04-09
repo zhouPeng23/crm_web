@@ -5,6 +5,7 @@ import lombok.Data;
 import java.math.BigDecimal;
 import java.sql.Time;
 import java.sql.Date;
+import java.time.LocalDateTime;
 
 /**
  * 预约
@@ -33,11 +34,11 @@ public class Appointment{
 
     private String createBy;
 
-    private Date createTime;
+    private LocalDateTime createTime;
 
     private String updateBy;
 
-    private Date updateTime;
+    private LocalDateTime updateTime;
 
 
 }
