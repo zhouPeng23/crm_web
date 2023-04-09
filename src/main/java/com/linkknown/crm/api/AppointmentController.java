@@ -59,6 +59,14 @@ public class AppointmentController {
     }
 
 
+    @PostMapping(value = "/zuofeiAppointment")
+    @WebParamsLog(description = "作废预约")
+    public BaseResponse<Object> zuofeiAppointment(Appointment appointment){
+        AppointmentParamUtils.zuofeiAppointment(appointment);
+        appointmentService.zuofeiAppointment(appointment);
+        return BaseResponse.success(ResponseEnum.appointment_has_already_zuofei);
+    }
+
 
     @PostMapping(value = "/queryAppointmentStatusList")
     @WebParamsLog(description = "查询预约状态集合")

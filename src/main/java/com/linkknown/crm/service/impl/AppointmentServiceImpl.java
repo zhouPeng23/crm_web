@@ -158,7 +158,7 @@ public class AppointmentServiceImpl implements IAppointmentService {
         Appointment appointment = new Appointment();
         BeanUtils.copyProperties(updateAppointmentReq,appointment);
 
-        //设置创建人和时间
+        //设置更新人和时间
         appointment.setUpdateBy("SYSTEM");
         appointment.setUpdateTime(LocalDateTime.now());
         appointmentMapper.updateAppointment(appointment);
@@ -187,6 +187,29 @@ public class AppointmentServiceImpl implements IAppointmentService {
         //返回
         return enumsObjectList;
     }
+
+
+    /**
+     * 作废预约
+     * @param appointment 预约
+     */
+    @Override
+    public void zuofeiAppointment(Appointment appointment) {
+        Appointment appointmentParam = new Appointment();
+        appointmentParam.setAppointmentId(appointment.getAppointmentId());
+        appointmentParam.setAppointmentStatus(AppointmentStatusEnum.appointment_zuo_fei.getCode());
+
+        //设置更新人和时间
+        appointmentParam.setUpdateBy("SYSTEM");
+        appointmentParam.setUpdateTime(LocalDateTime.now());
+
+        //更新为作废状态
+        appointmentMapper.updateAppointment(appointmentParam);
+
+    }
+
+
+
 
 
 

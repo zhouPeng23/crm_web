@@ -111,5 +111,17 @@ public class AppointmentParamUtils {
     }
 
 
+    /**
+     * 作废预约
+     * @param appointment 预约
+     */
+    public static void zuofeiAppointment(Appointment appointment) {
+        if (StringUtils.isEmpty(appointment.getAppointmentId())){
+            throw new WebException(ResponseEnum.appointment_id_can_not_be_empty);
+        }
+    }
+
+
+
 
 }

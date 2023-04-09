@@ -42,4 +42,9 @@ public interface IAppointmentService {
     Object queryAppointmentStatusList();
 
 
+    /**
+     * 作废预约
+     * @param appointment 预约
+     */
+    void zuofeiAppointment(Appointment appointment);
 }
