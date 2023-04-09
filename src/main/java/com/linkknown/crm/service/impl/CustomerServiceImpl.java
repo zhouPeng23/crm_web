@@ -15,6 +15,7 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -80,7 +81,7 @@ public class CustomerServiceImpl implements ICustomerService {
 
         //设置创建人和时间
         customer.setCreateBy("SYSTEM");
-        customer.setCreateTime(System.currentTimeMillis());
+        customer.setCreateTime(LocalDateTime.now());
 
         //插入
         customerMapper.insertCustomer(customer);
@@ -129,7 +130,7 @@ public class CustomerServiceImpl implements ICustomerService {
 
         //设置更新人和时间
         customer.setUpdateBy("SYSTEM");
-        customer.setUpdateTime(System.currentTimeMillis());
+        customer.setUpdateTime(LocalDateTime.now());
 
         //更新
         customerMapper.updateCustomer(customer);

@@ -21,6 +21,7 @@ import org.springframework.util.CollectionUtils;
 import sun.security.provider.MD5;
 
 import javax.annotation.Resource;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -53,7 +54,7 @@ public class EmployeeServiceImpl implements IEmployeeService {
 
         //设置创建人和时间
         employee.setCreateBy("SYSTEM");
-        employee.setCreateTime(System.currentTimeMillis());
+        employee.setCreateTime(LocalDateTime.now());
 
         //设置初始密码
         employee.setPassword(MD5Utils.md5(Constants.employee_default_password));
@@ -94,7 +95,7 @@ public class EmployeeServiceImpl implements IEmployeeService {
 
         //设置修改人和时间
         employee.setUpdateBy("SYSTEM");
-        employee.setUpdateTime(System.currentTimeMillis());
+        employee.setUpdateTime(LocalDateTime.now());
 
         //更新
         employeeMapper.updateEmployee(employee);

@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -52,7 +53,7 @@ public class ShopServiceImpl implements IShopService {
     public void addShop(Shop shop) {
         //设置创建人和时间
         shop.setCreateBy("SYSTEM");
-        shop.setCreateTime(System.currentTimeMillis());
+        shop.setCreateTime(LocalDateTime.now());
 
         //插入
         shopMapper.insertShop(shop);
@@ -94,7 +95,7 @@ public class ShopServiceImpl implements IShopService {
     public void updateShop(Shop shop) {
         //设置更新人和时间
         shop.setUpdateBy("SYSTEM");
-        shop.setUpdateTime(System.currentTimeMillis());
+        shop.setUpdateTime(LocalDateTime.now());
         shopMapper.updateShop(shop);
     }
 

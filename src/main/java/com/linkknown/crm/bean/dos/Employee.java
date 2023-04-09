@@ -2,6 +2,9 @@ package com.linkknown.crm.bean.dos;
 
 import lombok.Data;
 
+import java.sql.Date;
+import java.time.LocalDateTime;
+
 /**
  * 员工
  * @author zhoupeng
@@ -21,16 +24,16 @@ public class Employee {
 
     private String password;
 
-    private Long birthday;
+    private Date birthday;
 
     private Integer roleId;
 
     private String createBy;
 
-    private Long createTime;
+    private LocalDateTime createTime;
 
     private String updateBy;
 
-    private Long updateTime;
+    private LocalDateTime updateTime;
 
 }

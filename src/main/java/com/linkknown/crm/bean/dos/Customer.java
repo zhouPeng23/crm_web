@@ -2,6 +2,9 @@ package com.linkknown.crm.bean.dos;
 
 import lombok.Data;
 
+import java.sql.Date;
+import java.time.LocalDateTime;
+
 /**
  * 顾客
  * @author zhoupeng
@@ -19,7 +22,7 @@ public class Customer {
 
     private String phoneNumber;
 
-    private Long birthday;
+    private Date birthday;
 
     private Integer customerMassLevel;
 
@@ -27,11 +30,11 @@ public class Customer {
 
     private String createBy;
 
-    private Long createTime;
+    private LocalDateTime createTime;
 
     private String updateBy;
 
-    private Long updateTime;
+    private LocalDateTime updateTime;
 
 
 }
