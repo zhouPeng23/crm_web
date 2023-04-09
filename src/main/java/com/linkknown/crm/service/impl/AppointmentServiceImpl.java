@@ -51,7 +51,8 @@ public class AppointmentServiceImpl implements IAppointmentService {
         Integer shopId = queryAppointmentPage.getShopId();
         //入参 - 查询条件
         String phoneNumber = queryAppointmentPage.getPhoneNumber();
-        Date appointmentDate = queryAppointmentPage.getAppointmentDate();
+        Date appointmentDateStart = queryAppointmentPage.getAppointmentDateStart();
+        Date appointmentDateEnd = queryAppointmentPage.getAppointmentDateEnd();
         Integer appointmentStatus = queryAppointmentPage.getAppointmentStatus();
         //入参 - 分页
         Integer pageNo = queryAppointmentPage.getPageNo();
@@ -61,7 +62,8 @@ public class AppointmentServiceImpl implements IAppointmentService {
         QueryWrapper<Appointment> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("shop_id",shopId)
                 .like(!StringUtils.isEmpty(phoneNumber),"phone_number",phoneNumber)
-                .eq(!StringUtils.isEmpty(appointmentDate),"appointment_date",appointmentDate)
+                .ge(!StringUtils.isEmpty(appointmentDateStart),"appointment_date",appointmentDateStart)
+                .le(!StringUtils.isEmpty(appointmentDateEnd),"appointment_date",appointmentDateEnd)
                 .eq(!StringUtils.isEmpty(appointmentStatus),"appointment_status",appointmentStatus)
                 .orderByDesc("create_time");
 

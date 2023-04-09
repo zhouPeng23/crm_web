@@ -14,7 +14,8 @@ public class QueryAppointmentPage {
     private Integer shopId;
 
     private String phoneNumber;
-    private Date appointmentDate;
+    private Date appointmentDateStart;
+    private Date appointmentDateEnd;
     private Integer appointmentStatus;
 
     private Integer pageNo;
