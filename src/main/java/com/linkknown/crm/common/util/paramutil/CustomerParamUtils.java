@@ -1,5 +1,6 @@
 package com.linkknown.crm.common.util.paramutil;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.linkknown.crm.bean.dos.Customer;
 import com.linkknown.crm.bean.req.QueryCustomerPage;
 import com.linkknown.crm.common.aspect.exception.WebException;
@@ -113,6 +114,22 @@ public class CustomerParamUtils {
             throw new WebException(ResponseEnum.customer_id_can_not_be_empty);
         }
     }
+
+
+    /**
+     * 查询门店所有顾客集合
+     * @param customer 顾客
+     */
+    public static void queryShopAllCustomer(Customer customer) {
+        //门店id不能为空
+        if (StringUtils.isEmpty(customer.getShopId())){
+            throw new WebException(ResponseEnum.shop_id_can_not_be_empty);
+        }
+    }
+
+
+
+
 
 
 }

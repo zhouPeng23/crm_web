@@ -48,4 +48,11 @@ public interface ICustomerService {
      */
     void deleteCustomer(Customer customer);
 
+
+    /**
+     * 查询门店所有顾客
+     * @param customer 顾客
+     * @return 集合
+     */
+    List<Customer> queryShopAllCustomer(Customer customer);
 }

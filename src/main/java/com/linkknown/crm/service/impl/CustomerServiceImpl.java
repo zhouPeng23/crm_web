@@ -146,4 +146,15 @@ public class CustomerServiceImpl implements ICustomerService {
     }
 
 
+    /**
+     * 查询门店所有顾客
+     * @param customer 顾客
+     * @return 集合
+     */
+    @Override
+    public List<Customer> queryShopAllCustomer(Customer customer) {
+        return customerMapper.selectCustomerList(customer);
+    }
+
+
 }

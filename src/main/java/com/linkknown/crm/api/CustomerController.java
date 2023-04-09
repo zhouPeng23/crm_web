@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @author zhoupeng
@@ -68,6 +69,14 @@ public class CustomerController {
         CustomerParamUtils.deleteCustomer(customer);
         customService.deleteCustomer(customer);
         return BaseResponse.success(ResponseEnum.delete_success);
+    }
+
+    @PostMapping(value = "/queryShopAllCustomer")
+    @WebParamsLog(description = "查询门店所有顾客")
+    public BaseResponse<List<Customer>> queryShopAllCustomer(Customer customer){
+        CustomerParamUtils.queryShopAllCustomer(customer);
+        List<Customer> customerList = customService.queryShopAllCustomer(customer);
+        return BaseResponse.success(customerList);
     }
 
 
