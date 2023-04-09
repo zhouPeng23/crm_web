@@ -3,7 +3,8 @@ package com.linkknown.crm.bean.dos;
 import lombok.Data;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.sql.Time;
+import java.sql.Date;
 
 /**
  * 预约
@@ -20,7 +21,7 @@ public class Appointment{
 
     private Date appointmentDate;
 
-    private Date appointmentTime;
+    private Time appointmentTime;
 
     private Integer projectId;
 
@@ -28,7 +29,7 @@ public class Appointment{
 
     private Integer employeeId;
 
-    private String appointmentStatus;
+    private Integer appointmentStatus;
 
     private String createBy;
 

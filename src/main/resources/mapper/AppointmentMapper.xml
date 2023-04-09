@@ -34,7 +34,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="projectId != null "> and project_id = #{projectId}</if>
             <if test="projectPrice != null "> and project_price = #{projectPrice}</if>
             <if test="employeeId != null "> and employee_id = #{employeeId}</if>
-            <if test="appointmentStatus != null  and appointmentStatus != ''"> and appointment_status = #{appointmentStatus}</if>
+            <if test="appointmentStatus != null "> and appointment_status = #{appointmentStatus}</if>
         </where>
     </select>
     
@@ -53,7 +53,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="projectId != null ">project_id,</if>
             <if test="projectPrice != null ">project_price,</if>
             <if test="employeeId != null ">employee_id,</if>
-            <if test="appointmentStatus != null  and appointmentStatus != ''">appointment_status,</if>
+            <if test="appointmentStatus != null ">appointment_status,</if>
             <if test="createBy != null  and createBy != ''">create_by,</if>
             <if test="createTime != null ">create_time,</if>
             <if test="updateBy != null  and updateBy != ''">update_by,</if>
@@ -67,7 +67,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="projectId != null ">#{projectId},</if>
             <if test="projectPrice != null ">#{projectPrice},</if>
             <if test="employeeId != null ">#{employeeId},</if>
-            <if test="appointmentStatus != null  and appointmentStatus != ''">#{appointmentStatus},</if>
+            <if test="appointmentStatus != null ">#{appointmentStatus},</if>
             <if test="createBy != null  and createBy != ''">#{createBy},</if>
             <if test="createTime != null ">#{createTime},</if>
             <if test="updateBy != null  and updateBy != ''">#{updateBy},</if>
@@ -85,7 +85,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="projectId != null ">project_id = #{projectId},</if>
             <if test="projectPrice != null ">project_price = #{projectPrice},</if>
             <if test="employeeId != null ">employee_id = #{employeeId},</if>
-            <if test="appointmentStatus != null  and appointmentStatus != ''">appointment_status = #{appointmentStatus},</if>
+            <if test="appointmentStatus != null ">appointment_status = #{appointmentStatus},</if>
             <if test="createBy != null  and createBy != ''">create_by = #{createBy},</if>
             <if test="createTime != null ">create_time = #{createTime},</if>
             <if test="updateBy != null  and updateBy != ''">update_by = #{updateBy},</if>
