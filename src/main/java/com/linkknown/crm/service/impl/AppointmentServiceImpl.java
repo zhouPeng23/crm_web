@@ -62,17 +62,43 @@ public class AppointmentServiceImpl implements IAppointmentService {
         Integer pageNo = queryAppointmentPage.getPageNo();
         Integer pageSize = queryAppointmentPage.getPageSize();
 
-        //分页查询
+        //查询条件组装
         QueryWrapper<Appointment> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("shop_id",shopId)
-                .like(!StringUtils.isEmpty(phoneNumber),"phone_number",phoneNumber)
-                .ge(!StringUtils.isEmpty(appointmentDateStart),"appointment_date",appointmentDateStart)
-                .le(!StringUtils.isEmpty(appointmentDateEnd),"appointment_date",appointmentDateEnd)
-                .eq(!StringUtils.isEmpty(appointmentStatus),"appointment_status",appointmentStatus)
-                .orderByDesc("create_time");
 
-        //返回
-        return  appointmentMapper.selectPage(new Page<>(pageNo, pageSize), queryWrapper);
+        //思路: 手机号如果不为空，则精确查找, 如果为空，则不根据手机号查找，而是根据其他条件查
+        if (StringUtils.isEmpty(phoneNumber)){
+            //分页查询
+            queryWrapper.eq("shop_id",shopId)
+                    .ge(!StringUtils.isEmpty(appointmentDateStart),"appointment_date",appointmentDateStart)
+                    .le(!StringUtils.isEmpty(appointmentDateEnd),"appointment_date",appointmentDateEnd)
+                    .eq(!StringUtils.isEmpty(appointmentStatus),"appointment_status",appointmentStatus)
+                    .orderByDesc("create_time");
+            //返回
+            return  appointmentMapper.selectPage(new Page<>(pageNo, pageSize), queryWrapper);
+
+        }else{
+            //先根据手机号查询到具体顾客
+            Customer customerParam = new Customer();
+            customerParam.setPhoneNumber(phoneNumber);
+            List<Customer> customerList = customerMapper.selectCustomerList(customerParam);
+
+            if (!CollectionUtils.isEmpty(customerList)){
+                //查到了具体顾客
+                Customer customer = customerList.get(0);
+                //分页查询 - 根据customerId查记录
+                queryWrapper.eq("shop_id",shopId)
+                        .eq(!StringUtils.isEmpty(customer.getCustomerId()),"customer_id",customer.getCustomerId())
+                        .orderByDesc("create_time");
+
+            }else{
+                //未查该顾客 - 让界面显示0条记录
+                queryWrapper.eq("appointment_id",-1L);
+
+            }
+            //返回
+            return  appointmentMapper.selectPage(new Page<>(pageNo, pageSize), queryWrapper);
+        }
+
     }
 
 
