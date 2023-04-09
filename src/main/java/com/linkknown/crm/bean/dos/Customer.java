@@ -21,7 +21,7 @@ public class Customer {
 
     private Long birthday;
 
-    private String customerMassLevel;
+    private Integer customerMassLevel;
 
     private Integer belongToEmployeeId;
 

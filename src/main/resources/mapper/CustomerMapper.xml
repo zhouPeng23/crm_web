@@ -31,7 +31,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="sex != null "> and sex = #{sex}</if>
             <if test="phoneNumber != null  and phoneNumber != ''"> and phone_number = #{phoneNumber}</if>
             <if test="birthday != null "> and birthday = #{birthday}</if>
-            <if test="customerMassLevel != null  and customerMassLevel != ''"> and customer_mass_level = #{customerMassLevel}</if>
+            <if test="customerMassLevel != null "> and customer_mass_level = #{customerMassLevel}</if>
             <if test="belongToEmployeeId != null "> and belong_to_employee_id = #{belongToEmployeeId}</if>
         </where>
     </select>
@@ -49,7 +49,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="sex != null ">sex,</if>
             <if test="phoneNumber != null  and phoneNumber != ''">phone_number,</if>
             <if test="birthday != null ">birthday,</if>
-            <if test="customerMassLevel != null  and customerMassLevel != ''">customer_mass_level,</if>
+            <if test="customerMassLevel != null ">customer_mass_level,</if>
             <if test="belongToEmployeeId != null ">belong_to_employee_id,</if>
             <if test="createBy != null  and createBy != ''">create_by,</if>
             <if test="createTime != null ">create_time,</if>
@@ -62,7 +62,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="sex != null ">#{sex},</if>
             <if test="phoneNumber != null  and phoneNumber != ''">#{phoneNumber},</if>
             <if test="birthday != null ">#{birthday},</if>
-            <if test="customerMassLevel != null  and customerMassLevel != ''">#{customerMassLevel},</if>
+            <if test="customerMassLevel != null ">#{customerMassLevel},</if>
             <if test="belongToEmployeeId != null ">#{belongToEmployeeId},</if>
             <if test="createBy != null  and createBy != ''">#{createBy},</if>
             <if test="createTime != null ">#{createTime},</if>
@@ -79,7 +79,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="sex != null ">sex = #{sex},</if>
             <if test="phoneNumber != null  and phoneNumber != ''">phone_number = #{phoneNumber},</if>
             <if test="birthday != null ">birthday = #{birthday},</if>
-            <if test="customerMassLevel != null  and customerMassLevel != ''">customer_mass_level = #{customerMassLevel},</if>
+            <if test="customerMassLevel != null ">customer_mass_level = #{customerMassLevel},</if>
             <if test="belongToEmployeeId != null ">belong_to_employee_id = #{belongToEmployeeId},</if>
             <if test="createBy != null  and createBy != ''">create_by = #{createBy},</if>
             <if test="createTime != null ">create_time = #{createTime},</if>
