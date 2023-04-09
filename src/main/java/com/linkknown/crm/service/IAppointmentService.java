@@ -35,4 +35,11 @@ public interface IAppointmentService {
     void updateAppointment(UpdateAppointmentReq updateAppointmentReq);
 
 
+    /**
+     * 查询预约状态集合
+     * @return 集合
+     */
+    Object queryAppointmentStatusList();
+
+
 }

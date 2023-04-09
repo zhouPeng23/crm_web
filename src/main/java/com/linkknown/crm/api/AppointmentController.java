@@ -59,4 +59,11 @@ public class AppointmentController {
     }
 
 
+
+    @PostMapping(value = "/queryAppointmentStatusList")
+    @WebParamsLog(description = "查询预约状态集合")
+    public BaseResponse<Object> queryAppointmentStatusList(Appointment appointment){
+        return BaseResponse.success(appointmentService.queryAppointmentStatusList());
+    }
+
 }

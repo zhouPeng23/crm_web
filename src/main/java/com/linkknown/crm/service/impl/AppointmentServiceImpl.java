@@ -10,6 +10,7 @@ import com.linkknown.crm.bean.req.UpdateAppointmentReq;
 import com.linkknown.crm.common.aspect.exception.WebException;
 import com.linkknown.crm.common.enums.AppointmentStatusEnum;
 import com.linkknown.crm.common.enums.CustomerMassLevelEnum;
+import com.linkknown.crm.common.enums.EnumsObject;
 import com.linkknown.crm.common.enums.ResponseEnum;
 import com.linkknown.crm.mapper.AppointmentMapper;
 import com.linkknown.crm.mapper.CustomerMapper;
@@ -24,7 +25,10 @@ import java.math.BigDecimal;
 import java.sql.Date;
 import java.sql.Time;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+
 
 /**
  * @author zhoupeng
@@ -135,9 +139,28 @@ public class AppointmentServiceImpl implements IAppointmentService {
     }
 
 
+    /**
+     * 查询预约状态集合
+     * @return 集合
+     */
+    @Override
+    public Object queryAppointmentStatusList() {
+        //源数据
+        AppointmentStatusEnum[] enums = AppointmentStatusEnum.values();
 
+        //返回集合
+        List<EnumsObject> enumsObjectList = new ArrayList<>();
+        //装配数据
+        Arrays.stream(enums).forEach(e -> {
+            EnumsObject enumsObject = new EnumsObject();
+            enumsObject.setMsg(e.getMsg());
+            enumsObject.setCode(e.getCode());
+            enumsObjectList.add(enumsObject);
+        });
 
-
+        //返回
+        return enumsObjectList;
+    }
 
 
 
