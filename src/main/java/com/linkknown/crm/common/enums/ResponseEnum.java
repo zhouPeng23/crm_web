@@ -65,6 +65,7 @@ public enum ResponseEnum {
     appointment_time_can_not_be_empty                                     ("0411", "预约时间不能为空"),
     appointment_project_id_can_not_be_empty                              ("0412", "预约项目不能为空"),
     appointment_project_price_can_not_be_empty                           ("0413", "预约项目金额不能为空"),
+    appointment_id_can_not_be_empty                                       ("0414", "预约id不能为空"),
 
     //================================================角色==============================================================
     role_shop_id_can_not_be_empty                                         ("0501", "门店id不能为空"),
