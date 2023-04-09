@@ -47,10 +47,6 @@ public class CustomerParamUtils {
         if (!RegexUtils.validatePhoneNumber(customer.getPhoneNumber())){
             throw new WebException(ResponseEnum.customer_phone_number_style_error);
         }
-        //顾客生日日期不能为空
-        if (StringUtils.isEmpty(customer.getBirthday())){
-            throw new WebException(ResponseEnum.customer_birthday_can_not_be_empty);
-        }
         //顾客等级不能为空
         if (StringUtils.isEmpty(customer.getCustomerMassLevel())){
             throw new WebException(ResponseEnum.customer_mass_level_can_not_be_empty);
@@ -87,10 +83,6 @@ public class CustomerParamUtils {
         //顾客手机号格式错误
         if (!RegexUtils.validatePhoneNumber(customer.getPhoneNumber())){
             throw new WebException(ResponseEnum.customer_phone_number_style_error);
-        }
-        //顾客生日日期不能为空
-        if (StringUtils.isEmpty(customer.getBirthday())){
-            throw new WebException(ResponseEnum.customer_birthday_can_not_be_empty);
         }
         //顾客等级不能为空
         if (StringUtils.isEmpty(customer.getCustomerMassLevel())){
