@@ -29,9 +29,9 @@ public class ModifyAppointmentStatusTask {
     private AppointmentMapper appointmentMapper;
 
     /**
-     * 每隔1小时执行一次 - 修改预约单状态
+     * 每隔半个小时执行一次 - 修改预约单状态
      */
-    @Scheduled(cron = "0 * * * *")
+    @Scheduled(cron = "0 */30 * * * ?")
     public void modifyAppointmentStatus() {
         logger.info("==========>正在执行修改预约单状态定时任务");
 
