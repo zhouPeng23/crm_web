@@ -55,11 +55,6 @@ public class AppointmentParamUtils {
         if (StringUtils.isEmpty(addAppointmentReq.getProjectIds())){
             throw new WebException(ResponseEnum.appointment_project_id_can_not_be_empty);
         }
-        //项目金额
-        if (StringUtils.isEmpty(addAppointmentReq.getProjectPrice())){
-            throw new WebException(ResponseEnum.appointment_project_price_can_not_be_empty);
-        }
-
         //顾客所属员工不能为空
         if (StringUtils.isEmpty(addAppointmentReq.getEmployeeId())){
             throw new WebException(ResponseEnum.customer_belong_to_employee_id_can_not_be_empty);
@@ -93,11 +88,6 @@ public class AppointmentParamUtils {
         if (StringUtils.isEmpty(updateAppointmentReq.getProjectIds())){
             throw new WebException(ResponseEnum.appointment_project_id_can_not_be_empty);
         }
-        //项目金额
-        if (StringUtils.isEmpty(updateAppointmentReq.getProjectPrice())){
-            throw new WebException(ResponseEnum.appointment_project_price_can_not_be_empty);
-        }
-
         //顾客所属员工不能为空
         if (StringUtils.isEmpty(updateAppointmentReq.getEmployeeId())){
             throw new WebException(ResponseEnum.customer_belong_to_employee_id_can_not_be_empty);

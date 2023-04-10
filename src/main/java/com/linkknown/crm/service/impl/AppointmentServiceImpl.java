@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.linkknown.crm.bean.dos.Appointment;
 import com.linkknown.crm.bean.dos.Customer;
+import com.linkknown.crm.bean.dos.Project;
 import com.linkknown.crm.bean.req.AddAppointmentReq;
 import com.linkknown.crm.bean.req.QueryAppointmentPage;
 import com.linkknown.crm.bean.req.UpdateAppointmentReq;
@@ -14,6 +15,7 @@ import com.linkknown.crm.common.enums.EnumsObject;
 import com.linkknown.crm.common.enums.ResponseEnum;
 import com.linkknown.crm.mapper.AppointmentMapper;
 import com.linkknown.crm.mapper.CustomerMapper;
+import com.linkknown.crm.mapper.ProjectMapper;
 import com.linkknown.crm.service.IAppointmentService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -42,6 +44,9 @@ public class AppointmentServiceImpl implements IAppointmentService {
 
     @Resource
     private CustomerMapper customerMapper;
+
+    @Resource
+    private ProjectMapper projectMapper;
 
 
     /**
@@ -113,6 +118,8 @@ public class AppointmentServiceImpl implements IAppointmentService {
         BeanUtils.copyProperties(addAppointmentReq,appointment);
         //设置预约状态
         appointment.setAppointmentStatus(AppointmentStatusEnum.appointment_wait_use.getCode());
+        //设置预约项目总金额
+        appointment.setProjectPrice(this.tongjiProjectPriceByIds(addAppointmentReq.getProjectIds()));
 
         //根据手机号查询顾客表
         Customer customerParam = new Customer();
@@ -145,6 +152,33 @@ public class AppointmentServiceImpl implements IAppointmentService {
             appointment.setCreateTime(LocalDateTime.now());
             appointmentMapper.insertAppointment(appointment);
         }
+    }
+
+
+    /**
+     * 统计项目价格
+     * @param projectIds 项目ids
+     * @return 总金额
+     */
+    private BigDecimal tongjiProjectPriceByIds(String projectIds) {
+        //定义返回结果
+        BigDecimal totalAmount = BigDecimal.ZERO;
+
+        //逗号分隔，将数组转为集合
+        String[] projectIdsArray = projectIds.split(",");
+        List<Integer> intList = new ArrayList<Integer>();
+        for (String str : projectIdsArray) {
+            intList.add(Integer.parseInt(str));
+        }
+
+        //批量查询
+        List<Project> projectList = projectMapper.selectBatchIds(intList);
+        for (Project project:projectList){
+            totalAmount = totalAmount.add(project.getProjectPrice());
+        }
+
+        //返回总金额
+        return totalAmount;
     }
 
 
