@@ -156,6 +156,26 @@ public class AppointmentServiceImpl implements IAppointmentService {
 
 
     /**
+     * 更新预约
+     * @param updateAppointmentReq 请求
+     */
+    @Override
+    public void updateAppointment(UpdateAppointmentReq updateAppointmentReq) {
+        //更新入库的预约实体
+        Appointment appointment = new Appointment();
+        BeanUtils.copyProperties(updateAppointmentReq,appointment);
+
+        //设置预约项目总金额
+        appointment.setProjectPrice(this.tongjiProjectPriceByIds(updateAppointmentReq.getProjectIds()));
+
+        //设置更新人和时间
+        appointment.setUpdateBy("SYSTEM");
+        appointment.setUpdateTime(LocalDateTime.now());
+        appointmentMapper.updateAppointment(appointment);
+    }
+
+
+    /**
      * 统计项目价格
      * @param projectIds 项目ids
      * @return 总金额
@@ -166,36 +186,15 @@ public class AppointmentServiceImpl implements IAppointmentService {
 
         //逗号分隔，将数组转为集合
         String[] projectIdsArray = projectIds.split(",");
-        List<Integer> intList = new ArrayList<Integer>();
-        for (String str : projectIdsArray) {
-            intList.add(Integer.parseInt(str));
-        }
 
         //批量查询
-        List<Project> projectList = projectMapper.selectBatchIds(intList);
+        List<Project> projectList = projectMapper.selectProjectByIds(projectIdsArray);
         for (Project project:projectList){
             totalAmount = totalAmount.add(project.getProjectPrice());
         }
 
         //返回总金额
         return totalAmount;
-    }
-
-
-    /**
-     * 更新预约
-     * @param updateAppointmentReq 请求
-     */
-    @Override
-    public void updateAppointment(UpdateAppointmentReq updateAppointmentReq) {
-        //更新入库的预约实体
-        Appointment appointment = new Appointment();
-        BeanUtils.copyProperties(updateAppointmentReq,appointment);
-
-        //设置更新人和时间
-        appointment.setUpdateBy("SYSTEM");
-        appointment.setUpdateTime(LocalDateTime.now());
-        appointmentMapper.updateAppointment(appointment);
     }
 
 

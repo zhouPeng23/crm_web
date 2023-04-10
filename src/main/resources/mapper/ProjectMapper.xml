@@ -63,5 +63,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{projectId}
         </foreach>
     </delete>
+
+    <select id="selectProjectByIds" parameterType="String" resultMap="ProjectResult">
+        <include refid="selectProjectVo"/>
+        where project_id in
+        <foreach item="projectId" collection="array" open="(" separator="," close=")">
+            #{projectId}
+        </foreach>
+    </select>
     
 </mapper>

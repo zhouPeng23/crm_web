@@ -23,4 +23,6 @@ public interface ProjectMapper extends BaseMapper<Project> {
     public int deleteProjectById(Integer projectId);
 
     public int deleteProjectByIds(String[] projectIds);
+
+    public List<Project> selectProjectByIds(String[] projectIds);
 }
