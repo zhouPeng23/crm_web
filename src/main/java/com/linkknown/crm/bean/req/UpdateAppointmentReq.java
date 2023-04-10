@@ -15,17 +15,11 @@ public class UpdateAppointmentReq {
 
     private Integer appointmentId;
 
-    private String phoneNumber;
-
-    private String customerName;
-
     private Date appointmentDate;
 
     private Time appointmentTime;
 
     private String projectIds;
-
-    private BigDecimal projectPrice;
 
     private Integer employeeId;
 

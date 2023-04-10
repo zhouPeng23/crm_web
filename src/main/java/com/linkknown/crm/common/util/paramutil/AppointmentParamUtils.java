@@ -71,11 +71,6 @@ public class AppointmentParamUtils {
         if (StringUtils.isEmpty(updateAppointmentReq.getAppointmentId())){
             throw new WebException(ResponseEnum.appointment_id_can_not_be_empty);
         }
-        //顾客手机号格式错误
-        if (!RegexUtils.validatePhoneNumber(updateAppointmentReq.getPhoneNumber())){
-            throw new WebException(ResponseEnum.customer_phone_number_style_error);
-        }
-
         //预约日期
         if (StringUtils.isEmpty(updateAppointmentReq.getAppointmentDate())){
             throw new WebException(ResponseEnum.appointment_date_can_not_be_empty);
