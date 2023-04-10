@@ -68,7 +68,7 @@ public class ModifyAppointmentStatusTask {
         if (strIds.length>0){
             appointmentMapper.updateAppointmentStatusEndByBatchIds(strIds);
         }else{
-            logger.info("==========>无需执行");
+            logger.info("==========>ids为空无需执行");
         }
 
     }
