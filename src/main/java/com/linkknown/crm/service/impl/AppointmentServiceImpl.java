@@ -143,6 +143,8 @@ public class AppointmentServiceImpl implements IAppointmentService {
             customer.setPhoneNumber(addAppointmentReq.getPhoneNumber());
             customer.setCustomerMassLevel(CustomerMassLevelEnum.ordinary_member.getCode());
             customer.setBelongToEmployeeId(addAppointmentReq.getEmployeeId());
+            customer.setCreateBy("SYSTEM");
+            customer.setCreateTime(LocalDateTime.now());
             //插入顾客表
             customerMapper.insertCustomer(customer);
 
