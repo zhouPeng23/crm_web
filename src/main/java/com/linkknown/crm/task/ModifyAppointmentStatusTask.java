@@ -61,7 +61,7 @@ public class ModifyAppointmentStatusTask {
             }
         });
 
-        logger.info("==========>经查询需要修改预约单状态为“已结束”的预约单ids:{}",needUpdateAppointmentIdList);
+        logger.info("==========>已过期6小时,需要修改预约单状态为“已结束”的预约单ids:{}",needUpdateAppointmentIdList);
 
         //3.将这些单子设置为“已结束”
         String[] strIds = needUpdateAppointmentIdList.toArray(new String[0]);
