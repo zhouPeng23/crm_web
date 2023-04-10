@@ -10,7 +10,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="customerId"    column="customer_id"    />
         <result property="appointmentDate"    column="appointment_date"    />
         <result property="appointmentTime"    column="appointment_time"    />
-        <result property="projectId"    column="project_id"    />
+        <result property="projectIds"    column="project_ids"    />
         <result property="projectPrice"    column="project_price"    />
         <result property="employeeId"    column="employee_id"    />
         <result property="appointmentStatus"    column="appointment_status"    />
@@ -21,7 +21,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectAppointmentVo">
-        select shop_id, appointment_id, customer_id, appointment_date, appointment_time, project_id, project_price, employee_id, appointment_status, create_by, create_time, update_by, update_time from appointment
+        select shop_id, appointment_id, customer_id, appointment_date, appointment_time, project_ids, project_price, employee_id, appointment_status, create_by, create_time, update_by, update_time from appointment
     </sql>
 
     <select id="selectAppointmentList" parameterType="com.linkknown.crm.bean.dos.Appointment" resultMap="AppointmentResult">
@@ -31,7 +31,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="customerId != null "> and customer_id = #{customerId}</if>
             <if test="appointmentDate != null "> and appointment_date = #{appointmentDate}</if>
             <if test="appointmentTime != null "> and appointment_time = #{appointmentTime}</if>
-            <if test="projectId != null "> and project_id = #{projectId}</if>
+            <if test="projectIds != null "> and project_ids = #{projectIds}</if>
             <if test="projectPrice != null "> and project_price = #{projectPrice}</if>
             <if test="employeeId != null "> and employee_id = #{employeeId}</if>
             <if test="appointmentStatus != null "> and appointment_status = #{appointmentStatus}</if>
@@ -50,7 +50,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="customerId != null ">customer_id,</if>
             <if test="appointmentDate != null ">appointment_date,</if>
             <if test="appointmentTime != null ">appointment_time,</if>
-            <if test="projectId != null ">project_id,</if>
+            <if test="projectIds != null ">project_ids,</if>
             <if test="projectPrice != null ">project_price,</if>
             <if test="employeeId != null ">employee_id,</if>
             <if test="appointmentStatus != null ">appointment_status,</if>
@@ -64,7 +64,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="customerId != null ">#{customerId},</if>
             <if test="appointmentDate != null ">#{appointmentDate},</if>
             <if test="appointmentTime != null ">#{appointmentTime},</if>
-            <if test="projectId != null ">#{projectId},</if>
+            <if test="projectIds != null ">#{projectIds},</if>
             <if test="projectPrice != null ">#{projectPrice},</if>
             <if test="employeeId != null ">#{employeeId},</if>
             <if test="appointmentStatus != null ">#{appointmentStatus},</if>
@@ -82,7 +82,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="customerId != null ">customer_id = #{customerId},</if>
             <if test="appointmentDate != null ">appointment_date = #{appointmentDate},</if>
             <if test="appointmentTime != null ">appointment_time = #{appointmentTime},</if>
-            <if test="projectId != null ">project_id = #{projectId},</if>
+            <if test="projectIds != null ">project_ids = #{projectIds},</if>
             <if test="projectPrice != null ">project_price = #{projectPrice},</if>
             <if test="employeeId != null ">employee_id = #{employeeId},</if>
             <if test="appointmentStatus != null ">appointment_status = #{appointmentStatus},</if>

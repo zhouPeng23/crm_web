@@ -23,7 +23,7 @@ public class UpdateAppointmentReq {
 
     private Time appointmentTime;
 
-    private Integer projectId;
+    private String projectIds;
 
     private BigDecimal projectPrice;
 

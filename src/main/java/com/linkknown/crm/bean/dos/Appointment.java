@@ -24,7 +24,7 @@ public class Appointment{
 
     private Time appointmentTime;
 
-    private Integer projectId;
+    private String projectIds;
 
     private BigDecimal projectPrice;
 
