@@ -77,7 +77,8 @@ public class AppointmentServiceImpl implements IAppointmentService {
                     .ge(!StringUtils.isEmpty(appointmentDateStart),"appointment_date",appointmentDateStart)
                     .le(!StringUtils.isEmpty(appointmentDateEnd),"appointment_date",appointmentDateEnd)
                     .eq(!StringUtils.isEmpty(appointmentStatus),"appointment_status",appointmentStatus)
-                    .orderByDesc("create_time");
+                    .orderByDesc("appointment_date")
+                    .orderByAsc("appointment_time");
             //返回
             return  appointmentMapper.selectPage(new Page<>(pageNo, pageSize), queryWrapper);
 
@@ -93,7 +94,8 @@ public class AppointmentServiceImpl implements IAppointmentService {
                 //分页查询 - 根据customerId查记录
                 queryWrapper.eq("shop_id",shopId)
                         .eq(!StringUtils.isEmpty(customer.getCustomerId()),"customer_id",customer.getCustomerId())
-                        .orderByDesc("create_time");
+                        .orderByDesc("appointment_date")
+                        .orderByAsc("appointment_time");
 
             }else{
                 //未查该顾客 - 让界面显示0条记录
