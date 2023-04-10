@@ -15,6 +15,14 @@ public class DateUtils {
     private static String YYYY_MM_DD_HH_MM_SS = "yyyy-MM-dd HH:mm:ss";
 
 
+    /**
+     * 获取当前时间 yyyy-MM-dd HH:mm:ss
+     * @return 日期
+     */
+    public static Date getCurrentDateTime(){
+        return millisecondFormatDate(System.currentTimeMillis());
+    }
+
 
     /**
      * 毫秒格式化字符串日期
