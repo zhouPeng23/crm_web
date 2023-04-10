@@ -16,15 +16,6 @@ public class DateUtils {
 
 
     /**
-     * 获取当前时间 yyyy-MM-dd HH:mm:ss
-     * @return 日期
-     */
-    public static Date getCurrentDateTime(){
-        return millisecondFormatDate(System.currentTimeMillis());
-    }
-
-
-    /**
      * 毫秒格式化字符串日期
      * @param millisecond 毫秒数
      * @return 日期

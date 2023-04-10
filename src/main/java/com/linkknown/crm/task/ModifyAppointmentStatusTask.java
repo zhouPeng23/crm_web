@@ -33,7 +33,7 @@ public class ModifyAppointmentStatusTask {
      */
     @Scheduled(cron = "0 */2 * * * ?")
     public void modifyAppointmentStatus() {
-        logger.info("==========>正在执行修改预约单状态定时任务,当前时间:{}",DateUtils.getCurrentDateTime());
+        logger.info("==========>正在执行修改预约单状态定时任务");
 
         // 查看预约单的状态，如果某个单子已经过期了6个小时，系统自动将单子设置为“已结束”
         //1.查询所有“待处理”“进行中”的预约单
@@ -51,7 +51,7 @@ public class ModifyAppointmentStatusTask {
             Long appointmentDateTime = appointment.getAppointmentDate().getTime() + appointment.getAppointmentTime().getTime();
 
             // 计算两个时间戳之间的毫秒数差
-            long diffInMilliseconds = appointmentDateTime - System.currentTimeMillis();
+            long diffInMilliseconds = System.currentTimeMillis() - appointmentDateTime;
 
             // 将毫秒数差转换成小时数
             double diffInHours = diffInMilliseconds / (60 * 60 * 1000);
