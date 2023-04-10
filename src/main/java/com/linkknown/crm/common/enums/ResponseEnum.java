@@ -62,9 +62,10 @@ public enum ResponseEnum {
     appointment_date_can_not_be_empty                                     ("0410", "预约日期不能为空"),
     appointment_time_can_not_be_empty                                     ("0411", "预约时间不能为空"),
     appointment_project_id_can_not_be_empty                              ("0412", "预约项目不能为空"),
-    appointment_project_price_can_not_be_empty                           ("0413", "预约项目金额不能为空"),
     appointment_id_can_not_be_empty                                       ("0414", "预约id不能为空"),
     appointment_has_already_zuofei                                        ("0415", "预约已处于作废状态"),
+    customer_is_new_name_can_not_be_empty                                 ("0416", "该顾客为新人,姓名不能为空"),
+    customer_is_new_sex_can_not_be_empty                                 ("0417", "该顾客为新人,性别不能为空"),
 
     //================================================角色==============================================================
     role_shop_id_can_not_be_empty                                         ("0501", "门店id不能为空"),

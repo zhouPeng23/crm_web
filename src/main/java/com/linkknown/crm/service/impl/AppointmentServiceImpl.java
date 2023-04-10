@@ -138,6 +138,12 @@ public class AppointmentServiceImpl implements IAppointmentService {
 
         }else{
             //新顾客 - 先添加顾客表
+            if (StringUtils.isEmpty(addAppointmentReq.getCustomerName())){
+                throw new WebException(ResponseEnum.customer_is_new_name_can_not_be_empty);
+            }
+            if (StringUtils.isEmpty(addAppointmentReq.getSex())){
+                throw new WebException(ResponseEnum.customer_is_new_sex_can_not_be_empty);
+            }
             Customer customer = new Customer();
             customer.setShopId(addAppointmentReq.getShopId());
             customer.setCustomerName(addAppointmentReq.getCustomerName());

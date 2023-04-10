@@ -27,8 +27,6 @@ public class AddAppointmentReq {
 
     private String projectIds;
 
-    private BigDecimal projectPrice;
-
     private Integer employeeId;
 
 
