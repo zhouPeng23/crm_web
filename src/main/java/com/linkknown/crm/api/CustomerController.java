@@ -79,5 +79,13 @@ public class CustomerController {
         return BaseResponse.success(customerList);
     }
 
+    @PostMapping(value = "/queryCustomerByPhoneNumber")
+    @WebParamsLog(description = "根据手机号查询顾客")
+    public BaseResponse<Customer> queryCustomerByPhoneNumber(Customer customer){
+        CustomerParamUtils.queryCustomerByPhoneNumber(customer);
+        Customer customerDb = customService.queryCustomerByPhoneNumber(customer);
+        return BaseResponse.success(customerDb);
+    }
+
 
 }

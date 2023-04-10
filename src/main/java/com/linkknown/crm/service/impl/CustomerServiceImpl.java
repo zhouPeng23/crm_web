@@ -158,4 +158,22 @@ public class CustomerServiceImpl implements ICustomerService {
     }
 
 
+    /**
+     * 根据手机号查询顾客
+     * @param customer 请求
+     * @return 顾客
+     */
+    @Override
+    public Customer queryCustomerByPhoneNumber(Customer customer) {
+        Customer customerParam = new Customer();
+        customerParam.setPhoneNumber(customer.getPhoneNumber());
+        List<Customer> customerList = customerMapper.selectCustomerList(customerParam);
+        if (CollectionUtils.isEmpty(customerList)){
+            return null;
+        }
+        return customerList.get(0);
+
+    }
+
+
 }

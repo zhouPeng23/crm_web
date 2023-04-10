@@ -120,8 +120,14 @@ public class CustomerParamUtils {
     }
 
 
-
-
-
-
+    /**
+     * 根据手机号查询顾客
+     * @param customer 请求
+     */
+    public static void queryCustomerByPhoneNumber(Customer customer) {
+        //顾客手机号格式错误
+        if (!RegexUtils.validatePhoneNumber(customer.getPhoneNumber())){
+            throw new WebException(ResponseEnum.customer_phone_number_style_error);
+        }
+    }
 }

@@ -55,4 +55,12 @@ public interface ICustomerService {
      * @return 集合
      */
     List<Customer> queryShopAllCustomer(Customer customer);
+
+
+    /**
+     * 根据手机号查询顾客
+     * @param customer 请求
+     * @return 顾客
+     */
+    Customer queryCustomerByPhoneNumber(Customer customer);
 }
