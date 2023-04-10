@@ -98,7 +98,7 @@ public class AppointmentServiceImpl implements IAppointmentService {
                         .orderByAsc("appointment_time");
 
             }else{
-                //未查该顾客 - 让界面显示0条记录
+                //未查到该顾客 - 让界面显示0条记录
                 queryWrapper.eq("appointment_id",-1L);
 
             }
