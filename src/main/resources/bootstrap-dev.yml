@@ -1,17 +1,9 @@
-server:
-  port: 5002
-
 spring:
-  application:
-    name: crm_web
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/linkknown_crm_web?serverTimezone=UTC
     username: root
     password: root
-#    url: jdbc:mysql://47.101.135.23:3306/crm_web?serverTimezone=UTC
-#    username: linker
-#    password: Linker2020**
 
 
 
