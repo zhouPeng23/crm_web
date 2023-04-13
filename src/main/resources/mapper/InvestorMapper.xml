@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.linkknown.crm.mapper.InvestorMapper">
+    
+    <resultMap type="com.linkknown.crm.bean.dos.Investor" id="InvestorResult">
+        <result property="shopId"    column="shop_id"    />
+        <result property="investorId"    column="investor_id"    />
+        <result property="investorName"    column="investor_name"    />
+        <result property="sex"    column="sex"    />
+        <result property="phoneNumber"    column="phone_number"    />
+        <result property="password"    column="password"    />
+        <result property="birthday"    column="birthday"    />
+        <result property="investorAmount"    column="investor_amount"    />
+        <result property="holdingProportion"    column="holding_proportion"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <sql id="selectInvestorVo">
+        select shop_id, investor_id, investor_name, sex, phone_number, password, birthday, investor_amount, holding_proportion, create_by, create_time, update_by, update_time from investor
+    </sql>
+
+    <select id="selectInvestorList" parameterType="com.linkknown.crm.bean.dos.Investor" resultMap="InvestorResult">
+        <include refid="selectInvestorVo"/>
+        <where>  
+            <if test="shopId != null "> and shop_id = #{shopId}</if>
+            <if test="investorName != null  and investorName != ''"> and investor_name like concat('%', #{investorName}, '%')</if>
+            <if test="sex != null "> and sex = #{sex}</if>
+            <if test="phoneNumber != null  and phoneNumber != ''"> and phone_number = #{phoneNumber}</if>
+            <if test="password != null  and password != ''"> and password = #{password}</if>
+            <if test="birthday != null "> and birthday = #{birthday}</if>
+            <if test="investorAmount != null "> and investor_amount = #{investorAmount}</if>
+            <if test="holdingProportion != null "> and holding_proportion = #{holdingProportion}</if>
+        </where>
+    </select>
+    
+    <select id="selectInvestorById" parameterType="Integer" resultMap="InvestorResult">
+        <include refid="selectInvestorVo"/>
+        where investor_id = #{investorId}
+    </select>
+        
+    <insert id="insertInvestor" parameterType="com.linkknown.crm.bean.dos.Investor" useGeneratedKeys="true" keyProperty="investorId">
+        insert into investor
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="shopId != null ">shop_id,</if>
+            <if test="investorName != null  and investorName != ''">investor_name,</if>
+            <if test="sex != null ">sex,</if>
+            <if test="phoneNumber != null  and phoneNumber != ''">phone_number,</if>
+            <if test="password != null  and password != ''">password,</if>
+            <if test="birthday != null ">birthday,</if>
+            <if test="investorAmount != null ">investor_amount,</if>
+            <if test="holdingProportion != null ">holding_proportion,</if>
+            <if test="createBy != null  and createBy != ''">create_by,</if>
+            <if test="createTime != null ">create_time,</if>
+            <if test="updateBy != null  and updateBy != ''">update_by,</if>
+            <if test="updateTime != null ">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="shopId != null ">#{shopId},</if>
+            <if test="investorName != null  and investorName != ''">#{investorName},</if>
+            <if test="sex != null ">#{sex},</if>
+            <if test="phoneNumber != null  and phoneNumber != ''">#{phoneNumber},</if>
+            <if test="password != null  and password != ''">#{password},</if>
+            <if test="birthday != null ">#{birthday},</if>
+            <if test="investorAmount != null ">#{investorAmount},</if>
+            <if test="holdingProportion != null ">#{holdingProportion},</if>
+            <if test="createBy != null  and createBy != ''">#{createBy},</if>
+            <if test="createTime != null ">#{createTime},</if>
+            <if test="updateBy != null  and updateBy != ''">#{updateBy},</if>
+            <if test="updateTime != null ">#{updateTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateInvestor" parameterType="com.linkknown.crm.bean.dos.Investor">
+        update investor
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="shopId != null ">shop_id = #{shopId},</if>
+            <if test="investorName != null  and investorName != ''">investor_name = #{investorName},</if>
+            <if test="sex != null ">sex = #{sex},</if>
+            <if test="phoneNumber != null  and phoneNumber != ''">phone_number = #{phoneNumber},</if>
+            <if test="password != null  and password != ''">password = #{password},</if>
+            <if test="birthday != null ">birthday = #{birthday},</if>
+            <if test="investorAmount != null ">investor_amount = #{investorAmount},</if>
+            <if test="holdingProportion != null ">holding_proportion = #{holdingProportion},</if>
+            <if test="createBy != null  and createBy != ''">create_by = #{createBy},</if>
+            <if test="createTime != null ">create_time = #{createTime},</if>
+            <if test="updateBy != null  and updateBy != ''">update_by = #{updateBy},</if>
+            <if test="updateTime != null ">update_time = #{updateTime},</if>
+        </trim>
+        where investor_id = #{investorId}
+    </update>
+    
+</mapper>
