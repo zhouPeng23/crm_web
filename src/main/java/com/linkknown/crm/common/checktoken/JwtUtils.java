@@ -84,7 +84,7 @@ public class JwtUtils {
         Employee employee = employeeMapper.selectEmployeeByPhoneNumber(phoneNumber);
         if(employee!=null){
             //认证通过
-            setResponseHeaderToken(response,String.valueOf(employee.getEmployeeId()),employee.getEmployeeName());
+            setResponseHeaderToken(response,String.valueOf(employee.getPhoneNumber()),employee.getEmployeeName());
             return 1;
 
         }else {
@@ -115,7 +115,13 @@ public class JwtUtils {
     }
 
 
-    //因为过滤器是在ApplicationContext前面加载的，获取不到IOC容器里面的bean，可以用这种方法获取
+    /**
+     * 因为过滤器是在ApplicationContext前面加载的，获取不到IOC容器里面的bean，可以用这种方法获取
+     * @param beanClazz 类
+     * @param request 请求
+     * @param <T> T
+     * @return T
+     */
     private static  <T> T getIocBean(Class<T> beanClazz, HttpServletRequest request){
         WebApplicationContext applicationContext = WebApplicationContextUtils.getRequiredWebApplicationContext(request.getServletContext());
         return applicationContext.getBean(beanClazz);
