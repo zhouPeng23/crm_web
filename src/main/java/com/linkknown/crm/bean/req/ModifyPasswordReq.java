@@ -9,7 +9,7 @@ import lombok.Data;
 @Data
 public class ModifyPasswordReq {
 
-    private Integer employeeId;
+    private String phoneNumber;
 
     private String oldPassword;
 

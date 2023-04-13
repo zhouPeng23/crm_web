@@ -14,6 +14,8 @@ public interface ShopMapper extends BaseMapper<Shop> {
 
     public Shop selectShopById(Integer shopId);
 
+    public List<Shop> selectShopByIds(String[] shopIds);
+
     public List<Shop> selectShopList(Shop shop);
 
     public int insertShop(Shop shop);

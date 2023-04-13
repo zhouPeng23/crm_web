@@ -122,9 +122,9 @@ public class EmployeeParamUtils {
      * @param modifyPasswordReq 请求
      */
     public static void modifyPassword(ModifyPasswordReq modifyPasswordReq) {
-        //员工id不能为空
-        if (StringUtils.isEmpty(modifyPasswordReq.getEmployeeId())){
-            throw new WebException(ResponseEnum.employee_id_can_not_be_empty);
+        //手机号格式错误
+        if (!RegexUtils.validatePhoneNumber(modifyPasswordReq.getPhoneNumber())){
+            throw new WebException(ResponseEnum.epmloyee_phone_number_style_error);
         }
         //原密码不能为空
         if (StringUtils.isEmpty(modifyPasswordReq.getOldPassword())){

@@ -29,8 +29,8 @@ public class ShopController {
 
     @PostMapping(value = "/queryShopList")
     @WebParamsLog(description = "查询门店集合")
-    public BaseResponse<List<Shop>> queryShopList(Shop shop){
-        List<Shop> shopList = shopService.queryShopList(shop);
+    public BaseResponse<List<Shop>> queryShopList(String shopIds){
+        List<Shop> shopList = shopService.queryShopList(shopIds);
         return BaseResponse.success(shopList);
     }
 

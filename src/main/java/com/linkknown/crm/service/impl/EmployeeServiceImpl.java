@@ -163,13 +163,13 @@ public class EmployeeServiceImpl implements IEmployeeService {
     @Override
     public void modifyPassword(ModifyPasswordReq modifyPasswordReq) {
         //入参
-        Integer employeeId = modifyPasswordReq.getEmployeeId();
+        String phoneNumber = modifyPasswordReq.getPhoneNumber();
         String oldPassword = modifyPasswordReq.getOldPassword();
         String newPassword = modifyPasswordReq.getNewPassword();
         String newPasswordSecond = modifyPasswordReq.getNewPasswordSecond();
 
         //判断原密码是否正确
-        Employee employee = employeeMapper.selectEmployeeById(employeeId);
+        Employee employee = employeeMapper.selectEmployeeByPhoneNumber(phoneNumber);
         if (!oldPassword.equals(employee.getPassword())){
             throw new WebException(ResponseEnum.employee_org_password_is_not_right);
         }
@@ -181,7 +181,7 @@ public class EmployeeServiceImpl implements IEmployeeService {
 
         //入库新密码
         Employee employeeModify = new Employee();
-        employeeModify.setEmployeeId(employeeId);
+        employeeModify.setEmployeeId(employee.getEmployeeId());
         employeeModify.setPassword(newPassword);
         employeeMapper.updateEmployee(employeeModify);
     }

@@ -42,6 +42,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectShopVo"/>
         where shop_id = #{shopId}
     </select>
+
+    <select id="selectShopByIds" parameterType="String" resultMap="ShopResult">
+        <include refid="selectShopVo"/>
+        where shop_id in
+        <foreach item="shopId" collection="array" open="(" separator="," close=")">
+            #{shopId}
+        </foreach>
+    </select>
         
     <insert id="insertShop" parameterType="com.linkknown.crm.bean.dos.Shop" useGeneratedKeys="true" keyProperty="shopId">
         insert into shop

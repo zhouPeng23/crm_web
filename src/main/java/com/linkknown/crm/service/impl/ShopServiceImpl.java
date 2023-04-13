@@ -36,12 +36,13 @@ public class ShopServiceImpl implements IShopService {
 
     /**
      * 查询门店集合
-     * @param shop 门店
+     * @param shopIds id集合
      * @return 门店集合
      */
     @Override
-    public List<Shop> queryShopList(Shop shop){
-        return shopMapper.selectShopList(null);
+    public List<Shop> queryShopList(String shopIds){
+        String[] ids = shopIds.split(",");
+        return shopMapper.selectShopByIds(ids);
     }
 
 

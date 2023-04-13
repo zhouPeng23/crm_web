@@ -12,10 +12,10 @@ public interface IShopService {
 
     /**
      * 查询门店集合
-     * @param shop 门店
+     * @param shopIds id集合
      * @return 门店集合
      */
-    List<Shop> queryShopList(Shop shop);
+    List<Shop> queryShopList(String shopIds);
 
 
     /**
