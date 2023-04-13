@@ -1,8 +1,9 @@
 package com.linkknown.crm.common.checktoken;
 
-import com.alibaba.fastjson.JSONObject;
 import com.linkknown.crm.bean.dos.Employee;
+import com.linkknown.crm.bean.dos.Investor;
 import com.linkknown.crm.mapper.EmployeeMapper;
+import com.linkknown.crm.mapper.InvestorMapper;
 import io.jsonwebtoken.*;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.WebApplicationContext;
@@ -63,6 +64,7 @@ public class JwtUtils {
      * @return  token验证结果  1: 认证通过  0: 用户不存在  -1: token过期  -2：token解析失败
      */
     static int verifyToken(String token, HttpServletRequest request, HttpServletResponse response){
+        InvestorMapper investorMapper = getIocBean(InvestorMapper.class,request);
         EmployeeMapper employeeMapper = getIocBean(EmployeeMapper.class,request);
         Claims claims = null;
         try {
@@ -80,18 +82,29 @@ public class JwtUtils {
         //phoneNumber
         String phoneNumber = claims.getId();
 
-        //从token中获取手机号，查询该用户是否存在，存在则token验证通过
-        Employee employee = employeeMapper.selectEmployeeByPhoneNumber(phoneNumber);
-        if(employee!=null){
+        //查资方
+        Investor investor = investorMapper.selectInvestorByPhoneNumber(phoneNumber);
+        if (investor!=null){
+
             //认证通过
-            setResponseHeaderToken(response,String.valueOf(employee.getPhoneNumber()),employee.getEmployeeName());
+            setResponseHeaderToken(response,String.valueOf(investor.getPhoneNumber()),investor.getInvestorName());
             return 1;
 
-        }else {
-            //用户不存在
-            return 0;
-        }
+        }else{
 
+            //查员工
+            Employee employee = employeeMapper.selectEmployeeByPhoneNumber(phoneNumber);
+            if(employee!=null){
+                //认证通过
+                setResponseHeaderToken(response,String.valueOf(employee.getPhoneNumber()),employee.getEmployeeName());
+                return 1;
+
+            }else {
+                //用户不存在
+                return 0;
+            }
+
+        }
     }
 
 
