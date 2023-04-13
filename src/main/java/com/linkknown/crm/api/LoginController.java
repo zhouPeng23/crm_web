@@ -3,13 +3,16 @@ package com.linkknown.crm.api;
 import com.linkknown.crm.bean.dos.Employee;
 import com.linkknown.crm.bean.req.ModifyPasswordReq;
 import com.linkknown.crm.bean.req.UserLoginReq;
+import com.linkknown.crm.bean.res.UserLoginRes;
 import com.linkknown.crm.common.aspect.exception.WebExceptionService;
 import com.linkknown.crm.common.aspect.paramslog.WebParamsLog;
 import com.linkknown.crm.common.checktoken.JwtUtils;
 import com.linkknown.crm.common.enums.ResponseEnum;
 import com.linkknown.crm.common.response.BaseResponse;
 import com.linkknown.crm.common.util.paramutil.EmployeeParamUtils;
+import com.linkknown.crm.mapper.RoleMapper;
 import com.linkknown.crm.service.IEmployeeService;
+import com.linkknown.crm.service.IRoleService;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -30,9 +33,13 @@ public class LoginController {
     @Resource
     private IEmployeeService employeeService;
 
+    @Resource
+    private RoleMapper roleMapper;
+
+
     @PostMapping(value = "/login")
     @WebParamsLog(description = "用户登录")
-    public BaseResponse<Object> login(UserLoginReq userLoginReq){
+    public BaseResponse<UserLoginRes> login(UserLoginReq userLoginReq){
         //入参非空校验
         EmployeeParamUtils.loginValidate(userLoginReq);
 
@@ -46,9 +53,15 @@ public class LoginController {
         //登录成功后设置token
         JwtUtils.setResponseHeaderToken(response,employee.getPhoneNumber(),employee.getEmployeeName());
 
-        //密码就不返回了
-        employee.setPassword("");
-        return BaseResponse.success(employee);
+        //创建返回对象
+        UserLoginRes userLoginRes = new UserLoginRes();
+        userLoginRes.setPhoneNumber(employee.getPhoneNumber());
+        userLoginRes.setUserName(employee.getEmployeeName());
+        userLoginRes.setShopIds(employee.getShopId().toString());
+        userLoginRes.setAuthMenu(roleMapper.selectRoleById(employee.getRoleId()).getAuthMenu());
+
+        //返回
+        return BaseResponse.success(userLoginRes);
     }
 
 
