@@ -5,5 +5,8 @@ spring:
     username: root
     password: root
 
+employee:
+  default:
+    password: '111111'
 
 

@@ -6,7 +6,6 @@ import com.linkknown.crm.bean.dos.Role;
 import com.linkknown.crm.bean.req.ModifyPasswordReq;
 import com.linkknown.crm.bean.req.UserLoginReq;
 import com.linkknown.crm.common.aspect.exception.WebException;
-import com.linkknown.crm.common.constants.Constants;
 import com.linkknown.crm.common.enums.ResponseEnum;
 import com.linkknown.crm.common.util.MD5Utils;
 import com.linkknown.crm.mapper.CustomerMapper;
@@ -37,6 +36,9 @@ public class EmployeeServiceImpl implements IEmployeeService {
     @Resource
     private CustomerMapper customerMapper;
 
+    @Value("${employee.default.password}")
+    private String employeeDefaultPassword;
+
 
     /**
      * 添加员工
@@ -57,7 +59,7 @@ public class EmployeeServiceImpl implements IEmployeeService {
         employee.setCreateTime(LocalDateTime.now());
 
         //设置初始密码
-        employee.setPassword(MD5Utils.md5(Constants.employee_default_password));
+        employee.setPassword(MD5Utils.md5(employeeDefaultPassword));
 
         //插入
         employeeMapper.insertEmployee(employee);

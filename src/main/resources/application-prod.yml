@@ -5,5 +5,8 @@ spring:
     username: linker
     password: Linker2020**
 
+employee:
+  default:
+    password: '111111'
 
 
