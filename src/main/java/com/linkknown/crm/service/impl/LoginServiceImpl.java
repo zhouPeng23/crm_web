@@ -101,23 +101,44 @@ public class LoginServiceImpl implements ILoginService {
         String newPassword = modifyPasswordReq.getNewPassword();
         String newPasswordSecond = modifyPasswordReq.getNewPasswordSecond();
 
-        //判断原密码是否正确
-        Employee employee = employeeMapper.selectEmployeeByPhoneNumber(phoneNumber);
-        if (!oldPassword.equals(employee.getPassword())){
-            throw new WebException(ResponseEnum.employee_org_password_is_not_right);
-        }
+        //查询资方
+        Investor investor = investorMapper.selectInvestorByPhoneNumber(phoneNumber);
+        if (investor!=null){
+            //资方修改
+            //判断原密码是否正确
+            if (!oldPassword.equals(investor.getPassword())){
+                throw new WebException(ResponseEnum.org_password_is_not_right);
+            }
 
-        //判断两次输入的新密码是否一致
-        if (!newPassword.equals(newPasswordSecond)){
-            throw new WebException(ResponseEnum.employee_new_password_and_second_is_not_same);
-        }
+            //判断两次输入的新密码是否一致
+            if (!newPassword.equals(newPasswordSecond)){
+                throw new WebException(ResponseEnum.new_password_and_second_is_not_same);
+            }
 
-        //入库新密码
-        Employee employeeModify = new Employee();
-        employeeModify.setEmployeeId(employee.getEmployeeId());
-        employeeModify.setPassword(newPassword);
-        employeeMapper.updateEmployee(employeeModify);
+            //入库新密码
+            Investor investorModify = new Investor();
+            investorModify.setInvestorId(investor.getInvestorId());
+            investorModify.setPassword(newPassword);
+            investorMapper.updateInvestor(investorModify);
+
+        }else{
+            //员工修改
+            //判断原密码是否正确
+            Employee employee = employeeMapper.selectEmployeeByPhoneNumber(phoneNumber);
+            if (!oldPassword.equals(employee.getPassword())){
+                throw new WebException(ResponseEnum.org_password_is_not_right);
+            }
+
+            //判断两次输入的新密码是否一致
+            if (!newPassword.equals(newPasswordSecond)){
+                throw new WebException(ResponseEnum.new_password_and_second_is_not_same);
+            }
+
+            //入库新密码
+            Employee employeeModify = new Employee();
+            employeeModify.setEmployeeId(employee.getEmployeeId());
+            employeeModify.setPassword(newPassword);
+            employeeMapper.updateEmployee(employeeModify);
+        }
     }
-
-
 }
