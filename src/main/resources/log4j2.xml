@@ -5,12 +5,10 @@
 		<Property name="APP_ID" value="crm_web"/>
 		<Property name="LOG_PATH" value="/opt/logs/crm_web"/>
 		<Property name="LOG_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} %p %c [%t]:  %msg%n"/>
-		<Property name="DEFINE_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} %p %c [%t]: %msg%n"/>
 		<Property name="log4j2.isThreadContextMapInheritable" value="true"/>
 	</Properties>
 
 	<Appenders>
-
 		<console name="Console" target="SYSTEM_OUT">
 			<!--输出日志的格式 -->
 			<PatternLayout>
@@ -33,37 +31,15 @@
 				</Delete>
 			</DefaultRolloverStrategy>
 		</RollingFile>
-
-		<RollingFile name="ErrorRollingFile" fileName="${LOG_PATH}/${APP_ID}-error.log" filePattern="${LOG_PATH}/${APP_ID}-error-%d{yyyyMMdd}-%i.log.gz">
-			<ThresholdFilter level="error" onMatch="ACCEPT" onMismatch="DENY" />
-			<PatternLayout>
-				<Pattern>${DEFINE_PATTERN}</Pattern>
-			</PatternLayout>
-			<Policies>
-				<TimeBasedTriggeringPolicy interval="1" modulate="true" />
-			</Policies>
-			<DefaultRolloverStrategy>
-				<Delete basePath="${LOG_PATH}" maxDepth="1">
-					<IfFileName glob="${APP_ID}-error-*.log.gz" />
-					<IfAccumulatedFileCount exceeds="14" />
-					<IfLastModified age="30d" />
-				</Delete>
-			</DefaultRolloverStrategy>
-		</RollingFile>
 	</Appenders>
 
 	<Loggers>
 		<Root level="info">
 			<AppenderRef ref="Console"/>
-			<AppenderRef ref="RollingFile"/>
-			<AppenderRef ref="ErrorRollingFile"/>
 		</Root>
-		<logger name="com.linkknown.crm" level="info" additivity="false">
+		<logger name="com.linkknown.crm" level="info" additivity="true">
 			<AppenderRef ref="RollingFile"/>
 		</logger>
-		<AsyncLogger level="ERROR" includeLocation="true" name="error" additivity="false">
-			<AppenderRef ref="ErrorRollingFile" />
-		</AsyncLogger>
 	</Loggers>
 
 </Configuration>
