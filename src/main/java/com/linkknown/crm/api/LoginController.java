@@ -11,8 +11,7 @@ import com.linkknown.crm.common.enums.ResponseEnum;
 import com.linkknown.crm.common.response.BaseResponse;
 import com.linkknown.crm.common.util.paramutil.EmployeeParamUtils;
 import com.linkknown.crm.mapper.RoleMapper;
-import com.linkknown.crm.service.IEmployeeService;
-import com.linkknown.crm.service.IRoleService;
+import com.linkknown.crm.service.ILoginService;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -31,10 +30,7 @@ import javax.servlet.http.HttpServletResponse;
 public class LoginController {
 
     @Resource
-    private IEmployeeService employeeService;
-
-    @Resource
-    private RoleMapper roleMapper;
+    private ILoginService loginService;
 
 
     @PostMapping(value = "/login")
@@ -44,21 +40,14 @@ public class LoginController {
         EmployeeParamUtils.loginValidate(userLoginReq);
 
         //登录验证
-        Employee employee = employeeService.login(userLoginReq);
+        UserLoginRes userLoginRes = loginService.login(userLoginReq);
 
         //获取response
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         HttpServletResponse response = attributes.getResponse();
 
         //登录成功后设置token
-        JwtUtils.setResponseHeaderToken(response,employee.getPhoneNumber(),employee.getEmployeeName());
-
-        //创建返回对象
-        UserLoginRes userLoginRes = new UserLoginRes();
-        userLoginRes.setLoginUserPhoneNumber(employee.getPhoneNumber());
-        userLoginRes.setLoginUserName(employee.getEmployeeName());
-        userLoginRes.setLoginUserCanSearchShopIds(employee.getShopId().toString());
-        userLoginRes.setLoginUserCanSearchAuthMenu(roleMapper.selectRoleById(employee.getRoleId()).getAuthMenu());
+        JwtUtils.setResponseHeaderToken(response,userLoginRes.getLoginUserPhoneNumber(),userLoginRes.getLoginUserName());
 
         //返回
         return BaseResponse.success(userLoginRes);
@@ -82,7 +71,7 @@ public class LoginController {
         //入参非空校验
         EmployeeParamUtils.modifyPassword(modifyPasswordReq);
         //修改密码
-        employeeService.modifyPassword(modifyPasswordReq);
+        loginService.modifyPassword(modifyPasswordReq);
         //返回
         return BaseResponse.success(ResponseEnum.web_success);
     }

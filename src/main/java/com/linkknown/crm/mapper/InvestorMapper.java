@@ -11,7 +11,9 @@ import java.util.List;
 @Repository
 public interface InvestorMapper{
 
-    public Investor selectInvestorById(Long investorId);
+    public Investor selectInvestorById(Integer investorId);
+
+    public Investor selectInvestorByPhoneNumber(String phoneNumber);
 
     public List<Investor> selectInvestorList(Investor investor);
 

@@ -24,7 +24,7 @@ public class InvestorServiceImpl implements IInvestorService {
      * @return 资方
      */
     @Override
-    public Investor selectInvestorById(Long investorId) {
+    public Investor selectInvestorById(Integer investorId) {
         return investorMapper.selectInvestorById(investorId);
     }
 

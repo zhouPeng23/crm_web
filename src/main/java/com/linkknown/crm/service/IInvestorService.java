@@ -13,7 +13,7 @@ public interface IInvestorService {
      * @param investorId 资方ID
      * @return 资方
      */
-    public Investor selectInvestorById(Long investorId);
+    public Investor selectInvestorById(Integer investorId);
 
     /**
      * 查询资方列表

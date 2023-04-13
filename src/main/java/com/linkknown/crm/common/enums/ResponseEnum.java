@@ -39,7 +39,7 @@ public enum ResponseEnum {
     employee_role_can_not_be_empty                                       ("0304", "员工角色不能为空"),
     employee_not_exist                                                    ("0306", "用户不存在"),
     employee_number_error                                                 ("0307", "用户数量错误，请联系管理员"),
-    employee_phone_number_or_password_error                             ("0308", "手机号或密码错误"),
+    phone_number_or_password_error                                       ("0308", "手机号或密码错误"),
     employee_password_can_not_be_empty                                   ("0309", "密码不能为空"),
     employee_phone_number_has_allready_exist                            ("0310", "手机号已注册"),
     employee_has_customer_can_not_delete                                 ("0311", "员工名下有顾客，无法删除"),

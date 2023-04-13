@@ -41,17 +41,5 @@ public interface IEmployeeService {
     void deleteEmployee(Employee employee);
 
 
-    /**
-     * 登录
-     * @param userLoginReq 请求
-     * @return 用户
-     */
-    Employee login(UserLoginReq userLoginReq);
 
-
-    /**
-     * 修改密码
-     * @param modifyPasswordReq 请求
-     */
-    void modifyPassword(ModifyPasswordReq modifyPasswordReq);
 }
