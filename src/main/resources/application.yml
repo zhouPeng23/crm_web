@@ -5,5 +5,5 @@ spring:
   application:
     name: crm_web
   profiles:
-      active: prod
+      active: dev
 
