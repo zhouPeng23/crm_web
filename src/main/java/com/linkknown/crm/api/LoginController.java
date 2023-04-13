@@ -55,10 +55,10 @@ public class LoginController {
 
         //创建返回对象
         UserLoginRes userLoginRes = new UserLoginRes();
-        userLoginRes.setPhoneNumber(employee.getPhoneNumber());
-        userLoginRes.setUserName(employee.getEmployeeName());
-        userLoginRes.setShopIds(employee.getShopId().toString());
-        userLoginRes.setAuthMenu(roleMapper.selectRoleById(employee.getRoleId()).getAuthMenu());
+        userLoginRes.setLoginUserPhoneNumber(employee.getPhoneNumber());
+        userLoginRes.setLoginUserName(employee.getEmployeeName());
+        userLoginRes.setLoginUserCanSearchShopIds(employee.getShopId().toString());
+        userLoginRes.setLoginUserCanSearchAuthMenu(roleMapper.selectRoleById(employee.getRoleId()).getAuthMenu());
 
         //返回
         return BaseResponse.success(userLoginRes);

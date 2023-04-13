@@ -9,12 +9,12 @@ import lombok.Data;
 @Data
 public class UserLoginRes {
 
-    private String phoneNumber;
+    private String loginUserPhoneNumber;
 
-    private String userName;
+    private String loginUserName;
 
-    private String shopIds;
+    private String loginUserCanSearchShopIds;
 
-    private String authMenu;
+    private String loginUserCanSearchAuthMenu;
 
 }
