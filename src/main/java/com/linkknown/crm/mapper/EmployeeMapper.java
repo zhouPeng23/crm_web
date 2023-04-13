@@ -23,4 +23,6 @@ public interface EmployeeMapper extends BaseMapper<Employee> {
     public int deleteEmployeeById(Integer employeeId);
 
     public int deleteEmployeeByIds(String[] employeeIds);
+
+    Employee selectEmployeeByPhoneNumber(String phoneNumber);
 }

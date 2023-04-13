@@ -99,5 +99,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{employeeId}
         </foreach>
     </delete>
+
+    <select id="selectEmployeeByPhoneNumber" parameterType="String" resultMap="EmployeeResult">
+        <include refid="selectEmployeeVo"/>
+        where phoneNumber = #{phoneNumber}
+    </select>
     
 </mapper>

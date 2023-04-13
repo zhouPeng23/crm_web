@@ -34,21 +34,21 @@ public class JwtUtils {
 
     /**
      * 生成token
-     * @param employeeId  employeeId
-     * @param employeeName  employeeName
+     * @param phoneNumber  phoneNumber
+     * @param userName  userName
      * @return token
      */
-    private static String createToken(String employeeId, String employeeName){
+    private static String createToken(String phoneNumber, String userName){
         Map<String,Object> headerMap = new HashMap<>();
         headerMap.put("typ","JWT");
         headerMap.put("alg","HS256");
         JwtBuilder builder = Jwts.builder().setHeader(headerMap)
-                //用户ID
-                .setId(employeeId)
+                //用户手机号
+                .setId(phoneNumber)
                 //token过期时间  当前时间+有效时间
                 .setExpiration(new Date(System.currentTimeMillis()+EXPIRE_TIME))
-                //employeeName
-                .setSubject(employeeName)
+                //userName
+                .setSubject(userName)
                 //创建时间
                 .setIssuedAt(new Date())
                 //加密方式
@@ -77,11 +77,11 @@ public class JwtUtils {
             return -2;
         }
 
-        //employeeId
-        String employeeId = claims.getId();
+        //phoneNumber
+        String phoneNumber = claims.getId();
 
-        //从token中获取用户id，查询该Id的用户是否存在，存在则token验证通过
-        Employee employee = employeeMapper.selectEmployeeById(Integer.valueOf(employeeId));
+        //从token中获取手机号，查询该用户是否存在，存在则token验证通过
+        Employee employee = employeeMapper.selectEmployeeByPhoneNumber(phoneNumber);
         if(employee!=null){
             //认证通过
             setResponseHeaderToken(response,String.valueOf(employee.getEmployeeId()),employee.getEmployeeName());
@@ -98,11 +98,11 @@ public class JwtUtils {
     /**
      * 给响应头设置token
      * @param response 响应
-     * @param employeeId id
-     * @param employeeName name
+     * @param phoneNumber phoneNumber
+     * @param userName name
      */
-    public static void setResponseHeaderToken(HttpServletResponse response, String employeeId, String employeeName){
-        response.setHeader("token",createToken(employeeId, employeeName));
+    public static void setResponseHeaderToken(HttpServletResponse response, String phoneNumber, String userName){
+        response.setHeader("token",createToken(phoneNumber, userName));
     }
 
 
@@ -119,31 +119,6 @@ public class JwtUtils {
     private static  <T> T getIocBean(Class<T> beanClazz, HttpServletRequest request){
         WebApplicationContext applicationContext = WebApplicationContextUtils.getRequiredWebApplicationContext(request.getServletContext());
         return applicationContext.getBean(beanClazz);
-    }
-
-
-    /**
-     * 解析token
-     * @param token token
-     * @return string
-     */
-    public static String jiexiToken(String token){
-        Claims claims = null;
-        try {
-            //token过期后，会抛出ExpiredJwtException 异常，通过这个来判定token过期
-            claims = Jwts.parser().setSigningKey(KEY).parseClaimsJws(token).getBody();
-            String id = claims.getId();
-            String subject = claims.getSubject();
-            Date expiration = claims.getExpiration();
-            Map<String,Object> resMap = new HashMap<>();
-            resMap.put("id",id);
-            resMap.put("subject",subject);
-            resMap.put("expiration",expiration);
-            return JSONObject.toJSONString(resMap);
-
-        }catch (Exception e){
-            return "token解析失败";
-        }
     }
 
 
