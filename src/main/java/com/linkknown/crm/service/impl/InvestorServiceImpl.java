@@ -10,6 +10,7 @@ import java.util.List;
 
 /**
  * 资方Service业务层处理
+ * @author zhoupeng
  */
 @Service
 public class InvestorServiceImpl implements IInvestorService {
@@ -39,7 +40,6 @@ public class InvestorServiceImpl implements IInvestorService {
 
     /**
      * 新增资方
-     * 
      * @param investor 资方
      * @return 结果
      */
@@ -50,7 +50,6 @@ public class InvestorServiceImpl implements IInvestorService {
 
     /**
      * 修改资方
-     * 
      * @param investor 资方
      * @return 结果
      */
