@@ -5,7 +5,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="com.linkknown.crm.mapper.InvestorMapper">
     
     <resultMap type="com.linkknown.crm.bean.dos.Investor" id="InvestorResult">
-        <result property="shopId"    column="shop_id"    />
+        <result property="shopIds"    column="shop_ids"    />
         <result property="investorId"    column="investor_id"    />
         <result property="investorName"    column="investor_name"    />
         <result property="sex"    column="sex"    />
@@ -21,13 +21,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectInvestorVo">
-        select shop_id, investor_id, investor_name, sex, phone_number, password, birthday, investor_amount, holding_proportion, create_by, create_time, update_by, update_time from investor
+        select shop_ids, investor_id, investor_name, sex, phone_number, password, birthday, investor_amount, holding_proportion, create_by, create_time, update_by, update_time from investor
     </sql>
 
     <select id="selectInvestorList" parameterType="com.linkknown.crm.bean.dos.Investor" resultMap="InvestorResult">
         <include refid="selectInvestorVo"/>
         <where>  
-            <if test="shopId != null "> and shop_id = #{shopId}</if>
+            <if test="shopIds != null and shopIds != ''"> and shop_ids = #{shopIds}</if>
             <if test="investorName != null  and investorName != ''"> and investor_name like concat('%', #{investorName}, '%')</if>
             <if test="sex != null "> and sex = #{sex}</if>
             <if test="phoneNumber != null  and phoneNumber != ''"> and phone_number = #{phoneNumber}</if>
@@ -46,7 +46,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <insert id="insertInvestor" parameterType="com.linkknown.crm.bean.dos.Investor" useGeneratedKeys="true" keyProperty="investorId">
         insert into investor
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="shopId != null ">shop_id,</if>
+            <if test="shopIds != null and shopIds != ''">shop_ids,</if>
             <if test="investorName != null  and investorName != ''">investor_name,</if>
             <if test="sex != null ">sex,</if>
             <if test="phoneNumber != null  and phoneNumber != ''">phone_number,</if>
@@ -60,7 +60,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="updateTime != null ">update_time,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="shopId != null ">#{shopId},</if>
+            <if test="shopIds != null and shopIds != ''">#{shopIds},</if>
             <if test="investorName != null  and investorName != ''">#{investorName},</if>
             <if test="sex != null ">#{sex},</if>
             <if test="phoneNumber != null  and phoneNumber != ''">#{phoneNumber},</if>
@@ -78,7 +78,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <update id="updateInvestor" parameterType="com.linkknown.crm.bean.dos.Investor">
         update investor
         <trim prefix="SET" suffixOverrides=",">
-            <if test="shopId != null ">shop_id = #{shopId},</if>
+            <if test="shopIds != null and shopIds != ''">shop_ids = #{shopIds},</if>
             <if test="investorName != null  and investorName != ''">investor_name = #{investorName},</if>
             <if test="sex != null ">sex = #{sex},</if>
             <if test="phoneNumber != null  and phoneNumber != ''">phone_number = #{phoneNumber},</if>

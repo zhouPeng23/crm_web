@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 @Data
 public class Investor {
 
-    private Integer shopId;
+    private String shopIds;
 
     private Integer investorId;
 
