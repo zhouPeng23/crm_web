@@ -10,6 +10,7 @@ import com.linkknown.crm.common.enums.ResponseEnum;
 import com.linkknown.crm.common.util.MD5Utils;
 import com.linkknown.crm.mapper.CustomerMapper;
 import com.linkknown.crm.mapper.EmployeeMapper;
+import com.linkknown.crm.mapper.InvestorMapper;
 import com.linkknown.crm.mapper.RoleMapper;
 import com.linkknown.crm.service.IEmployeeService;
 import org.apache.commons.codec.digest.Md5Crypt;
@@ -34,6 +35,9 @@ public class EmployeeServiceImpl implements IEmployeeService {
     private EmployeeMapper employeeMapper;
 
     @Resource
+    private InvestorMapper investorMapper;
+
+    @Resource
     private CustomerMapper customerMapper;
 
     @Value("${employee.default.password}")
@@ -46,6 +50,11 @@ public class EmployeeServiceImpl implements IEmployeeService {
      */
     @Override
     public void addEmployee(Employee employee) {
+        //资方手机号校验
+        if (investorMapper.selectInvestorByPhoneNumber(employee.getPhoneNumber())!=null){
+            throw new WebException(ResponseEnum.phone_number_is_prohibition_of_use);
+        }
+
         //根据手机号,校验用户是否已存在
         Employee employeeSearch = new Employee();
         employeeSearch.setPhoneNumber(employee.getPhoneNumber());
@@ -83,6 +92,11 @@ public class EmployeeServiceImpl implements IEmployeeService {
      */
     @Override
     public void updateEmployee(Employee employee) {
+        //资方手机号校验
+        if (investorMapper.selectInvestorByPhoneNumber(employee.getPhoneNumber())!=null){
+            throw new WebException(ResponseEnum.phone_number_is_prohibition_of_use);
+        }
+
         //校验用户是否修改了手机号
         Employee employeeDb = employeeMapper.selectEmployeeById(employee.getEmployeeId());
         if (!employee.getPhoneNumber().equals(employeeDb.getPhoneNumber())){
