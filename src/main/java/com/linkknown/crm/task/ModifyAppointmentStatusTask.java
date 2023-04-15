@@ -13,8 +13,7 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author zhoupeng
@@ -43,12 +42,18 @@ public class ModifyAppointmentStatusTask {
                     .eq("appointment_status",AppointmentStatusEnum.appointment_on_use.getCode());
         //查询
         List<Appointment> appointmentList = appointmentMapper.selectList(queryWrapper);
+        logger.info("以下是所有处于'待处理'、'进行中'中的预约单");
 
         //2.计算这些单子预约具体时间与当前时间的差值，找出过期6小时的单子集合
         List<String> needUpdateAppointmentIdList = new ArrayList<>();
         appointmentList.forEach(appointment -> {
-            // 将 date 和 time 转换成毫秒数
-            Long appointmentDateTime = appointment.getAppointmentDate().getTime() + appointment.getAppointmentTime().getTime();
+
+            //预约时间
+            Date appointmentDate = DateUtils.formatSqlDateAndTime2UtilDate(appointment.getAppointmentDate(), appointment.getAppointmentTime());
+            logger.info("预约id:{},预约时间:{}",appointment.getAppointmentId(),appointmentDate);
+
+            // 转换成毫秒数
+            Long appointmentDateTime = appointmentDate.getTime();
 
             // 计算两个时间戳之间的毫秒数差
             long diffInMilliseconds = System.currentTimeMillis() - appointmentDateTime;

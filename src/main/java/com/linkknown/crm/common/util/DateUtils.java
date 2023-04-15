@@ -10,10 +10,6 @@ import java.util.Date;
  */
 public class DateUtils {
 
-    private static String YYYY_MM_DD = "yyyy-MM-dd";
-
-    private static String YYYY_MM_DD_HH_MM_SS = "yyyy-MM-dd HH:mm:ss";
-
 
     /**
      * 毫秒格式化字符串日期
@@ -21,9 +17,9 @@ public class DateUtils {
      * @return 日期
      */
     public static Date millisecondFormatDate(Long millisecond){
-        SimpleDateFormat sdf = new SimpleDateFormat(YYYY_MM_DD_HH_MM_SS);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         try {
-            return new SimpleDateFormat(YYYY_MM_DD).parse(sdf.format(new Date(millisecond)));
+            return new SimpleDateFormat("yyyy-MM-dd").parse(sdf.format(new Date(millisecond)));
         } catch (ParseException e) {
             e.printStackTrace();
             return null;
@@ -35,13 +31,40 @@ public class DateUtils {
      * 获取strDateTime日期的Date类型
      */
     public static Date formatStrTime2Date(String strDateTime) {
-        SimpleDateFormat sdf = new SimpleDateFormat(YYYY_MM_DD_HH_MM_SS);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         try {
             return sdf.parse(strDateTime);
         } catch (ParseException e) {
             e.printStackTrace();
         }
         return null;
+    }
+
+
+    /**
+     * 根据sqlDate 和 sqlTime 组合获取utilDate
+     * @param sqlDate 日期
+     * @param sqlTime 时间
+     * @return utilDate
+     */
+    public static Date formatSqlDateAndTime2UtilDate(java.sql.Date sqlDate, java.sql.Time sqlTime) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String dateStr = sdf.format(sqlDate);
+
+        sdf = new SimpleDateFormat("HH:mm:ss");
+        String timeStr = sdf.format(sqlTime);
+
+        String strDateTime = dateStr+" "+timeStr;
+
+        Date parseDate = null;
+        sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        try {
+            parseDate = sdf.parse(strDateTime);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return parseDate;
     }
 
 
