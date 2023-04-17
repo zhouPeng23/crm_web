@@ -158,7 +158,7 @@ public class CustomerServiceImpl implements ICustomerService {
                 throw new WebException(ResponseEnum.introduced_by_customer_name_is_error);
             }
             //禁止双向绑定
-            if (introducedByCustomer.getIntroducedByCustomerId().equals(updateCustomerReq.getCustomerId())){
+            if (updateCustomerReq.getCustomerId().equals(introducedByCustomer.getIntroducedByCustomerId())){
                 throw new WebException(ResponseEnum.prohibit_bidirectional_binding);
             }
 
