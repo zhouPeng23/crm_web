@@ -9,6 +9,8 @@ public class CustomerIncome {
 
     private Integer shopId;
 
+    private Integer customerIncomeId;
+
     private Integer customerId;
 
     private Integer introduceCustomerId;
