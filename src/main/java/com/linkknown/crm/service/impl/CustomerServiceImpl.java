@@ -157,6 +157,10 @@ public class CustomerServiceImpl implements ICustomerService {
             if (!introducedByCustomer.getCustomerName().equals(updateCustomerReq.getIntroducedByCustomerName())){
                 throw new WebException(ResponseEnum.introduced_by_customer_name_is_error);
             }
+            //禁止双向绑定
+            if (introducedByCustomer.getIntroducedByCustomerId().equals(updateCustomerReq.getCustomerId())){
+                throw new WebException(ResponseEnum.prohibit_bidirectional_binding);
+            }
 
         }else{
             //否则设置为空
