@@ -69,6 +69,17 @@ public class DateUtils {
 
 
     /**
+     * 根据utilDate获取utilDateStr
+     * @param date 日期
+     * @return utilDateStr
+     */
+    public static String formatUtilDateStr(Date date) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return sdf.format(date);
+    }
+
+
+    /**
      * 时间对比
      * @param currentTime 当前时间
      * @param compareTime 对比时间

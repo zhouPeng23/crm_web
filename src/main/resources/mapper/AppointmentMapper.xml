@@ -105,8 +105,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         </foreach>
     </delete>
 
-    <update id="updateAppointmentStatusEndByBatchIds" parameterType="String">
+    <update id="updateAppointmentStatusEndUseByBatchIds" parameterType="String">
         update appointment set appointment_status = 3 where appointment_id in
+        <foreach item="appointmentId" collection="array" open="(" separator="," close=")">
+            #{appointmentId}
+        </foreach>
+    </update>
+
+    <update id="updateAppointmentStatusOnUseByBatchIds" parameterType="String">
+        update appointment set appointment_status = 2 where appointment_id in
         <foreach item="appointmentId" collection="array" open="(" separator="," close=")">
             #{appointmentId}
         </foreach>

@@ -39,4 +39,27 @@ public enum AppointmentStatusEnum {
     }
 
 
+    /**
+     * 通过code获取描述
+     * @param code code
+     * @return str
+     */
+    public static String getCodeDesc(Integer code){
+        if (code.equals(appointment_wait_use.getCode())){
+            return appointment_wait_use.getMsg();
+
+        }else if (code.equals(appointment_on_use.getCode())){
+            return appointment_on_use.getMsg();
+
+        }else if (code.equals(appointment_end_use.getCode())){
+            return appointment_end_use.getMsg();
+
+        }else if (code.equals(appointment_zuo_fei.getCode())){
+            return appointment_zuo_fei.getMsg();
+
+        }
+        return "未知状态";
+    }
+
+
 }

@@ -24,5 +24,7 @@ public interface AppointmentMapper extends BaseMapper<Appointment> {
 
     public int deleteAppointmentByIds(String[] appointmentIds);
 
-    public void updateAppointmentStatusEndByBatchIds(String[] appointmentIds);
+    public void updateAppointmentStatusEndUseByBatchIds(String[] appointmentIds);
+
+    public void updateAppointmentStatusOnUseByBatchIds(String[] appointmentIds);
 }
