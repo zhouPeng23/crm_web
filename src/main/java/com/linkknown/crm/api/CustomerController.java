@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.linkknown.crm.bean.dos.Customer;
 import com.linkknown.crm.bean.req.AddCustomerReq;
 import com.linkknown.crm.bean.req.QueryCustomerPage;
+import com.linkknown.crm.bean.req.UpdateCustomerReq;
 import com.linkknown.crm.common.aspect.exception.WebExceptionService;
 import com.linkknown.crm.common.aspect.paramslog.WebParamsLog;
 import com.linkknown.crm.common.enums.ResponseEnum;
@@ -50,9 +51,9 @@ public class CustomerController {
 
     @PostMapping(value = "/updateCustomer")
     @WebParamsLog(description = "更新顾客")
-    public BaseResponse<Object> updateCustomer(Customer customer){
-        CustomerParamUtils.updateCustomer(customer);
-        customService.updateCustomer(customer);
+    public BaseResponse<Object> updateCustomer(UpdateCustomerReq updateCustomerReq){
+        CustomerParamUtils.updateCustomer(updateCustomerReq);
+        customService.updateCustomer(updateCustomerReq);
         return BaseResponse.success(ResponseEnum.update_success);
     }
 

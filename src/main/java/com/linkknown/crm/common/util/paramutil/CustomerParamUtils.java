@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.linkknown.crm.bean.dos.Customer;
 import com.linkknown.crm.bean.req.AddCustomerReq;
 import com.linkknown.crm.bean.req.QueryCustomerPage;
+import com.linkknown.crm.bean.req.UpdateCustomerReq;
 import com.linkknown.crm.common.aspect.exception.WebException;
 import com.linkknown.crm.common.enums.ResponseEnum;
 import com.linkknown.crm.common.util.RegexUtils;
@@ -80,36 +81,54 @@ public class CustomerParamUtils {
 
     /**
      * 更新顾客校验参数
-     * @param customer customer
+     * @param updateCustomerReq updateCustomerReq
      */
-    public static void updateCustomer(Customer customer) {
+    public static void updateCustomer(UpdateCustomerReq updateCustomerReq) {
         //门店id不能为空
-        if (StringUtils.isEmpty(customer.getShopId())){
+        if (StringUtils.isEmpty(updateCustomerReq.getShopId())){
             throw new WebException(ResponseEnum.shop_id_can_not_be_empty);
         }
         //顾客id不能为空
-        if (StringUtils.isEmpty(customer.getCustomerId())){
+        if (StringUtils.isEmpty(updateCustomerReq.getCustomerId())){
             throw new WebException(ResponseEnum.customer_id_can_not_be_empty);
         }
         //顾客姓名不能为空
-        if (StringUtils.isEmpty(customer.getCustomerName())){
+        if (StringUtils.isEmpty(updateCustomerReq.getCustomerName())){
             throw new WebException(ResponseEnum.customer_name_can_not_be_empty);
         }
         //顾客性别不能为空
-        if (StringUtils.isEmpty(customer.getSex())){
+        if (StringUtils.isEmpty(updateCustomerReq.getSex())){
             throw new WebException(ResponseEnum.customer_sex_can_not_be_empty);
         }
         //顾客手机号格式错误
-        if (!RegexUtils.validatePhoneNumber(customer.getPhoneNumber())){
+        if (!RegexUtils.validatePhoneNumber(updateCustomerReq.getPhoneNumber())){
             throw new WebException(ResponseEnum.customer_phone_number_style_error);
         }
         //顾客等级不能为空
-        if (StringUtils.isEmpty(customer.getCustomerMassLevel())){
+        if (StringUtils.isEmpty(updateCustomerReq.getCustomerMassLevel())){
             throw new WebException(ResponseEnum.customer_mass_level_can_not_be_empty);
         }
         //顾客所属员工不能为空
-        if (StringUtils.isEmpty(customer.getBelongToEmployeeId())){
+        if (StringUtils.isEmpty(updateCustomerReq.getBelongToEmployeeId())){
             throw new WebException(ResponseEnum.customer_belong_to_employee_id_can_not_be_empty);
+        }
+
+        //如果有被介绍人，那么被介绍人手机号、姓名不能为空
+        if ("1".equals(updateCustomerReq.getHasIntroducedByCustomer())){
+
+            //更新顾客手机号与被介绍人手机号不能相同
+            if (updateCustomerReq.getPhoneNumber().equals(updateCustomerReq.getIntroducedByCustomerPhoneNumber())){
+                throw new WebException(ResponseEnum.two_phone_number_is_same);
+            }
+            //被介绍人手机号格式错误
+            if (!RegexUtils.validatePhoneNumber(updateCustomerReq.getIntroducedByCustomerPhoneNumber())){
+                throw new WebException(ResponseEnum.introduced_by_customer_phone_number_style_error);
+            }
+            //被介绍人姓名不能为空
+            if (StringUtils.isEmpty(updateCustomerReq.getIntroducedByCustomerName())){
+                throw new WebException(ResponseEnum.introduced_by_customer_name_cannot_be_empty);
+            }
+
         }
 
     }

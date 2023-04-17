@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.linkknown.crm.bean.dos.Customer;
 import com.linkknown.crm.bean.req.AddCustomerReq;
+import com.linkknown.crm.bean.req.UpdateCustomerReq;
 import com.linkknown.crm.common.enums.EnumsObject;
 import com.linkknown.crm.bean.req.QueryCustomerPage;
 import com.linkknown.crm.common.aspect.exception.WebException;
@@ -128,20 +129,38 @@ public class CustomerServiceImpl implements ICustomerService {
 
     /**
      * 更新顾客
-     * @param customer 顾客
+     * @param updateCustomerReq 更新顾客请求
      */
     @Override
-    public void updateCustomer(Customer customer) {
+    public void updateCustomer(UpdateCustomerReq updateCustomerReq) {
         //校验用户是否修改了手机号
-        Customer customerDb = customerMapper.selectCustomerById(customer.getCustomerId());
-        if (!customer.getPhoneNumber().equals(customerDb.getPhoneNumber())){
+        Customer customerDb = customerMapper.selectCustomerById(updateCustomerReq.getCustomerId());
+        if (!updateCustomerReq.getPhoneNumber().equals(customerDb.getPhoneNumber())){
             //修改了手机号
             Customer customerSearch = new Customer();
-            customerSearch.setPhoneNumber(customer.getPhoneNumber());
+            customerSearch.setPhoneNumber(updateCustomerReq.getPhoneNumber());
             List<Customer> customerSearchList = customerMapper.selectCustomerList(customerSearch);
             if (!CollectionUtils.isEmpty(customerSearchList)){
                 throw new WebException(ResponseEnum.customer_phone_number_has_allready_exist);
             }
+        }
+
+        Customer customer = new Customer();
+        BeanUtils.copyProperties(updateCustomerReq,customer);
+
+        //如果有被介绍人，需要设置
+        if ("1".equals(updateCustomerReq.getHasIntroducedByCustomer())){
+            //根据手机号查顾客获取customerId
+            Customer introducedByCustomer = customerMapper.selectCustomerByPhoneNumber(updateCustomerReq.getIntroducedByCustomerPhoneNumber());
+            customer.setIntroducedByCustomerId(introducedByCustomer.getCustomerId());
+            //这里小心一点，顺便校验手机号查询出来的用户名和界面传来的是否一致
+            if (!introducedByCustomer.getCustomerName().equals(updateCustomerReq.getIntroducedByCustomerName())){
+                throw new WebException(ResponseEnum.introduced_by_customer_name_is_error);
+            }
+
+        }else{
+            //否则设置为空
+            customer.setIntroducedByCustomerId(null);
         }
 
         //设置更新人和时间
