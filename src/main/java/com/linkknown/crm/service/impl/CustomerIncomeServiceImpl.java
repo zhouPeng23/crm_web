@@ -55,10 +55,17 @@ public class CustomerIncomeServiceImpl implements ICustomerIncomeService {
         List<Customer> customerList = customerMapper.selectCustomerList(customerParams);
         List<Integer> customerIdList = customerList.stream().map(Customer::getCustomerId).collect(Collectors.toList());
 
-        //分页查询
+        //根据customerIdList是否为空分情况查
         QueryWrapper<CustomerIncome> queryWrapper = new QueryWrapper<>();
-        queryWrapper.in(!CollectionUtils.isEmpty(customerIdList),"customer_id",customerIdList)
-                .orderByDesc("create_time");
+        if (!CollectionUtils.isEmpty(customerIdList)){
+            //正常分页查询
+            queryWrapper.in("customer_id",customerIdList)
+                    .orderByDesc("create_time");
+
+        }else{
+            //返回空
+            queryWrapper.eq("customer_income_id",-1);
+        }
 
         //返回分页
         return customerIncomeMapper.selectPage(new Page<>(pageNo, pageSize), queryWrapper);
