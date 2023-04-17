@@ -71,6 +71,7 @@ public enum ResponseEnum {
     introduced_by_customer_name_cannot_be_empty                          ("0419", "被介绍顾客姓名为空"),
     two_phone_number_is_same                                               ("0420", "新增顾客手机号与被介绍人手机号不能相同"),
     introduced_by_customer_name_is_error                                  ("0421", "被介绍顾客姓名与手机号不匹配"),
+    phone_number_style_error                                               ("0422", "手机号格式错误"),
 
     //================================================角色==============================================================
     role_shop_id_can_not_be_empty                                         ("0501", "门店id不能为空"),
