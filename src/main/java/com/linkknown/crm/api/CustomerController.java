@@ -2,6 +2,7 @@ package com.linkknown.crm.api;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.linkknown.crm.bean.dos.Customer;
+import com.linkknown.crm.bean.req.AddCustomerReq;
 import com.linkknown.crm.bean.req.QueryCustomerPage;
 import com.linkknown.crm.common.aspect.exception.WebExceptionService;
 import com.linkknown.crm.common.aspect.paramslog.WebParamsLog;
@@ -40,9 +41,9 @@ public class CustomerController {
 
     @PostMapping(value = "/addCustomer")
     @WebParamsLog(description = "添加顾客")
-    public BaseResponse<Object> addCustomer(Customer customer){
-        CustomerParamUtils.addCustomer(customer);
-        customService.addCustomer(customer);
+    public BaseResponse<Object> addCustomer(AddCustomerReq addCustomerReq){
+        CustomerParamUtils.addCustomer(addCustomerReq);
+        customService.addCustomer(addCustomerReq);
         return BaseResponse.success(ResponseEnum.add_success);
     }
 

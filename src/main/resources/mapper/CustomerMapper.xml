@@ -104,5 +104,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{customerId}
         </foreach>
     </delete>
+
+    <select id="selectCustomerByPhoneNumber" parameterType="String" resultMap="CustomerResult">
+        <include refid="selectCustomerVo"/>
+        where phone_number = #{phoneNumber}
+    </select>
     
 </mapper>
