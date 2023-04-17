@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.linkknown.crm.bean.dos.Appointment;
 import com.linkknown.crm.bean.dos.Customer;
+import com.linkknown.crm.bean.dos.CustomerIncome;
 import com.linkknown.crm.bean.dos.Project;
 import com.linkknown.crm.bean.req.AddAppointmentReq;
 import com.linkknown.crm.bean.req.QueryAppointmentPage;
@@ -14,6 +15,7 @@ import com.linkknown.crm.common.enums.CustomerMassLevelEnum;
 import com.linkknown.crm.common.enums.EnumsObject;
 import com.linkknown.crm.common.enums.ResponseEnum;
 import com.linkknown.crm.mapper.AppointmentMapper;
+import com.linkknown.crm.mapper.CustomerIncomeMapper;
 import com.linkknown.crm.mapper.CustomerMapper;
 import com.linkknown.crm.mapper.ProjectMapper;
 import com.linkknown.crm.service.IAppointmentService;
@@ -47,6 +49,9 @@ public class AppointmentServiceImpl implements IAppointmentService {
 
     @Resource
     private ProjectMapper projectMapper;
+
+    @Resource
+    private CustomerIncomeMapper customerIncomeMapper;
 
 
     /**
@@ -135,6 +140,16 @@ public class AppointmentServiceImpl implements IAppointmentService {
             appointment.setCreateBy("SYSTEM");
             appointment.setCreateTime(LocalDateTime.now());
             appointmentMapper.insertAppointment(appointment);
+
+            //被介绍人不为空,插入一条收益记录
+            if (!StringUtils.isEmpty(customer.getIntroducedByCustomerId())){
+                CustomerIncome customerIncome = new CustomerIncome();
+                customerIncome.setShopId(addAppointmentReq.getShopId());
+                customerIncome.setCustomerId(customer.getIntroducedByCustomerId());
+                customerIncome.setIntroduceCustomerId(customer.getCustomerId());
+                customerIncome.setIntroduceCustomerAppointmentId(appointment.getAppointmentId());
+                customerIncomeMapper.insertCustomerIncome(customerIncome);
+            }
 
         }else{
             //新顾客 - 先添加顾客表

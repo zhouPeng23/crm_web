@@ -17,6 +17,11 @@ public class CustomerIncomeParamUtils {
      * @param queryCustomerIncomePage 请求
      */
     public static void queryCustomerIncomeList(QueryCustomerIncomePage queryCustomerIncomePage) {
+        //门店id不能为空
+        if (StringUtils.isEmpty(queryCustomerIncomePage.getShopId())){
+            throw new WebException(ResponseEnum.shop_id_can_not_be_empty);
+        }
+        //如果输入了手机号，那么需要校验格式
         if (!StringUtils.isEmpty(queryCustomerIncomePage.getPhoneNumber())){
             //手机号如果不为空，需校验格式
             if (!RegexUtils.validatePhoneNumber(queryCustomerIncomePage.getPhoneNumber())){
