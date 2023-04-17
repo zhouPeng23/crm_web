@@ -28,6 +28,8 @@ public class Customer {
 
     private Integer belongToEmployeeId;
 
+    private Integer introducedByCustomerId;
+
     private String createBy;
 
     private LocalDateTime createTime;
