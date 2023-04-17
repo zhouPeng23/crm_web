@@ -12,7 +12,7 @@ import java.util.List;
 @Repository
 public interface CustomerIncomeMapper extends BaseMapper<CustomerIncome> {
 
-    public CustomerIncome selectCustomerIncomeById(Long customerId);
+    public CustomerIncome selectCustomerIncomeById(Integer customerIncomeId);
 
     public List<CustomerIncome> selectCustomerIncomeList(CustomerIncome customerIncome);
 
@@ -20,7 +20,7 @@ public interface CustomerIncomeMapper extends BaseMapper<CustomerIncome> {
 
     public int updateCustomerIncome(CustomerIncome customerIncome);
 
-    public int deleteCustomerIncomeById(Long customerId);
+    public int deleteCustomerIncomeById(Integer customerIncomeId);
 
-    public int deleteCustomerIncomeByIds(String[] customerIds);
+    public int deleteCustomerIncomeByIds(String[] customerIncomeIds);
 }

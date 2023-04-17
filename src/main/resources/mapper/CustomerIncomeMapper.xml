@@ -6,6 +6,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     
     <resultMap type="com.linkknown.crm.bean.dos.CustomerIncome" id="CustomerIncomeResult">
         <result property="shopId"    column="shop_id"    />
+        <result property="customerIncomeId"    column="customer_income_id"    />
         <result property="customerId"    column="customer_id"    />
         <result property="introduceCustomerId"    column="introduce_customer_id"    />
         <result property="introduceCustomerAppointmentId"    column="introduce_customer_appointment_id"    />
@@ -16,27 +17,29 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectCustomerIncomeVo">
-        select shop_id, customer_id, introduce_customer_id, introduce_customer_appointment_id, create_by, create_time, update_by, update_time from customer_income
+        select shop_id, customer_income_id, customer_id, introduce_customer_id, introduce_customer_appointment_id, create_by, create_time, update_by, update_time from customer_income
     </sql>
 
     <select id="selectCustomerIncomeList" parameterType="com.linkknown.crm.bean.dos.CustomerIncome" resultMap="CustomerIncomeResult">
         <include refid="selectCustomerIncomeVo"/>
         <where>  
             <if test="shopId != null "> and shop_id = #{shopId}</if>
+            <if test="customerId != null "> and customer_id = #{customerId}</if>
             <if test="introduceCustomerId != null "> and introduce_customer_id = #{introduceCustomerId}</if>
             <if test="introduceCustomerAppointmentId != null "> and introduce_customer_appointment_id = #{introduceCustomerAppointmentId}</if>
         </where>
     </select>
     
-    <select id="selectCustomerIncomeById" parameterType="Long" resultMap="CustomerIncomeResult">
+    <select id="selectCustomerIncomeById" parameterType="Integer" resultMap="CustomerIncomeResult">
         <include refid="selectCustomerIncomeVo"/>
-        where customer_id = #{customerId}
+        where customer_income_id = #{customerIncomeId}
     </select>
         
-    <insert id="insertCustomerIncome" parameterType="com.linkknown.crm.bean.dos.CustomerIncome" useGeneratedKeys="true" keyProperty="customerId">
+    <insert id="insertCustomerIncome" parameterType="com.linkknown.crm.bean.dos.CustomerIncome" useGeneratedKeys="true" keyProperty="customerIncomeId">
         insert into customer_income
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="shopId != null ">shop_id,</if>
+            <if test="customerId != null ">customer_id,</if>
             <if test="introduceCustomerId != null ">introduce_customer_id,</if>
             <if test="introduceCustomerAppointmentId != null ">introduce_customer_appointment_id,</if>
             <if test="createBy != null  and createBy != ''">create_by,</if>
@@ -46,6 +49,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="shopId != null ">#{shopId},</if>
+            <if test="customerId != null ">#{customerId},</if>
             <if test="introduceCustomerId != null ">#{introduceCustomerId},</if>
             <if test="introduceCustomerAppointmentId != null ">#{introduceCustomerAppointmentId},</if>
             <if test="createBy != null  and createBy != ''">#{createBy},</if>
@@ -59,6 +63,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         update customer_income
         <trim prefix="SET" suffixOverrides=",">
             <if test="shopId != null ">shop_id = #{shopId},</if>
+            <if test="customerId != null ">customer_id = #{customerId},</if>
             <if test="introduceCustomerId != null ">introduce_customer_id = #{introduceCustomerId},</if>
             <if test="introduceCustomerAppointmentId != null ">introduce_customer_appointment_id = #{introduceCustomerAppointmentId},</if>
             <if test="createBy != null  and createBy != ''">create_by = #{createBy},</if>
@@ -66,17 +71,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="updateBy != null  and updateBy != ''">update_by = #{updateBy},</if>
             <if test="updateTime != null ">update_time = #{updateTime},</if>
         </trim>
-        where customer_id = #{customerId}
+        where customer_income_id = #{customerIncomeId}
     </update>
 
-    <delete id="deleteCustomerIncomeById" parameterType="Long">
-        delete from customer_income where customer_id = #{customerId}
+    <delete id="deleteCustomerIncomeById" parameterType="Integer">
+        delete from customer_income where customer_income_id = #{customerIncomeId}
     </delete>
 
     <delete id="deleteCustomerIncomeByIds" parameterType="String">
-        delete from customer_income where customer_id in 
-        <foreach item="customerId" collection="array" open="(" separator="," close=")">
-            #{customerId}
+        delete from customer_income where customer_income_id in 
+        <foreach item="customerIncomeId" collection="array" open="(" separator="," close=")">
+            #{customerIncomeId}
         </foreach>
     </delete>
     
