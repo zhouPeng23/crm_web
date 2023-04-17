@@ -148,6 +148,8 @@ public class AppointmentServiceImpl implements IAppointmentService {
                 customerIncome.setCustomerId(customer.getIntroducedByCustomerId());
                 customerIncome.setIntroduceCustomerId(customer.getCustomerId());
                 customerIncome.setIntroduceCustomerAppointmentId(appointment.getAppointmentId());
+                customerIncome.setCreateBy("SYSTEM");
+                customerIncome.setCreateTime(LocalDateTime.now());
                 customerIncomeMapper.insertCustomerIncome(customerIncome);
             }
 
