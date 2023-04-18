@@ -14,6 +14,8 @@ import com.linkknown.crm.mapper.CustomerMapper;
 import com.linkknown.crm.service.ICustomerService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
@@ -73,6 +75,7 @@ public class CustomerServiceImpl implements ICustomerService {
      * @param addCustomerReq 添加顾客请求
      */
     @Override
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public void addCustomer(AddCustomerReq addCustomerReq) {
         //根据手机号,校验用户是否已存在
         Customer customerSearch = new Customer();
@@ -132,6 +135,7 @@ public class CustomerServiceImpl implements ICustomerService {
      * @param updateCustomerReq 更新顾客请求
      */
     @Override
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public void updateCustomer(UpdateCustomerReq updateCustomerReq) {
         //校验用户是否修改了手机号
         Customer customerDb = customerMapper.selectCustomerById(updateCustomerReq.getCustomerId());
@@ -181,6 +185,7 @@ public class CustomerServiceImpl implements ICustomerService {
      * @param customer 顾客
      */
     @Override
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public void deleteCustomer(Customer customer) {
         customerMapper.deleteCustomerById(customer.getCustomerId());
     }

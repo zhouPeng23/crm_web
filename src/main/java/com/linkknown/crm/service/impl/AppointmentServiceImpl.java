@@ -21,6 +21,8 @@ import com.linkknown.crm.mapper.ProjectMapper;
 import com.linkknown.crm.service.IAppointmentService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
@@ -119,6 +121,7 @@ public class AppointmentServiceImpl implements IAppointmentService {
      * @param addAppointmentReq 请求
      */
     @Override
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public void addAppointment(AddAppointmentReq addAppointmentReq) {
         //入库的预约实体
         Appointment appointment = new Appointment();
@@ -187,6 +190,7 @@ public class AppointmentServiceImpl implements IAppointmentService {
      * @param updateAppointmentReq 请求
      */
     @Override
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public void updateAppointment(UpdateAppointmentReq updateAppointmentReq) {
         //更新入库的预约实体
         Appointment appointment = new Appointment();
@@ -254,6 +258,7 @@ public class AppointmentServiceImpl implements IAppointmentService {
      * @param appointment 预约
      */
     @Override
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public void zuofeiAppointment(Appointment appointment) {
         Appointment appointmentParam = new Appointment();
         appointmentParam.setAppointmentId(appointment.getAppointmentId());

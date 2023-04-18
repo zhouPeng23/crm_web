@@ -12,6 +12,9 @@ import com.linkknown.crm.mapper.InvestorMapper;
 import com.linkknown.crm.mapper.RoleMapper;
 import com.linkknown.crm.service.ILoginService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+
 import javax.annotation.Resource;
 import java.util.List;
 
@@ -94,6 +97,7 @@ public class LoginServiceImpl implements ILoginService {
      * @param modifyPasswordReq 请求
      */
     @Override
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public void modifyPassword(ModifyPasswordReq modifyPasswordReq) {
         //入参
         String phoneNumber = modifyPasswordReq.getPhoneNumber();
