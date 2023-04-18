@@ -274,7 +274,15 @@ public class AppointmentServiceImpl implements IAppointmentService {
     }
 
 
-
+    /**
+     * 根据预约单ids查集合
+     * @param ids ids
+     * @return 集合
+     */
+    @Override
+    public List<Appointment> queryAppointmentByIds(String ids){
+        return appointmentMapper.selectAppointmentByIds(ids.split(","));
+    }
 
 
 

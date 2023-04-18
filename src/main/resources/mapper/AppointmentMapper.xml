@@ -37,6 +37,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="appointmentStatus != null "> and appointment_status = #{appointmentStatus}</if>
         </where>
     </select>
+
+    <select id="selectAppointmentByIds" parameterType="String" resultMap="AppointmentResult">
+        <include refid="selectAppointmentVo"/>
+        where appointment_id in
+        <foreach item="appointmentId" collection="array" open="(" separator="," close=")">
+            #{appointmentId}
+        </foreach>
+    </select>
     
     <select id="selectAppointmentById" parameterType="Integer" resultMap="AppointmentResult">
         <include refid="selectAppointmentVo"/>

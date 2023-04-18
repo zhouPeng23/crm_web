@@ -10,6 +10,8 @@ import com.linkknown.crm.common.enums.ResponseEnum;
 import com.linkknown.crm.common.util.RegexUtils;
 import org.springframework.util.StringUtils;
 
+import java.util.List;
+
 /**
  * @author zhoupeng
  * @date 2023/4/4 14:55
@@ -107,6 +109,13 @@ public class AppointmentParamUtils {
     }
 
 
-
-
+    /**
+     * 根据ids查预约单
+     * @param ids ids
+     */
+    public static void queryAppointmentByIds(String ids) {
+        if (StringUtils.isEmpty(ids)){
+            throw new WebException(ResponseEnum.appointment_id_can_not_be_empty);
+        }
+    }
 }
