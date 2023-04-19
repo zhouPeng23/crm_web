@@ -44,6 +44,10 @@ public class EmployeeParamUtils {
         if (StringUtils.isEmpty(employee.getSex())){
             throw new WebException(ResponseEnum.employee_sex_can_not_be_empty);
         }
+        //员工班次不能为空
+        if (StringUtils.isEmpty(employee.getShiftId())){
+            throw new WebException(ResponseEnum.employee_shift_cannot_be_empty);
+        }
         //员工手机号格式错误
         if (!RegexUtils.validatePhoneNumber(employee.getPhoneNumber())){
             throw new WebException(ResponseEnum.epmloyee_phone_number_style_error);
@@ -76,6 +80,10 @@ public class EmployeeParamUtils {
         //员工性别不能为空
         if (StringUtils.isEmpty(employee.getSex())){
             throw new WebException(ResponseEnum.employee_sex_can_not_be_empty);
+        }
+        //员工班次不能为空
+        if (StringUtils.isEmpty(employee.getShiftId())){
+            throw new WebException(ResponseEnum.employee_shift_cannot_be_empty);
         }
         //员工手机号格式错误
         if (!RegexUtils.validatePhoneNumber(employee.getPhoneNumber())){

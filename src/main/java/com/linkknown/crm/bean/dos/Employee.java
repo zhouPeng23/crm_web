@@ -20,6 +20,8 @@ public class Employee {
 
     private Integer sex;
 
+    private Integer shiftId;
+
     private String phoneNumber;
 
     private String password;

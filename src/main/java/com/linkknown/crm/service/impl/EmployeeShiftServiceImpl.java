@@ -10,6 +10,8 @@ import com.linkknown.crm.mapper.EmployeeShiftMapper;
 import com.linkknown.crm.mapper.EmployeeShiftTimeMapper;
 import com.linkknown.crm.service.IEmployeeShiftService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
@@ -70,6 +72,7 @@ public class EmployeeShiftServiceImpl implements IEmployeeShiftService {
      * @param employeeShift 班次
      */
     @Override
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public void deleteShift(EmployeeShift employeeShift) {
         //入参
         Integer shiftId = employeeShift.getShiftId();
@@ -96,6 +99,7 @@ public class EmployeeShiftServiceImpl implements IEmployeeShiftService {
      * @param employeeShiftTime 请求
      */
     @Override
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public void addShiftTime(EmployeeShiftTime employeeShiftTime){
         //入参
         Integer shiftId = employeeShiftTime.getShiftId();
