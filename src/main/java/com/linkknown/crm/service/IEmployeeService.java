@@ -1,6 +1,7 @@
 package com.linkknown.crm.service;
 
 import com.linkknown.crm.bean.dos.Employee;
+import com.linkknown.crm.bean.dos.EmployeeShiftTime;
 import com.linkknown.crm.bean.req.ModifyPasswordReq;
 import com.linkknown.crm.bean.req.UserLoginReq;
 
@@ -41,5 +42,10 @@ public interface IEmployeeService {
     void deleteEmployee(Employee employee);
 
 
-
+    /**
+     * 查询员工班次集合
+     * @param employee 员工
+     * @return 集合
+     */
+    List<EmployeeShiftTime> queryEmployeeShiftTimeList(Employee employee);
 }

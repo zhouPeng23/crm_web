@@ -1,17 +1,16 @@
 package com.linkknown.crm.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.linkknown.crm.bean.dos.Customer;
 import com.linkknown.crm.bean.dos.Employee;
+import com.linkknown.crm.bean.dos.EmployeeShiftTime;
 import com.linkknown.crm.bean.dos.Role;
 import com.linkknown.crm.bean.req.ModifyPasswordReq;
 import com.linkknown.crm.bean.req.UserLoginReq;
 import com.linkknown.crm.common.aspect.exception.WebException;
 import com.linkknown.crm.common.enums.ResponseEnum;
 import com.linkknown.crm.common.util.MD5Utils;
-import com.linkknown.crm.mapper.CustomerMapper;
-import com.linkknown.crm.mapper.EmployeeMapper;
-import com.linkknown.crm.mapper.InvestorMapper;
-import com.linkknown.crm.mapper.RoleMapper;
+import com.linkknown.crm.mapper.*;
 import com.linkknown.crm.service.IEmployeeService;
 import org.apache.commons.codec.digest.Md5Crypt;
 import org.apache.tomcat.util.security.MD5Encoder;
@@ -44,6 +43,9 @@ public class EmployeeServiceImpl implements IEmployeeService {
 
     @Value("${employee.default.password}")
     private String employeeDefaultPassword;
+
+    @Resource
+    private EmployeeShiftTimeMapper employeeShiftTimeMapper;
 
 
     /**
@@ -141,6 +143,19 @@ public class EmployeeServiceImpl implements IEmployeeService {
         employeeMapper.deleteEmployeeById(employee.getEmployeeId());
     }
 
+
+    /**
+     * 查询员工班次集合
+     * @param employee 员工
+     * @return 集合
+     */
+    @Override
+    public List<EmployeeShiftTime> queryEmployeeShiftTimeList(Employee employee){
+        QueryWrapper<EmployeeShiftTime> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("shift_id",employee.getShiftId())
+                .orderByAsc("start_time");
+        return employeeShiftTimeMapper.selectList(queryWrapper);
+    }
 
 
 }

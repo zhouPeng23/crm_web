@@ -1,6 +1,7 @@
 package com.linkknown.crm.api;
 
 import com.linkknown.crm.bean.dos.Employee;
+import com.linkknown.crm.bean.dos.EmployeeShiftTime;
 import com.linkknown.crm.common.aspect.exception.WebExceptionService;
 import com.linkknown.crm.common.aspect.paramslog.WebParamsLog;
 import com.linkknown.crm.common.enums.ResponseEnum;
@@ -61,6 +62,15 @@ public class EmployeeController {
         EmployeeParamUtils.deleteEmployee(employee);
         employeeService.deleteEmployee(employee);
         return BaseResponse.success(ResponseEnum.delete_success);
+    }
+
+
+    @PostMapping(value = "/queryEmployeeShiftTimeList")
+    @WebParamsLog(description = "查询员工班次集合")
+    public BaseResponse<List<EmployeeShiftTime>> queryEmployeeShiftTimeList(Employee employee){
+        EmployeeParamUtils.queryEmployeeShiftTimeList(employee);
+        List<EmployeeShiftTime> employeeShiftTimeList = employeeService.queryEmployeeShiftTimeList(employee);
+        return BaseResponse.success(employeeShiftTimeList);
     }
 
 
