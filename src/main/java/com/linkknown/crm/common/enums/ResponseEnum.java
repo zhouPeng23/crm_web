@@ -56,6 +56,7 @@ public enum ResponseEnum {
     shift_time_end_can_not_be_empty                                       ("0322", "结束时间不能为空"),
     shift_time_end_time_must_greator_start_time                          ("0323", "结束时间必须大于开始时间"),
     shift_time_has_chong_he                                                ("0324", "时间段存在重合"),
+    employee_shift_cannot_be_empty                                         ("0325", "员工班次不能为空"),
 
     //================================================顾客==============================================================
     customer_name_can_not_be_empty                                        ("0401", "顾客姓名不能为空"),
