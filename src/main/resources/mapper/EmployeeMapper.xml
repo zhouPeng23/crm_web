@@ -9,6 +9,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="employeeId"    column="employee_id"    />
         <result property="employeeName"    column="employee_name"    />
         <result property="sex"    column="sex"    />
+        <result property="shiftId"    column="shift_id"    />
         <result property="phoneNumber"    column="phone_number"    />
         <result property="password"    column="password"    />
         <result property="birthday"    column="birthday"    />
@@ -20,7 +21,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectEmployeeVo">
-        select shop_id, employee_id, employee_name, sex, phone_number,password, birthday, role_id, create_by, create_time, update_by, update_time from employee
+        select shop_id, employee_id, employee_name, sex,shift_id, phone_number,password, birthday, role_id, create_by, create_time, update_by, update_time from employee
     </sql>
 
     <select id="selectEmployeeList" parameterType="com.linkknown.crm.bean.dos.Employee" resultMap="EmployeeResult">
@@ -29,6 +30,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="shopId != null "> and shop_id = #{shopId}</if>
             <if test="employeeName != null  and employeeName != ''"> and employee_name like concat('%', #{employeeName}, '%')</if>
             <if test="sex != null "> and sex = #{sex}</if>
+            <if test="shiftId != null "> and shift_id = #{shiftId}</if>
             <if test="phoneNumber != null  and phoneNumber != ''"> and phone_number = #{phoneNumber}</if>
             <if test="password != null  and password != ''"> and password = #{password}</if>
             <if test="birthday != null "> and birthday = #{birthday}</if>
@@ -47,6 +49,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="shopId != null ">shop_id,</if>
             <if test="employeeName != null  and employeeName != ''">employee_name,</if>
             <if test="sex != null ">sex,</if>
+            <if test="shiftId != null ">shift_id,</if>
             <if test="phoneNumber != null  and phoneNumber != ''">phone_number,</if>
             <if test="password != null  and password != ''">password,</if>
             <if test="birthday != null ">birthday,</if>
@@ -60,6 +63,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="shopId != null ">#{shopId},</if>
             <if test="employeeName != null  and employeeName != ''">#{employeeName},</if>
             <if test="sex != null ">#{sex},</if>
+            <if test="shiftId != null ">#{shiftId},</if>
             <if test="phoneNumber != null  and phoneNumber != ''">#{phoneNumber},</if>
             <if test="password != null  and password != ''">#{password},</if>
             <if test="birthday != null ">#{birthday},</if>
@@ -77,6 +81,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="shopId != null ">shop_id = #{shopId},</if>
             <if test="employeeName != null  and employeeName != ''">employee_name = #{employeeName},</if>
             <if test="sex != null ">sex = #{sex},</if>
+            <if test="shiftId != null ">shift_id = #{shiftId},</if>
             <if test="phoneNumber != null  and phoneNumber != ''">phone_number = #{phoneNumber},</if>
             <if test="password != null  and password != ''">password = #{password},</if>
             <if test="birthday != null ">birthday = #{birthday},</if>
