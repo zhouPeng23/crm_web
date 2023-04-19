@@ -1,5 +1,6 @@
 package com.linkknown.crm.common.util;
 
+import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -89,6 +90,33 @@ public class DateUtils {
         return currentTime.getTime() >= compareTime.getTime();
     }
 
+
+    /**
+     * 对比两个时间段是否有交集 - 不考虑临界点
+     * @param paramStartTime   参数开始时间
+     * @param paramEndTime     参数结束时间
+     * @param compareStartTime 对比开始时间
+     * @param compareEndTime   对比结束时间
+     * @return 是否
+     */
+    public static boolean hasIntersectionBetweenSqlTime(Time paramStartTime, Time paramEndTime, Time compareStartTime, Time compareEndTime) {
+        //定义两个临时参数辅助转换
+        long temp1 = paramStartTime.getTime();
+        long temp2 = paramEndTime.getTime();
+
+        //入参的两个时间值
+        long startTime1 = temp1 < temp2 ? temp1 : temp2;
+        long endTime1 = temp2 > temp1 ? temp2 : temp1;
+
+        temp1 = compareStartTime.getTime();
+        temp2 = compareEndTime.getTime();
+
+        //对比的两个时间值
+        long startTime2 = temp1 < temp2 ? temp1 : temp2;
+        long endTime2 = temp2 > temp1 ? temp2 : temp1;
+
+        return startTime1 < endTime2 && endTime1 > startTime2;
+    }
 
 
 
