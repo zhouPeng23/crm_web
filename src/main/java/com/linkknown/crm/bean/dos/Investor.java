@@ -6,6 +6,10 @@ import java.math.BigDecimal;
 import java.sql.Date;
 import java.time.LocalDateTime;
 
+/**
+ * 出资方
+ * @author zhoupeng
+ */
 @Data
 public class Investor {
 

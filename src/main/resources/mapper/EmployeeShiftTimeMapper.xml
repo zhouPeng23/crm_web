@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.linkknown.crm.mapper.EmployeeShiftTimeMapper">
+    
+    <resultMap type="com.linkknown.crm.bean.dos.EmployeeShiftTime" id="EmployeeShiftTimeResult">
+        <result property="shopId"    column="shop_id"    />
+        <result property="shiftId"    column="shift_id"    />
+        <result property="shiftTimeId"    column="shift_time_id"    />
+        <result property="startTime"    column="start_time"    />
+        <result property="endTime"    column="end_time"    />
+    </resultMap>
+
+    <sql id="selectEmployeeShiftTimeVo">
+        select shop_id, shift_id, shift_time_id, start_time, end_time from employee_shift_time
+    </sql>
+
+    <select id="selectEmployeeShiftTimeList" parameterType="com.linkknown.crm.bean.dos.EmployeeShiftTime" resultMap="EmployeeShiftTimeResult">
+        <include refid="selectEmployeeShiftTimeVo"/>
+        <where>  
+            <if test="shopId != null "> and shop_id = #{shopId}</if>
+            <if test="shiftId != null "> and shift_id = #{shiftId}</if>
+            <if test="startTime != null "> and start_time = #{startTime}</if>
+            <if test="endTime != null "> and end_time = #{endTime}</if>
+        </where>
+    </select>
+    
+    <select id="selectEmployeeShiftTimeById" parameterType="Integer" resultMap="EmployeeShiftTimeResult">
+        <include refid="selectEmployeeShiftTimeVo"/>
+        where shift_time_id = #{shiftTimeId}
+    </select>
+        
+    <insert id="insertEmployeeShiftTime" parameterType="com.linkknown.crm.bean.dos.EmployeeShiftTime" useGeneratedKeys="true" keyProperty="shiftTimeId">
+        insert into employee_shift_time
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="shopId != null ">shop_id,</if>
+            <if test="shiftId != null ">shift_id,</if>
+            <if test="startTime != null ">start_time,</if>
+            <if test="endTime != null ">end_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="shopId != null ">#{shopId},</if>
+            <if test="shiftId != null ">#{shiftId},</if>
+            <if test="startTime != null ">#{startTime},</if>
+            <if test="endTime != null ">#{endTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateEmployeeShiftTime" parameterType="com.linkknown.crm.bean.dos.EmployeeShiftTime">
+        update employee_shift_time
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="shopId != null ">shop_id = #{shopId},</if>
+            <if test="shiftId != null ">shift_id = #{shiftId},</if>
+            <if test="startTime != null ">start_time = #{startTime},</if>
+            <if test="endTime != null ">end_time = #{endTime},</if>
+        </trim>
+        where shift_time_id = #{shiftTimeId}
+    </update>
+
+    <delete id="deleteEmployeeShiftTimeById" parameterType="Integer">
+        delete from employee_shift_time where shift_time_id = #{shiftTimeId}
+    </delete>
+
+    <delete id="deleteEmployeeShiftTimeByIds" parameterType="String">
+        delete from employee_shift_time where shift_time_id in
+        <foreach item="shiftTimeId" collection="array" open="(" separator="," close=")">
+            #{shiftTimeId}
+        </foreach>
+    </delete>
+
+    
+</mapper>

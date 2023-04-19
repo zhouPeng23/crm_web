@@ -4,6 +4,10 @@ import lombok.Data;
 
 import java.time.LocalDateTime;
 
+/**
+ * 顾客收益
+ * @author zhoupeng
+ */
 @Data
 public class CustomerIncome {
 

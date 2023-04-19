@@ -50,6 +50,8 @@ public enum ResponseEnum {
     org_password_is_not_right                                             ("0316", "原密码不正确"),
     new_password_and_second_is_not_same                                  ("0317", "两次输入的新密码不一致"),
     phone_number_is_prohibition_of_use                                   ("0318", "该手机号不为员工所有"),
+    shift_name_can_not_be_empty                                           ("0319", "班次名称不能为空"),
+    shift_id_can_not_be_empty                                             ("0320", "班次id不能为空"),
 
     //================================================顾客==============================================================
     customer_name_can_not_be_empty                                        ("0401", "顾客姓名不能为空"),
