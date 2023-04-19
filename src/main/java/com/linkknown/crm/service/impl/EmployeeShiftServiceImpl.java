@@ -1,5 +1,6 @@
 package com.linkknown.crm.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.linkknown.crm.bean.dos.EmployeeShift;
 import com.linkknown.crm.bean.dos.EmployeeShiftTime;
 import com.linkknown.crm.mapper.EmployeeShiftMapper;
@@ -83,8 +84,31 @@ public class EmployeeShiftServiceImpl implements IEmployeeShiftService {
             String[] ids = shiftTimeIds.stream().map(Object::toString).toArray(String[]::new);
             employeeShiftTimeMapper.deleteEmployeeShiftTimeByIds(ids);
         }
-
-
-
     }
+
+
+    /**
+     * 添加班次时间
+     * @param employeeShiftTime 请求
+     */
+    @Override
+    public void addShiftTime(EmployeeShiftTime employeeShiftTime){
+        employeeShiftTimeMapper.insertEmployeeShiftTime(employeeShiftTime);
+    }
+
+
+    /**
+     * 查询班次时间集合
+     * @param employeeShiftTime 请求
+     * @return 集合
+     */
+    @Override
+    public List<EmployeeShiftTime> queryShiftTimeList(EmployeeShiftTime employeeShiftTime){
+        QueryWrapper<EmployeeShiftTime> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("shop_id",employeeShiftTime.getShopId())
+                    .orderByAsc("start_time");
+        return employeeShiftTimeMapper.selectList(queryWrapper);
+    }
+
+
 }

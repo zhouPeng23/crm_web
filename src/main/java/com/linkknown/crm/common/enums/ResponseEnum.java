@@ -52,6 +52,9 @@ public enum ResponseEnum {
     phone_number_is_prohibition_of_use                                   ("0318", "该手机号不为员工所有"),
     shift_name_can_not_be_empty                                           ("0319", "班次名称不能为空"),
     shift_id_can_not_be_empty                                             ("0320", "班次id不能为空"),
+    shift_time_start_can_not_be_empty                                     ("0321", "开始时间不能为空"),
+    shift_time_end_can_not_be_empty                                       ("0322", "结束时间不能为空"),
+    shift_time_start_time_cannot_greator_end_time                       ("0323", "开始时间不能大于结束时间"),
 
     //================================================顾客==============================================================
     customer_name_can_not_be_empty                                        ("0401", "顾客姓名不能为空"),

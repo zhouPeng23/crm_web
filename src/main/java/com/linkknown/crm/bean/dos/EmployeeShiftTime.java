@@ -1,8 +1,7 @@
 package com.linkknown.crm.bean.dos;
 
 import lombok.Data;
-
-import java.time.LocalDateTime;
+import java.sql.Time;
 
 /**
  * 班次时间
@@ -17,8 +16,8 @@ public class EmployeeShiftTime {
 
     private Integer shiftTimeId;
 
-    private LocalDateTime startTime;
+    private Time startTime;
 
-    private LocalDateTime endTime;
+    private Time endTime;
 
 }

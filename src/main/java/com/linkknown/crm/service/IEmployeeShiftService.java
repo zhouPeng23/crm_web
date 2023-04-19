@@ -1,6 +1,8 @@
 package com.linkknown.crm.service;
 
 import com.linkknown.crm.bean.dos.EmployeeShift;
+import com.linkknown.crm.bean.dos.EmployeeShiftTime;
+
 import java.util.List;
 
 /**
@@ -38,6 +40,21 @@ public interface IEmployeeShiftService {
      * @param employeeShift 班次
      */
     public void deleteShift(EmployeeShift employeeShift);
+
+
+    /**
+     * 添加班次时间
+     * @param employeeShiftTime 请求
+     */
+    public void addShiftTime(EmployeeShiftTime employeeShiftTime);
+
+
+    /**
+     * 查询班次时间集合
+     * @param employeeShiftTime 请求
+     * @return 集合
+     */
+    public List<EmployeeShiftTime> queryShiftTimeList(EmployeeShiftTime employeeShiftTime);
 
 
 
