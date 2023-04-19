@@ -10,6 +10,8 @@ import com.linkknown.crm.mapper.ProjectMapper;
 import com.linkknown.crm.mapper.ShopMapper;
 import com.linkknown.crm.service.IShopService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
@@ -51,6 +53,7 @@ public class ShopServiceImpl implements IShopService {
      * @param shop 门店
      */
     @Override
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public void addShop(Shop shop) {
         //设置创建人和时间
         shop.setCreateBy("SYSTEM");
@@ -66,6 +69,7 @@ public class ShopServiceImpl implements IShopService {
      * @param shop 门店
      */
     @Override
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public void deleteShop(Shop shop) {
         //查看门店下是否还有员工
         Employee employee = new Employee();
@@ -93,6 +97,7 @@ public class ShopServiceImpl implements IShopService {
      * @param shop 门店
      */
     @Override
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public void updateShop(Shop shop) {
         //设置更新人和时间
         shop.setUpdateBy("SYSTEM");

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @author zhoupeng
@@ -38,6 +39,15 @@ public class AppointmentController {
         AppointmentParamUtils.queryAppointmentList(queryAppointmentPage);
         Page<Appointment> page = appointmentService.queryAppointmentList(queryAppointmentPage);
         return BaseResponse.success(page);
+    }
+
+
+    @PostMapping(value = "/queryAppointmentByIds")
+    @WebParamsLog(description = "根据ids查询预约单集合")
+    public BaseResponse<List<Appointment>> queryAppointmentByIds(String appointmentIds){
+        AppointmentParamUtils.queryAppointmentByIds(appointmentIds);
+        List<Appointment> appointmentList = appointmentService.queryAppointmentByIds(appointmentIds);
+        return BaseResponse.success(appointmentList);
     }
 
 

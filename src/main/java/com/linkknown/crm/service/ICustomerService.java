@@ -2,6 +2,8 @@ package com.linkknown.crm.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.linkknown.crm.bean.dos.Customer;
+import com.linkknown.crm.bean.req.AddCustomerReq;
+import com.linkknown.crm.bean.req.UpdateCustomerReq;
 import com.linkknown.crm.common.enums.EnumsObject;
 import com.linkknown.crm.bean.req.QueryCustomerPage;
 
@@ -23,9 +25,9 @@ public interface ICustomerService {
 
     /**
      * 添加顾客
-     * @param customer 顾客
+     * @param addCustomerReq 添加顾客请求
      */
-    void addCustomer(Customer customer);
+    void addCustomer(AddCustomerReq addCustomerReq);
 
 
     /**
@@ -37,9 +39,9 @@ public interface ICustomerService {
 
     /**
      * 更新顾客
-     * @param customer 顾客
+     * @param updateCustomerReq 更新顾客请求
      */
-    void updateCustomer(Customer customer);
+    void updateCustomer(UpdateCustomerReq updateCustomerReq);
 
 
     /**

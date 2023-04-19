@@ -6,6 +6,8 @@ import com.linkknown.crm.bean.req.AddAppointmentReq;
 import com.linkknown.crm.bean.req.QueryAppointmentPage;
 import com.linkknown.crm.bean.req.UpdateAppointmentReq;
 
+import java.util.List;
+
 /**
  * @author zhoupeng
  * @date 2022/6/10 15:21
@@ -47,4 +49,12 @@ public interface IAppointmentService {
      * @param appointment 预约
      */
     void zuofeiAppointment(Appointment appointment);
+
+
+    /**
+     * 根据预约单ids查集合
+     * @param ids ids
+     * @return 集合
+     */
+    List<Appointment> queryAppointmentByIds(String ids);
 }

@@ -1,18 +1,17 @@
-package com.linkknown.crm.bean.dos;
+package com.linkknown.crm.bean.req;
 
 import lombok.Data;
 
 import java.sql.Date;
+import java.sql.Time;
 import java.time.LocalDateTime;
 
 /**
- * 顾客
  * @author zhoupeng
+ * @date 2023/4/5 19:46
  */
 @Data
-public class Customer {
-
-    private Integer customerId;
+public class AddCustomerReq {
 
     private Integer shopId;
 
@@ -28,15 +27,11 @@ public class Customer {
 
     private Integer belongToEmployeeId;
 
-    private Integer introducedByCustomerId;
+    private String hasIntroducedByCustomer;
 
-    private String createBy;
+    private String introducedByCustomerPhoneNumber;
 
-    private LocalDateTime createTime;
-
-    private String updateBy;
-
-    private LocalDateTime updateTime;
+    private String introducedByCustomerName;
 
 
 }

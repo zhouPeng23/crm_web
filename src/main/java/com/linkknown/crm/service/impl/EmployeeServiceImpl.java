@@ -17,6 +17,8 @@ import org.apache.commons.codec.digest.Md5Crypt;
 import org.apache.tomcat.util.security.MD5Encoder;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 import sun.security.provider.MD5;
 
@@ -49,6 +51,7 @@ public class EmployeeServiceImpl implements IEmployeeService {
      * @param employee 员工
      */
     @Override
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public void addEmployee(Employee employee) {
         //资方手机号校验
         if (investorMapper.selectInvestorByPhoneNumber(employee.getPhoneNumber())!=null){
@@ -91,6 +94,7 @@ public class EmployeeServiceImpl implements IEmployeeService {
      * @param employee 员工
      */
     @Override
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public void updateEmployee(Employee employee) {
         //资方手机号校验
         if (investorMapper.selectInvestorByPhoneNumber(employee.getPhoneNumber())!=null){
@@ -123,6 +127,7 @@ public class EmployeeServiceImpl implements IEmployeeService {
      * @param employee 员工
      */
     @Override
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public void deleteEmployee(Employee employee) {
         //查看员工名下是否有顾客
         Customer customer = new Customer();

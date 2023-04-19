@@ -16,6 +16,8 @@ public interface AppointmentMapper extends BaseMapper<Appointment> {
 
     public List<Appointment> selectAppointmentList(Appointment appointment);
 
+    public List<Appointment> selectAppointmentByIds(String[] appointmentIds);
+
     public int insertAppointment(Appointment appointment);
 
     public int updateAppointment(Appointment appointment);
@@ -24,5 +26,7 @@ public interface AppointmentMapper extends BaseMapper<Appointment> {
 
     public int deleteAppointmentByIds(String[] appointmentIds);
 
-    public void updateAppointmentStatusEndByBatchIds(String[] appointmentIds);
+    public void updateAppointmentStatusEndUseByBatchIds(String[] appointmentIds);
+
+    public void updateAppointmentStatusOnUseByBatchIds(String[] appointmentIds);
 }

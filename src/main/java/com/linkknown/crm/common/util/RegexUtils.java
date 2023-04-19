@@ -1,5 +1,7 @@
 package com.linkknown.crm.common.util;
 
+import org.springframework.util.StringUtils;
+
 import java.util.regex.Pattern;
 
 /**
@@ -24,6 +26,9 @@ public class RegexUtils {
      * @param str 入参
      */
     public static boolean validatePhoneNumber(String str) {
+        if (StringUtils.isEmpty(str)){
+            return false;
+        }
         return Pattern.matches(PHONE_NUMBER, str);
     }
 
@@ -33,6 +38,9 @@ public class RegexUtils {
      * @param str 入参
      */
     public static boolean validateAmount(String str) {
+        if (StringUtils.isEmpty(str)){
+            return false;
+        }
         return Pattern.matches(PRICE, str);
     }
 

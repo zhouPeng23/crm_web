@@ -4,6 +4,8 @@ import com.linkknown.crm.bean.dos.Investor;
 import com.linkknown.crm.mapper.InvestorMapper;
 import com.linkknown.crm.service.IInvestorService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -44,6 +46,7 @@ public class InvestorServiceImpl implements IInvestorService {
      * @return 结果
      */
     @Override
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public int insertInvestor(Investor investor) {
         return investorMapper.insertInvestor(investor);
     }
@@ -54,6 +57,7 @@ public class InvestorServiceImpl implements IInvestorService {
      * @return 结果
      */
     @Override
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public int updateInvestor(Investor investor) {
         return investorMapper.updateInvestor(investor);
     }

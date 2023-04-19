@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.linkknown.crm.bean.dos.Appointment;
 import com.linkknown.crm.bean.dos.Customer;
+import com.linkknown.crm.bean.dos.CustomerIncome;
 import com.linkknown.crm.bean.dos.Project;
 import com.linkknown.crm.bean.req.AddAppointmentReq;
 import com.linkknown.crm.bean.req.QueryAppointmentPage;
@@ -14,11 +15,14 @@ import com.linkknown.crm.common.enums.CustomerMassLevelEnum;
 import com.linkknown.crm.common.enums.EnumsObject;
 import com.linkknown.crm.common.enums.ResponseEnum;
 import com.linkknown.crm.mapper.AppointmentMapper;
+import com.linkknown.crm.mapper.CustomerIncomeMapper;
 import com.linkknown.crm.mapper.CustomerMapper;
 import com.linkknown.crm.mapper.ProjectMapper;
 import com.linkknown.crm.service.IAppointmentService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
@@ -47,6 +51,9 @@ public class AppointmentServiceImpl implements IAppointmentService {
 
     @Resource
     private ProjectMapper projectMapper;
+
+    @Resource
+    private CustomerIncomeMapper customerIncomeMapper;
 
 
     /**
@@ -114,6 +121,7 @@ public class AppointmentServiceImpl implements IAppointmentService {
      * @param addAppointmentReq 请求
      */
     @Override
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public void addAppointment(AddAppointmentReq addAppointmentReq) {
         //入库的预约实体
         Appointment appointment = new Appointment();
@@ -135,6 +143,18 @@ public class AppointmentServiceImpl implements IAppointmentService {
             appointment.setCreateBy("SYSTEM");
             appointment.setCreateTime(LocalDateTime.now());
             appointmentMapper.insertAppointment(appointment);
+
+            //被介绍人不为空,插入一条收益记录
+            if (!StringUtils.isEmpty(customer.getIntroducedByCustomerId())){
+                CustomerIncome customerIncome = new CustomerIncome();
+                customerIncome.setShopId(addAppointmentReq.getShopId());
+                customerIncome.setCustomerId(customer.getIntroducedByCustomerId());
+                customerIncome.setIntroduceCustomerId(customer.getCustomerId());
+                customerIncome.setIntroduceCustomerAppointmentId(appointment.getAppointmentId());
+                customerIncome.setCreateBy("SYSTEM");
+                customerIncome.setCreateTime(LocalDateTime.now());
+                customerIncomeMapper.insertCustomerIncome(customerIncome);
+            }
 
         }else{
             //新顾客 - 先添加顾客表
@@ -170,6 +190,7 @@ public class AppointmentServiceImpl implements IAppointmentService {
      * @param updateAppointmentReq 请求
      */
     @Override
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public void updateAppointment(UpdateAppointmentReq updateAppointmentReq) {
         //更新入库的预约实体
         Appointment appointment = new Appointment();
@@ -237,6 +258,7 @@ public class AppointmentServiceImpl implements IAppointmentService {
      * @param appointment 预约
      */
     @Override
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public void zuofeiAppointment(Appointment appointment) {
         Appointment appointmentParam = new Appointment();
         appointmentParam.setAppointmentId(appointment.getAppointmentId());
@@ -252,7 +274,15 @@ public class AppointmentServiceImpl implements IAppointmentService {
     }
 
 
-
+    /**
+     * 根据预约单ids查集合
+     * @param ids ids
+     * @return 集合
+     */
+    @Override
+    public List<Appointment> queryAppointmentByIds(String ids){
+        return appointmentMapper.selectAppointmentByIds(ids.split(","));
+    }
 
 
 
