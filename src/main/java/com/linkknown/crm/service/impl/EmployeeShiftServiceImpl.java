@@ -3,6 +3,9 @@ package com.linkknown.crm.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.linkknown.crm.bean.dos.EmployeeShift;
 import com.linkknown.crm.bean.dos.EmployeeShiftTime;
+import com.linkknown.crm.common.aspect.exception.WebException;
+import com.linkknown.crm.common.enums.ResponseEnum;
+import com.linkknown.crm.common.util.DateUtils;
 import com.linkknown.crm.mapper.EmployeeShiftMapper;
 import com.linkknown.crm.mapper.EmployeeShiftTimeMapper;
 import com.linkknown.crm.service.IEmployeeShiftService;
@@ -10,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -93,6 +97,29 @@ public class EmployeeShiftServiceImpl implements IEmployeeShiftService {
      */
     @Override
     public void addShiftTime(EmployeeShiftTime employeeShiftTime){
+        //入参
+        Integer shiftId = employeeShiftTime.getShiftId();
+        Time startTimeParam = employeeShiftTime.getStartTime();
+        Time endTimeParam = employeeShiftTime.getEndTime();
+
+        //根据班次查目前所有的时间段
+        EmployeeShiftTime employeeShiftTimeParam = new EmployeeShiftTime();
+        employeeShiftTimeParam.setShiftId(shiftId);
+        List<EmployeeShiftTime> employeeShiftTimeList = employeeShiftTimeMapper.selectEmployeeShiftTimeList(employeeShiftTimeParam);
+
+        //循环对比
+        if (!CollectionUtils.isEmpty(employeeShiftTimeList)){
+            employeeShiftTimeList.forEach(employeeShiftTimeDb -> {
+                //已存在记录的时间段
+                Time startTimeDb = employeeShiftTimeDb.getStartTime();
+                Time endTimeDb = employeeShiftTimeDb.getEndTime();
+                //调用工具类对比时间是否有交集
+                if (DateUtils.hasIntersectionBetweenSqlTime(startTimeParam,endTimeParam, startTimeDb,endTimeDb)){
+                    throw new WebException(ResponseEnum.shift_time_has_chong_he);
+                }
+            });
+        }
+
         employeeShiftTimeMapper.insertEmployeeShiftTime(employeeShiftTime);
     }
 

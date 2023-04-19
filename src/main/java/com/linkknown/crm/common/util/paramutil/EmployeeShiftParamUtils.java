@@ -83,9 +83,9 @@ public class EmployeeShiftParamUtils {
         if (StringUtils.isEmpty(employeeShiftTime.getEndTime())){
             throw new WebException(ResponseEnum.shift_time_end_can_not_be_empty);
         }
-        //开始时间不能大于结束时间
-        if (employeeShiftTime.getStartTime().getTime() > employeeShiftTime.getEndTime().getTime()){
-            throw new WebException(ResponseEnum.shift_time_start_time_cannot_greator_end_time);
+        //结束时间必须大于开始时间
+        if (employeeShiftTime.getStartTime().getTime() >= employeeShiftTime.getEndTime().getTime()){
+            throw new WebException(ResponseEnum.shift_time_end_time_must_greator_start_time);
         }
     }
 
