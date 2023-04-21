@@ -2,10 +2,7 @@ package com.linkknown.crm.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.linkknown.crm.bean.dos.Appointment;
-import com.linkknown.crm.bean.dos.Customer;
-import com.linkknown.crm.bean.dos.CustomerIncome;
-import com.linkknown.crm.bean.dos.Project;
+import com.linkknown.crm.bean.dos.*;
 import com.linkknown.crm.bean.req.AddAppointmentReq;
 import com.linkknown.crm.bean.req.QueryAppointmentPage;
 import com.linkknown.crm.bean.req.UpdateAppointmentReq;
@@ -14,10 +11,7 @@ import com.linkknown.crm.common.enums.AppointmentStatusEnum;
 import com.linkknown.crm.common.enums.CustomerMassLevelEnum;
 import com.linkknown.crm.common.enums.EnumsObject;
 import com.linkknown.crm.common.enums.ResponseEnum;
-import com.linkknown.crm.mapper.AppointmentMapper;
-import com.linkknown.crm.mapper.CustomerIncomeMapper;
-import com.linkknown.crm.mapper.CustomerMapper;
-import com.linkknown.crm.mapper.ProjectMapper;
+import com.linkknown.crm.mapper.*;
 import com.linkknown.crm.service.IAppointmentService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -31,9 +25,11 @@ import java.math.BigDecimal;
 import java.sql.Date;
 import java.sql.Time;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 /**
@@ -54,6 +50,18 @@ public class AppointmentServiceImpl implements IAppointmentService {
 
     @Resource
     private CustomerIncomeMapper customerIncomeMapper;
+
+    @Resource
+    private EmployeeMapper employeeMapper;
+
+    @Resource
+    private EmployeeShiftMapper employeeShiftMapper;
+
+    @Resource
+    private EmployeeShiftTimeMapper employeeShiftTimeMapper;
+
+    @Resource
+    private EmployeeOverTimeMapper employeeOverTimeMapper;
 
 
     /**
@@ -181,6 +189,61 @@ public class AppointmentServiceImpl implements IAppointmentService {
             appointment.setCreateBy("SYSTEM");
             appointment.setCreateTime(LocalDateTime.now());
             appointmentMapper.insertAppointment(appointment);
+        }
+
+        //处理加班记录
+        this.handleEmployeeOverTime(appointment,appointment.getEmployeeId());
+    }
+
+
+    /**
+     * 处理加班记录
+     * @param appointment 预约单
+     * @param employeeId 员工id
+     */
+    private void handleEmployeeOverTime(Appointment appointment, Integer employeeId) {
+        //预约具体时间
+        Time appointmentTime = appointment.getAppointmentTime();
+
+        //员工信息
+        Employee employee = employeeMapper.selectEmployeeById(employeeId);
+
+        //班次信息
+        EmployeeShift employeeShift = employeeShiftMapper.selectEmployeeShiftById(employee.getShiftId());
+
+        //班次时间信息
+        EmployeeShiftTime employeeShiftTime = new EmployeeShiftTime();
+        employeeShiftTime.setShiftId(employeeShift.getShiftId());
+        List<Time> timeList = employeeShiftTimeMapper.selectEmployeeShiftTimeList(employeeShiftTime).stream()
+                .map(EmployeeShiftTime::getEndTime)
+                .collect(Collectors.toList());
+
+        //记录一下班次时间，方便入库
+        StringBuilder shiftTimeStr = new StringBuilder();
+
+        if (!CollectionUtils.isEmpty(timeList)){
+            //获取最大值，也就是下班时间
+            Time maxTime = new Time(0);
+            for (Time time:timeList){
+                shiftTimeStr.append(time.toString().substring(0, 5)).append(",");
+                if (time.getTime()>=maxTime.getTime()){
+                    maxTime = time;
+                }
+            }
+
+            //加班情况
+            if (appointmentTime.getTime()>maxTime.getTime()){
+                EmployeeOverTime employeeOverTime = new EmployeeOverTime();
+                employeeOverTime.setShopId(appointment.getShopId());
+                employeeOverTime.setEmployeeId(employeeId);
+                employeeOverTime.setShiftTimeStr(shiftTimeStr.substring(0,shiftTimeStr.length()-1));
+                employeeOverTime.setAppointmentId(appointment.getAppointmentId());
+                employeeOverTime.setCreateBy("SYSTEM");
+                employeeOverTime.setCreateTime(LocalDateTime.now());
+                //插入加班记录
+                employeeOverTimeMapper.insertEmployeeOverTime(employeeOverTime);
+            }
+
         }
     }
 
