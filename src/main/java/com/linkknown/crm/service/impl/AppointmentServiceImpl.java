@@ -197,6 +197,30 @@ public class AppointmentServiceImpl implements IAppointmentService {
 
 
     /**
+     * 更新预约
+     * @param updateAppointmentReq 请求
+     */
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+    public void updateAppointment(UpdateAppointmentReq updateAppointmentReq) {
+        //更新入库的预约实体
+        Appointment appointment = new Appointment();
+        BeanUtils.copyProperties(updateAppointmentReq,appointment);
+
+        //设置预约项目总金额
+        appointment.setProjectPrice(this.tongjiProjectPriceByIds(updateAppointmentReq.getProjectIds()));
+
+        //设置更新人和时间
+        appointment.setUpdateBy("SYSTEM");
+        appointment.setUpdateTime(LocalDateTime.now());
+        appointmentMapper.updateAppointment(appointment);
+
+        //处理加班记录
+        this.handleEmployeeOverTime(appointment,appointment.getEmployeeId());
+    }
+
+
+    /**
      * 处理加班记录
      * @param appointment 预约单
      * @param employeeId 员工id
@@ -231,41 +255,33 @@ public class AppointmentServiceImpl implements IAppointmentService {
                 }
             }
 
-            //加班情况
+            //这里做个查询，本次预约单是否已经在加班记录表里了
+            EmployeeOverTime employeeOverTimeDb = employeeOverTimeMapper.selectEmployeeShiftTimeByAppointmentId(appointment.getAppointmentId());
+            Boolean thisAppointmentHasInDb = employeeOverTimeDb != null;
+
+            //根据下班时间与预约时间对比，要么插入记录，要么去除记录
             if (appointmentTime.getTime()>maxTime.getTime()){
-                EmployeeOverTime employeeOverTime = new EmployeeOverTime();
-                employeeOverTime.setShopId(appointment.getShopId());
-                employeeOverTime.setEmployeeId(employeeId);
-                employeeOverTime.setShiftTimeStr(shiftTimeStr.substring(0,shiftTimeStr.length()-1));
-                employeeOverTime.setAppointmentId(appointment.getAppointmentId());
-                employeeOverTime.setCreateBy("SYSTEM");
-                employeeOverTime.setCreateTime(LocalDateTime.now());
-                //插入加班记录
-                employeeOverTimeMapper.insertEmployeeOverTime(employeeOverTime);
+                if (!thisAppointmentHasInDb){
+                    //库里没有，插入加班记录
+                    EmployeeOverTime employeeOverTime = new EmployeeOverTime();
+                    employeeOverTime.setShopId(appointment.getShopId());
+                    employeeOverTime.setEmployeeId(employeeId);
+                    employeeOverTime.setShiftTimeStr(shiftTimeStr.substring(0,shiftTimeStr.length()-1));
+                    employeeOverTime.setAppointmentId(appointment.getAppointmentId());
+                    employeeOverTime.setCreateBy("SYSTEM");
+                    employeeOverTime.setCreateTime(LocalDateTime.now());
+                    employeeOverTimeMapper.insertEmployeeOverTime(employeeOverTime);
+                }
+
+            }else{
+                //去除加班记录
+                if (thisAppointmentHasInDb){
+                    employeeOverTimeMapper.deleteEmployeeOverTimeById(employeeOverTimeDb.getOverTimeId());
+                }
+
             }
 
         }
-    }
-
-
-    /**
-     * 更新预约
-     * @param updateAppointmentReq 请求
-     */
-    @Override
-    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
-    public void updateAppointment(UpdateAppointmentReq updateAppointmentReq) {
-        //更新入库的预约实体
-        Appointment appointment = new Appointment();
-        BeanUtils.copyProperties(updateAppointmentReq,appointment);
-
-        //设置预约项目总金额
-        appointment.setProjectPrice(this.tongjiProjectPriceByIds(updateAppointmentReq.getProjectIds()));
-
-        //设置更新人和时间
-        appointment.setUpdateBy("SYSTEM");
-        appointment.setUpdateTime(LocalDateTime.now());
-        appointmentMapper.updateAppointment(appointment);
     }
 
 

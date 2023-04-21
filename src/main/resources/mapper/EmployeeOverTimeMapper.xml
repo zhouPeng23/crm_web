@@ -84,5 +84,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{overTimeId}
         </foreach>
     </delete>
+
+    <select id="selectEmployeeShiftTimeByAppointmentId" parameterType="Integer" resultMap="EmployeeOverTimeResult">
+        <include refid="selectEmployeeOverTimeVo"/>
+        where appointment_id = #{appointmentId}
+    </select>
     
 </mapper>

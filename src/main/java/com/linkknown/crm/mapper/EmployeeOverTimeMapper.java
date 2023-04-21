@@ -23,4 +23,6 @@ public interface EmployeeOverTimeMapper extends BaseMapper<EmployeeOverTime> {
     public int deleteEmployeeOverTimeById(Integer overTimeId);
 
     public int deleteEmployeeOverTimeByIds(String[] overTimeIds);
+
+    EmployeeOverTime selectEmployeeShiftTimeByAppointmentId(Integer appointmentId);
 }
