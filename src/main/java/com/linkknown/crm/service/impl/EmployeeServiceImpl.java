@@ -100,6 +100,9 @@ public class EmployeeServiceImpl implements IEmployeeService {
         //设置初始密码
         employee.setPassword(MD5Utils.md5(employeeDefaultPassword));
 
+        //设置正常状态
+        employee.setStatus(StatusEnum.normal.getCode());
+
         //插入
         employeeMapper.insertEmployee(employee);
     }
