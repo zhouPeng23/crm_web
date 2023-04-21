@@ -9,6 +9,7 @@ import com.linkknown.crm.bean.req.ModifyPasswordReq;
 import com.linkknown.crm.bean.req.UserLoginReq;
 import com.linkknown.crm.common.aspect.exception.WebException;
 import com.linkknown.crm.common.enums.ResponseEnum;
+import com.linkknown.crm.common.enums.StatusEnum;
 import com.linkknown.crm.common.util.MD5Utils;
 import com.linkknown.crm.mapper.*;
 import com.linkknown.crm.service.IEmployeeService;
@@ -139,8 +140,9 @@ public class EmployeeServiceImpl implements IEmployeeService {
             throw new WebException(ResponseEnum.employee_has_customer_can_not_delete);
         }
 
-        //删除
-        employeeMapper.deleteEmployeeById(employee.getEmployeeId());
+        //更新状态为删除状态
+        employee.setStatus(StatusEnum.deleted.getCode());
+        employeeMapper.updateEmployee(employee);
     }
 
 
