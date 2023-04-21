@@ -2,6 +2,7 @@ package com.linkknown.crm.common.checktoken;
 
 import com.linkknown.crm.bean.dos.Employee;
 import com.linkknown.crm.bean.dos.Investor;
+import com.linkknown.crm.common.enums.StatusEnum;
 import com.linkknown.crm.mapper.EmployeeMapper;
 import com.linkknown.crm.mapper.InvestorMapper;
 import io.jsonwebtoken.*;
@@ -84,8 +85,7 @@ public class JwtUtils {
 
         //查资方
         Investor investor = investorMapper.selectInvestorByPhoneNumber(phoneNumber);
-        if (investor!=null){
-
+        if (investor!=null && investor.getStatus().equals(StatusEnum.normal.getCode())){
             //认证通过
             setResponseHeaderToken(response,String.valueOf(investor.getPhoneNumber()),investor.getInvestorName());
             return 1;
@@ -94,7 +94,7 @@ public class JwtUtils {
 
             //查员工
             Employee employee = employeeMapper.selectEmployeeByPhoneNumber(phoneNumber);
-            if(employee!=null){
+            if(employee!=null && employee.getStatus().equals(StatusEnum.normal.getCode())){
                 //认证通过
                 setResponseHeaderToken(response,String.valueOf(employee.getPhoneNumber()),employee.getEmployeeName());
                 return 1;
