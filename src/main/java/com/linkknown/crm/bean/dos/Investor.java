@@ -31,6 +31,8 @@ public class Investor {
 
     private BigDecimal holdingProportion;
 
+    private Integer status;
+
     private String createBy;
 
     private LocalDateTime createTime;

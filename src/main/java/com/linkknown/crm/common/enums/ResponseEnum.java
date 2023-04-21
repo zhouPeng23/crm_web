@@ -90,10 +90,16 @@ public enum ResponseEnum {
     project_project_price_style_error                                     ("0603", "项目价格格式错误"),
     project_project_id_can_not_be_empty                                   ("0604", "项目id不能为空"),
 
+    //================================================账号==============================================================
+    account_has_been_deleted                                               ("0701", "账号已删除"),
+    account_has_been_disabled                                              ("0702", "账号已禁用"),
+    account_status_yi_chang                                                ("0703", "账号状态异常"),
 
 
 
-    please_contact_the_administrator                                    ("9999", "请联系管理员");
+
+
+    please_contact_the_administrator                                      ("9999", "请联系管理员");
 
     String code;
     String msg;

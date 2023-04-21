@@ -1,6 +1,7 @@
 package com.linkknown.crm.api;
 
 import com.linkknown.crm.bean.dos.Employee;
+import com.linkknown.crm.bean.dos.EmployeeShiftTime;
 import com.linkknown.crm.common.aspect.exception.WebExceptionService;
 import com.linkknown.crm.common.aspect.paramslog.WebParamsLog;
 import com.linkknown.crm.common.enums.ResponseEnum;
@@ -28,11 +29,20 @@ public class EmployeeController {
     @Resource
     private IEmployeeService employeeService;
 
-    @PostMapping(value = "/queryEmployeeList")
-    @WebParamsLog(description = "查询员工集合")
-    public BaseResponse<List<Employee>> queryEmployeeList(Employee employee){
-        EmployeeParamUtils.queryEmployeeList(employee);
-        List<Employee> employeeList = employeeService.queryEmployeeList(employee);
+    @PostMapping(value = "/queryShopAllEmployeeList")
+    @WebParamsLog(description = "查询店铺下所有员工集合")
+    public BaseResponse<List<Employee>> queryShopAllEmployeeList(Employee employee){
+        EmployeeParamUtils.queryShopAllEmployeeList(employee);
+        List<Employee> employeeList = employeeService.queryShopAllEmployeeList(employee);
+        return BaseResponse.success(employeeList);
+    }
+
+
+    @PostMapping(value = "/queryShopNormalEmployeeList")
+    @WebParamsLog(description = "查询店铺下所有正常状态员工集合")
+    public BaseResponse<List<Employee>> queryShopNormalEmployeeList(Employee employee){
+        EmployeeParamUtils.queryShopNormalEmployeeList(employee);
+        List<Employee> employeeList = employeeService.queryShopNormalEmployeeList(employee);
         return BaseResponse.success(employeeList);
     }
 
@@ -61,6 +71,15 @@ public class EmployeeController {
         EmployeeParamUtils.deleteEmployee(employee);
         employeeService.deleteEmployee(employee);
         return BaseResponse.success(ResponseEnum.delete_success);
+    }
+
+
+    @PostMapping(value = "/queryEmployeeShiftTimeList")
+    @WebParamsLog(description = "查询员工班次集合")
+    public BaseResponse<List<EmployeeShiftTime>> queryEmployeeShiftTimeList(Employee employee){
+        EmployeeParamUtils.queryEmployeeShiftTimeList(employee);
+        List<EmployeeShiftTime> employeeShiftTimeList = employeeService.queryEmployeeShiftTimeList(employee);
+        return BaseResponse.success(employeeShiftTimeList);
     }
 
 

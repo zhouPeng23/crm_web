@@ -30,6 +30,8 @@ public class Employee {
 
     private Integer roleId;
 
+    private Integer status;
+
     private String createBy;
 
     private LocalDateTime createTime;

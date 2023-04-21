@@ -1,17 +1,17 @@
 package com.linkknown.crm.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.linkknown.crm.bean.dos.Customer;
 import com.linkknown.crm.bean.dos.Employee;
+import com.linkknown.crm.bean.dos.EmployeeShiftTime;
 import com.linkknown.crm.bean.dos.Role;
 import com.linkknown.crm.bean.req.ModifyPasswordReq;
 import com.linkknown.crm.bean.req.UserLoginReq;
 import com.linkknown.crm.common.aspect.exception.WebException;
 import com.linkknown.crm.common.enums.ResponseEnum;
+import com.linkknown.crm.common.enums.StatusEnum;
 import com.linkknown.crm.common.util.MD5Utils;
-import com.linkknown.crm.mapper.CustomerMapper;
-import com.linkknown.crm.mapper.EmployeeMapper;
-import com.linkknown.crm.mapper.InvestorMapper;
-import com.linkknown.crm.mapper.RoleMapper;
+import com.linkknown.crm.mapper.*;
 import com.linkknown.crm.service.IEmployeeService;
 import org.apache.commons.codec.digest.Md5Crypt;
 import org.apache.tomcat.util.security.MD5Encoder;
@@ -45,6 +45,33 @@ public class EmployeeServiceImpl implements IEmployeeService {
     @Value("${employee.default.password}")
     private String employeeDefaultPassword;
 
+    @Resource
+    private EmployeeShiftTimeMapper employeeShiftTimeMapper;
+
+
+    /**
+     * 查询店铺下所有员工集合
+     * @param employee 员工
+     * @return 集合
+     */
+    @Override
+    public List<Employee> queryShopAllEmployeeList(Employee employee) {
+        return employeeMapper.selectEmployeeList(employee);
+    }
+
+
+    /**
+     * 查询店铺下所有正常状态员工集合
+     * @param employee 员工
+     * @return 集合
+     */
+    @Override
+    public List<Employee> queryShopNormalEmployeeList(Employee employee) {
+        //查询正常状态的员工
+        employee.setStatus(StatusEnum.normal.getCode());
+        return employeeMapper.selectEmployeeList(employee);
+    }
+
 
     /**
      * 添加员工
@@ -73,19 +100,11 @@ public class EmployeeServiceImpl implements IEmployeeService {
         //设置初始密码
         employee.setPassword(MD5Utils.md5(employeeDefaultPassword));
 
+        //设置正常状态
+        employee.setStatus(StatusEnum.normal.getCode());
+
         //插入
         employeeMapper.insertEmployee(employee);
-    }
-
-
-    /**
-     * 查询员工集合
-     * @param employee 员工
-     * @return 集合
-     */
-    @Override
-    public List<Employee> queryEmployeeList(Employee employee) {
-        return employeeMapper.selectEmployeeList(employee);
     }
 
 
@@ -137,10 +156,24 @@ public class EmployeeServiceImpl implements IEmployeeService {
             throw new WebException(ResponseEnum.employee_has_customer_can_not_delete);
         }
 
-        //删除
-        employeeMapper.deleteEmployeeById(employee.getEmployeeId());
+        //更新状态为删除状态
+        employee.setStatus(StatusEnum.deleted.getCode());
+        employeeMapper.updateEmployee(employee);
     }
 
+
+    /**
+     * 查询员工班次集合
+     * @param employee 员工
+     * @return 集合
+     */
+    @Override
+    public List<EmployeeShiftTime> queryEmployeeShiftTimeList(Employee employee){
+        QueryWrapper<EmployeeShiftTime> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("shift_id",employee.getShiftId())
+                .orderByAsc("start_time");
+        return employeeShiftTimeMapper.selectList(queryWrapper);
+    }
 
 
 }

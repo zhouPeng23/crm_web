@@ -1,12 +1,15 @@
 package com.linkknown.crm.common.util.paramutil;
 
 import com.linkknown.crm.bean.dos.Employee;
+import com.linkknown.crm.bean.dos.EmployeeShiftTime;
 import com.linkknown.crm.bean.req.ModifyPasswordReq;
 import com.linkknown.crm.bean.req.UserLoginReq;
 import com.linkknown.crm.common.aspect.exception.WebException;
 import com.linkknown.crm.common.enums.ResponseEnum;
 import com.linkknown.crm.common.util.RegexUtils;
 import org.springframework.util.StringUtils;
+
+import java.util.List;
 
 /**
  * @author zhoupeng
@@ -16,10 +19,22 @@ public class EmployeeParamUtils {
 
 
     /**
-     * 查询员工集合校验
+     * 查询店铺下所有员工集合校验
      * @param employee employee
      */
-    public static void queryEmployeeList(Employee employee) {
+    public static void queryShopAllEmployeeList(Employee employee) {
+        //门店id不能为空
+        if (StringUtils.isEmpty(employee.getShopId())){
+            throw new WebException(ResponseEnum.shop_id_can_not_be_empty);
+        }
+    }
+
+
+    /**
+     * 查询店铺下所有正常状态员工集合校验
+     * @param employee employee
+     */
+    public static void queryShopNormalEmployeeList(Employee employee) {
         //门店id不能为空
         if (StringUtils.isEmpty(employee.getShopId())){
             throw new WebException(ResponseEnum.shop_id_can_not_be_empty);
@@ -149,18 +164,18 @@ public class EmployeeParamUtils {
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    /**
+     * 查询员工班次集合
+     * @param employee 员工
+     */
+    public static void queryEmployeeShiftTimeList(Employee employee) {
+        //门店id不能为空
+        if (StringUtils.isEmpty(employee.getShopId())){
+            throw new WebException(ResponseEnum.shop_id_can_not_be_empty);
+        }
+        //员工id不能为空
+        if (StringUtils.isEmpty(employee.getEmployeeId())){
+            throw new WebException(ResponseEnum.employee_id_can_not_be_empty);
+        }
+    }
 }
