@@ -14,6 +14,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="birthday"    column="birthday"    />
         <result property="investorAmount"    column="investor_amount"    />
         <result property="holdingProportion"    column="holding_proportion"    />
+        <result property="status"    column="status"    />
         <result property="createBy"    column="create_by"    />
         <result property="createTime"    column="create_time"    />
         <result property="updateBy"    column="update_by"    />
@@ -21,7 +22,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectInvestorVo">
-        select shop_ids, investor_id, investor_name, sex, phone_number, password, birthday, investor_amount, holding_proportion, create_by, create_time, update_by, update_time from investor
+        select shop_ids, investor_id, investor_name, sex, phone_number, password, birthday, investor_amount, holding_proportion, status, create_by, create_time, update_by, update_time from investor
     </sql>
 
     <select id="selectInvestorList" parameterType="com.linkknown.crm.bean.dos.Investor" resultMap="InvestorResult">
@@ -35,6 +36,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="birthday != null "> and birthday = #{birthday}</if>
             <if test="investorAmount != null "> and investor_amount = #{investorAmount}</if>
             <if test="holdingProportion != null "> and holding_proportion = #{holdingProportion}</if>
+            <if test="status != null "> and status = #{status}</if>
         </where>
     </select>
     
@@ -59,6 +61,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="birthday != null ">birthday,</if>
             <if test="investorAmount != null ">investor_amount,</if>
             <if test="holdingProportion != null ">holding_proportion,</if>
+            <if test="status != null ">status,</if>
             <if test="createBy != null  and createBy != ''">create_by,</if>
             <if test="createTime != null ">create_time,</if>
             <if test="updateBy != null  and updateBy != ''">update_by,</if>
@@ -73,6 +76,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="birthday != null ">#{birthday},</if>
             <if test="investorAmount != null ">#{investorAmount},</if>
             <if test="holdingProportion != null ">#{holdingProportion},</if>
+            <if test="status != null ">#{status},</if>
             <if test="createBy != null  and createBy != ''">#{createBy},</if>
             <if test="createTime != null ">#{createTime},</if>
             <if test="updateBy != null  and updateBy != ''">#{updateBy},</if>
@@ -91,6 +95,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="birthday != null ">birthday = #{birthday},</if>
             <if test="investorAmount != null ">investor_amount = #{investorAmount},</if>
             <if test="holdingProportion != null ">holding_proportion = #{holdingProportion},</if>
+            <if test="status != null ">status = #{status},</if>
             <if test="createBy != null  and createBy != ''">create_by = #{createBy},</if>
             <if test="createTime != null ">create_time = #{createTime},</if>
             <if test="updateBy != null  and updateBy != ''">update_by = #{updateBy},</if>
