@@ -69,6 +69,10 @@ public class AppointmentParamUtils {
      * @param updateAppointmentReq 请求
      */
     public static void updateAppointment(UpdateAppointmentReq updateAppointmentReq) {
+        //门店id不能为空
+        if (StringUtils.isEmpty(updateAppointmentReq.getShopId())){
+            throw new WebException(ResponseEnum.shop_id_can_not_be_empty);
+        }
         //预约id不能为空
         if (StringUtils.isEmpty(updateAppointmentReq.getAppointmentId())){
             throw new WebException(ResponseEnum.appointment_id_can_not_be_empty);

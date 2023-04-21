@@ -238,9 +238,7 @@ public class AppointmentServiceImpl implements IAppointmentService {
         //班次时间信息
         EmployeeShiftTime employeeShiftTime = new EmployeeShiftTime();
         employeeShiftTime.setShiftId(employeeShift.getShiftId());
-        List<Time> timeList = employeeShiftTimeMapper.selectEmployeeShiftTimeList(employeeShiftTime).stream()
-                .map(EmployeeShiftTime::getEndTime)
-                .collect(Collectors.toList());
+        List<EmployeeShiftTime> timeList = employeeShiftTimeMapper.selectEmployeeShiftTimeList(employeeShiftTime);
 
         //记录一下班次时间，方便入库
         StringBuilder shiftTimeStr = new StringBuilder();
@@ -248,10 +246,10 @@ public class AppointmentServiceImpl implements IAppointmentService {
         if (!CollectionUtils.isEmpty(timeList)){
             //获取最大值，也就是下班时间
             Time maxTime = new Time(0);
-            for (Time time:timeList){
-                shiftTimeStr.append(time.toString().substring(0, 5)).append(",");
-                if (time.getTime()>=maxTime.getTime()){
-                    maxTime = time;
+            for (EmployeeShiftTime shiftTime:timeList){
+                shiftTimeStr.append(shiftTime.getStartTime().toString().substring(0, 5)).append("-").append(shiftTime.getEndTime().toString().substring(0, 5)).append(" ,");
+                if (shiftTime.getEndTime().getTime()>=maxTime.getTime()){
+                    maxTime = shiftTime.getEndTime();
                 }
             }
 
