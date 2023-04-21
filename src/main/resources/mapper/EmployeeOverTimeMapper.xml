@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.linkknown.crm.mapper.EmployeeOverTimeMapper">
+    
+    <resultMap type="com.linkknown.crm.bean.dos.EmployeeOverTime" id="EmployeeOverTimeResult">
+        <result property="shopId"    column="shop_id"    />
+        <result property="employeeId"    column="employee_id"    />
+        <result property="overTimeId"    column="over_time_id"    />
+        <result property="shiftTimeStr"    column="shift_time_str"    />
+        <result property="appointmentId"    column="appointment_id"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <sql id="selectEmployeeOverTimeVo">
+        select shop_id, employee_id, over_time_id, shift_time_str, appointment_id, create_by, create_time, update_by, update_time from employee_over_time
+    </sql>
+
+    <select id="selectEmployeeOverTimeList" parameterType="com.linkknown.crm.bean.dos.EmployeeOverTime" resultMap="EmployeeOverTimeResult">
+        <include refid="selectEmployeeOverTimeVo"/>
+        <where>  
+            <if test="shopId != null "> and shop_id = #{shopId}</if>
+            <if test="employeeId != null "> and employee_id = #{employeeId}</if>
+            <if test="shiftTimeStr != null  and shiftTimeStr != ''"> and shift_time_str = #{shiftTimeStr}</if>
+            <if test="appointmentId != null "> and appointment_id = #{appointmentId}</if>
+        </where>
+    </select>
+    
+    <select id="selectEmployeeOverTimeById" parameterType="Integer" resultMap="EmployeeOverTimeResult">
+        <include refid="selectEmployeeOverTimeVo"/>
+        where over_time_id = #{overTimeId}
+    </select>
+        
+    <insert id="insertEmployeeOverTime" parameterType="com.linkknown.crm.bean.dos.EmployeeOverTime" useGeneratedKeys="true" keyProperty="overTimeId">
+        insert into employee_over_time
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="shopId != null ">shop_id,</if>
+            <if test="employeeId != null ">employee_id,</if>
+            <if test="shiftTimeStr != null  and shiftTimeStr != ''">shift_time_str,</if>
+            <if test="appointmentId != null ">appointment_id,</if>
+            <if test="createBy != null  and createBy != ''">create_by,</if>
+            <if test="createTime != null ">create_time,</if>
+            <if test="updateBy != null  and updateBy != ''">update_by,</if>
+            <if test="updateTime != null ">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="shopId != null ">#{shopId},</if>
+            <if test="employeeId != null ">#{employeeId},</if>
+            <if test="shiftTimeStr != null  and shiftTimeStr != ''">#{shiftTimeStr},</if>
+            <if test="appointmentId != null ">#{appointmentId},</if>
+            <if test="createBy != null  and createBy != ''">#{createBy},</if>
+            <if test="createTime != null ">#{createTime},</if>
+            <if test="updateBy != null  and updateBy != ''">#{updateBy},</if>
+            <if test="updateTime != null ">#{updateTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateEmployeeOverTime" parameterType="com.linkknown.crm.bean.dos.EmployeeOverTime">
+        update employee_over_time
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="shopId != null ">shop_id = #{shopId},</if>
+            <if test="employeeId != null ">employee_id = #{employeeId},</if>
+            <if test="shiftTimeStr != null  and shiftTimeStr != ''">shift_time_str = #{shiftTimeStr},</if>
+            <if test="appointmentId != null ">appointment_id = #{appointmentId},</if>
+            <if test="createBy != null  and createBy != ''">create_by = #{createBy},</if>
+            <if test="createTime != null ">create_time = #{createTime},</if>
+            <if test="updateBy != null  and updateBy != ''">update_by = #{updateBy},</if>
+            <if test="updateTime != null ">update_time = #{updateTime},</if>
+        </trim>
+        where over_time_id = #{overTimeId}
+    </update>
+
+    <delete id="deleteEmployeeOverTimeById" parameterType="Integer">
+        delete from employee_over_time where over_time_id = #{overTimeId}
+    </delete>
+
+    <delete id="deleteEmployeeOverTimeByIds" parameterType="String">
+        delete from employee_over_time where over_time_id in 
+        <foreach item="overTimeId" collection="array" open="(" separator="," close=")">
+            #{overTimeId}
+        </foreach>
+    </delete>
+    
+</mapper>
