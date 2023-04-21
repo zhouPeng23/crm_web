@@ -13,6 +13,8 @@ import java.sql.Time;
 @Data
 public class UpdateAppointmentReq {
 
+    private Integer shopId;
+
     private Integer appointmentId;
 
     private Date appointmentDate;
