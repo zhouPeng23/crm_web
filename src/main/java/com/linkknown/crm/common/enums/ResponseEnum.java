@@ -93,6 +93,7 @@ public enum ResponseEnum {
     //================================================账号==============================================================
     account_has_been_deleted                                               ("0701", "账号已删除"),
     account_has_been_disabled                                              ("0702", "账号已禁用"),
+    account_status_yi_chang                                                ("0703", "账号状态异常"),
 
 
 

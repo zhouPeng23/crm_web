@@ -7,6 +7,7 @@ import com.linkknown.crm.bean.req.UserLoginReq;
 import com.linkknown.crm.bean.res.UserLoginRes;
 import com.linkknown.crm.common.aspect.exception.WebException;
 import com.linkknown.crm.common.enums.ResponseEnum;
+import com.linkknown.crm.common.enums.StatusEnum;
 import com.linkknown.crm.mapper.EmployeeMapper;
 import com.linkknown.crm.mapper.InvestorMapper;
 import com.linkknown.crm.mapper.RoleMapper;
@@ -52,7 +53,9 @@ public class LoginServiceImpl implements ILoginService {
         //查询资方
         Investor investor = investorMapper.selectInvestorByPhoneNumber(phoneNumberParam);
         if (investor!=null){
-            //资方登录
+            //检查账户状态
+            this.checkAccountStatus(investor.getStatus());
+            //对比密码
             if (!passwordParam.equals(investor.getPassword())){
                 throw new WebException(ResponseEnum.phone_number_or_password_error);
             }
@@ -73,13 +76,14 @@ public class LoginServiceImpl implements ILoginService {
             if (employeeList.size()>1){
                 throw new WebException(ResponseEnum.employee_number_error);
             }
-
-            //查到一个用户后对比密码
+            //查到用户
             Employee employeeDb = employeeList.get(0);
+            //检查账户状态
+            this.checkAccountStatus(employeeDb.getStatus());
+            //对比密码
             if (!passwordParam.equals(employeeDb.getPassword())){
                 throw new WebException(ResponseEnum.phone_number_or_password_error);
             }
-
             //设置返回对象值
             userLoginRes.setLoginUserPhoneNumber(employeeDb.getPhoneNumber());
             userLoginRes.setLoginUserName(employeeDb.getEmployeeName());
@@ -89,6 +93,28 @@ public class LoginServiceImpl implements ILoginService {
 
         //认证通过^_^
         return userLoginRes;
+    }
+
+
+    /**
+     * 检查账户状态
+     * @param status 状态
+     */
+    private void checkAccountStatus(Integer status) {
+        //非正常状态做个提示
+        if (!StatusEnum.normal.getCode().equals(status)){
+            //禁用
+            if (StatusEnum.disabled.getCode().equals(status)){
+                throw new WebException(ResponseEnum.account_has_been_disabled);
+            }
+            //已删除
+            if (StatusEnum.deleted.getCode().equals(status)){
+                throw new WebException(ResponseEnum.account_has_been_deleted);
+            }
+
+            //统一提示
+            throw new WebException(ResponseEnum.account_status_yi_chang);
+        }
     }
 
 
