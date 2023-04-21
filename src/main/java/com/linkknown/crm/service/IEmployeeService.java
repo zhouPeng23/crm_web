@@ -14,18 +14,26 @@ import java.util.List;
 public interface IEmployeeService {
 
     /**
+     * 查询店铺下所有员工集合
+     * @param employee 员工
+     * @return 集合
+     */
+    List<Employee> queryShopAllEmployeeList(Employee employee);
+
+
+    /**
+     * 查询店铺下所有正常状态员工集合
+     * @param employee 员工
+     * @return 集合
+     */
+    List<Employee> queryShopNormalEmployeeList(Employee employee);
+
+
+    /**
      * 添加员工
      * @param employee 员工
      */
     void addEmployee(Employee employee);
-
-
-    /**
-     * 查询员工集合
-     * @param employee 员工
-     * @return 集合
-     */
-    List<Employee> queryEmployeeList(Employee employee);
 
 
     /**

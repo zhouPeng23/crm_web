@@ -50,6 +50,30 @@ public class EmployeeServiceImpl implements IEmployeeService {
 
 
     /**
+     * 查询店铺下所有员工集合
+     * @param employee 员工
+     * @return 集合
+     */
+    @Override
+    public List<Employee> queryShopAllEmployeeList(Employee employee) {
+        return employeeMapper.selectEmployeeList(employee);
+    }
+
+
+    /**
+     * 查询店铺下所有正常状态员工集合
+     * @param employee 员工
+     * @return 集合
+     */
+    @Override
+    public List<Employee> queryShopNormalEmployeeList(Employee employee) {
+        //查询正常状态的员工
+        employee.setStatus(StatusEnum.normal.getCode());
+        return employeeMapper.selectEmployeeList(employee);
+    }
+
+
+    /**
      * 添加员工
      * @param employee 员工
      */
@@ -78,17 +102,6 @@ public class EmployeeServiceImpl implements IEmployeeService {
 
         //插入
         employeeMapper.insertEmployee(employee);
-    }
-
-
-    /**
-     * 查询员工集合
-     * @param employee 员工
-     * @return 集合
-     */
-    @Override
-    public List<Employee> queryEmployeeList(Employee employee) {
-        return employeeMapper.selectEmployeeList(employee);
     }
 
 

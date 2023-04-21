@@ -19,10 +19,22 @@ public class EmployeeParamUtils {
 
 
     /**
-     * 查询员工集合校验
+     * 查询店铺下所有员工集合校验
      * @param employee employee
      */
-    public static void queryEmployeeList(Employee employee) {
+    public static void queryShopAllEmployeeList(Employee employee) {
+        //门店id不能为空
+        if (StringUtils.isEmpty(employee.getShopId())){
+            throw new WebException(ResponseEnum.shop_id_can_not_be_empty);
+        }
+    }
+
+
+    /**
+     * 查询店铺下所有正常状态员工集合校验
+     * @param employee employee
+     */
+    public static void queryShopNormalEmployeeList(Employee employee) {
         //门店id不能为空
         if (StringUtils.isEmpty(employee.getShopId())){
             throw new WebException(ResponseEnum.shop_id_can_not_be_empty);
