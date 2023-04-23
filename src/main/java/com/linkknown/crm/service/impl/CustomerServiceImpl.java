@@ -92,9 +92,6 @@ public class CustomerServiceImpl implements ICustomerService {
         if ("1".equals(addCustomerReq.getHasIntroducedByCustomer())){
             //根据手机号查顾客获取customerId
             Customer introducedByCustomer = customerMapper.selectCustomerByPhoneNumber(addCustomerReq.getIntroducedByCustomerPhoneNumber());
-            if (introducedByCustomer==null){
-                throw new WebException(ResponseEnum.introduced_user_not_exist);
-            }
             customer.setIntroducedByCustomerId(introducedByCustomer.getCustomerId());
             //这里小心一点，顺便校验手机号查询出来的用户名和界面传来的是否一致
             if (!introducedByCustomer.getCustomerName().equals(addCustomerReq.getIntroducedByCustomerName())){
@@ -159,6 +156,9 @@ public class CustomerServiceImpl implements ICustomerService {
         if ("1".equals(updateCustomerReq.getHasIntroducedByCustomer())){
             //根据手机号查顾客获取customerId
             Customer introducedByCustomer = customerMapper.selectCustomerByPhoneNumber(updateCustomerReq.getIntroducedByCustomerPhoneNumber());
+            if (introducedByCustomer==null){
+                throw new WebException(ResponseEnum.introduced_user_not_exist);
+            }
             customer.setIntroducedByCustomerId(introducedByCustomer.getCustomerId());
             //这里小心一点，顺便校验手机号查询出来的用户名和界面传来的是否一致
             if (!introducedByCustomer.getCustomerName().equals(updateCustomerReq.getIntroducedByCustomerName())){
