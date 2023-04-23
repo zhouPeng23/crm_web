@@ -24,9 +24,9 @@ import java.util.Map;
 public class JwtUtils {
 
     /**
-     * 过期时间30分钟
+     * 过期时间2小时
      */
-    private static final long EXPIRE_TIME = 30*60*1000;
+    private static final long EXPIRE_TIME = 2*60*60*1000;
 
     /**
      * 加密密钥
