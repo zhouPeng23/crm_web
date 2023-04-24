@@ -17,7 +17,4 @@ public class Project {
 
     private String projectName;
 
-    private BigDecimal projectPrice;
-
-
 }
