@@ -49,9 +49,6 @@ public class AppointmentServiceImpl implements IAppointmentService {
     private ProjectMapper projectMapper;
 
     @Resource
-    private CustomerIncomeMapper customerIncomeMapper;
-
-    @Resource
     private EmployeeMapper employeeMapper;
 
     @Resource
@@ -136,8 +133,6 @@ public class AppointmentServiceImpl implements IAppointmentService {
         BeanUtils.copyProperties(addAppointmentReq,appointment);
         //设置预约状态
         appointment.setAppointmentStatus(AppointmentStatusEnum.appointment_wait_use.getCode());
-        //设置预约项目总金额
-        appointment.setProjectPrice(this.tongjiProjectPriceByIds(addAppointmentReq.getProjectIds()));
 
         //根据手机号查询顾客表
         Customer customerParam = new Customer();
@@ -151,18 +146,6 @@ public class AppointmentServiceImpl implements IAppointmentService {
             appointment.setCreateBy("SYSTEM");
             appointment.setCreateTime(LocalDateTime.now());
             appointmentMapper.insertAppointment(appointment);
-
-            //被介绍人不为空,插入一条收益记录
-            if (!StringUtils.isEmpty(customer.getIntroducedByCustomerId())){
-                CustomerIncome customerIncome = new CustomerIncome();
-                customerIncome.setShopId(addAppointmentReq.getShopId());
-                customerIncome.setCustomerId(customer.getIntroducedByCustomerId());
-                customerIncome.setIntroduceCustomerId(customer.getCustomerId());
-                customerIncome.setIntroduceCustomerAppointmentId(appointment.getAppointmentId());
-                customerIncome.setCreateBy("SYSTEM");
-                customerIncome.setCreateTime(LocalDateTime.now());
-                customerIncomeMapper.insertCustomerIncome(customerIncome);
-            }
 
         }else{
             //新顾客 - 先添加顾客表
@@ -206,9 +189,6 @@ public class AppointmentServiceImpl implements IAppointmentService {
         //更新入库的预约实体
         Appointment appointment = new Appointment();
         BeanUtils.copyProperties(updateAppointmentReq,appointment);
-
-        //设置预约项目总金额
-        appointment.setProjectPrice(this.tongjiProjectPriceByIds(updateAppointmentReq.getProjectIds()));
 
         //设置更新人和时间
         appointment.setUpdateBy("SYSTEM");
@@ -280,29 +260,6 @@ public class AppointmentServiceImpl implements IAppointmentService {
             }
 
         }
-    }
-
-
-    /**
-     * 统计项目价格
-     * @param projectIds 项目ids
-     * @return 总金额
-     */
-    private BigDecimal tongjiProjectPriceByIds(String projectIds) {
-        //定义返回结果
-        BigDecimal totalAmount = BigDecimal.ZERO;
-
-        //逗号分隔，将数组转为集合
-        String[] projectIdsArray = projectIds.split(",");
-
-        //批量查询
-        List<Project> projectList = projectMapper.selectProjectByIds(projectIdsArray);
-        for (Project project:projectList){
-            totalAmount = totalAmount.add(project.getProjectPrice());
-        }
-
-        //返回总金额
-        return totalAmount;
     }
 
 
