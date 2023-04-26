@@ -82,6 +82,16 @@ public enum ResponseEnum {
     prohibit_bidirectional_binding                                         ("0423", "禁止双向绑定"),
     introduced_user_not_exist                                              ("0424", "被介绍人不存在"),
 
+    //================================================充值==============================================================
+    amount_style_is_error                                                   ("0425", "金额格式错误"),
+    remark_cannot_be_empty                                                  ("0426", "备注不能为空"),
+    login_user_phone_number_cannot_be_empty                               ("0427", "操作员手机号不能为空"),
+    password_cannot_be_empty                                                ("0428", "密码不能为空"),
+    not_this_shop_employee_cannot_do_this                                 ("0429", "非本店员工无法操作"),
+    customer_is_not_exist                                                   ("0430", "顾客不存在"),
+    password_is_wrong                                                        ("0431", "密码错误"),
+    customer_phone_number_and_name_is_error                               ("0432", "顾客姓名与手机号不匹配"),
+
     //================================================角色==============================================================
     role_shop_id_can_not_be_empty                                         ("0501", "门店id不能为空"),
 

@@ -59,7 +59,7 @@ public class ModifyAppointmentStatus2EndUseTask {
             long diffInMilliseconds = System.currentTimeMillis() - appointmentDateTime;
 
             // 将毫秒数差转换成小时数
-            double diffInHours = diffInMilliseconds / (60 * 60 * 1000);
+            long diffInHours = diffInMilliseconds / (60 * 60 * 1000);
 
             if (diffInHours>=3){
                 needUpdateAppointmentIdList.add(appointment.getAppointmentId().toString());
