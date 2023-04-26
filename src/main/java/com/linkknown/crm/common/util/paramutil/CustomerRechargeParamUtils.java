@@ -9,6 +9,8 @@ import com.linkknown.crm.common.enums.ResponseEnum;
 import com.linkknown.crm.common.util.RegexUtils;
 import org.springframework.util.StringUtils;
 
+import java.util.List;
+
 /**
  * @author zhoupeng
  * @date 2023/4/4 14:55
@@ -73,4 +75,19 @@ public class CustomerRechargeParamUtils {
         }
 
     }
+
+
+    /**
+     * 查询充值记录
+     * @param rechargeIds ids
+     */
+    public static void queryRechargeListByIds(String rechargeIds) {
+        if (StringUtils.isEmpty(rechargeIds)){
+            throw new WebException(ResponseEnum.recharge_ids_cannot_be_empty);
+        }
+    }
+
+
+
+
 }

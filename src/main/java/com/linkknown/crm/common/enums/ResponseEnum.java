@@ -91,6 +91,7 @@ public enum ResponseEnum {
     customer_is_not_exist                                                   ("0430", "顾客不存在"),
     password_is_wrong                                                        ("0431", "密码错误"),
     customer_phone_number_and_name_is_error                               ("0432", "顾客姓名与手机号不匹配"),
+    recharge_ids_cannot_be_empty                                           ("0433", "充值ids不能为空"),
 
     //================================================角色==============================================================
     role_shop_id_can_not_be_empty                                         ("0501", "门店id不能为空"),

@@ -14,6 +14,8 @@ public interface CustomerRechargeMapper extends BaseMapper<CustomerRecharge> {
 
     public CustomerRecharge selectCustomerRechargeById(Integer rechargeId);
 
+    public List<CustomerRecharge> selectRechargeListByIds(String[] rechargeIds);
+
     public List<CustomerRecharge> selectCustomerRechargeList(CustomerRecharge customerRecharge);
 
     public int insertCustomerRecharge(CustomerRecharge customerRecharge);

@@ -2,6 +2,7 @@ package com.linkknown.crm.bean.dos;
 
 import lombok.Data;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 /**
@@ -19,7 +20,11 @@ public class CustomerIncome {
 
     private Integer introduceCustomerId;
 
-    private Integer introduceCustomerAppointmentId;
+    private Integer introduceCustomerRechargeId;
+
+    private Integer incomePoint;
+
+    private BigDecimal incomeAmount;
 
     private String createBy;
 

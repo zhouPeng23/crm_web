@@ -3,17 +3,20 @@ package com.linkknown.crm.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.linkknown.crm.bean.dos.Customer;
+import com.linkknown.crm.bean.dos.CustomerIncome;
 import com.linkknown.crm.bean.dos.CustomerRecharge;
 import com.linkknown.crm.bean.dos.Employee;
 import com.linkknown.crm.bean.req.AddCustomerRechargeReq;
 import com.linkknown.crm.bean.req.QueryCustomerRechargePage;
 import com.linkknown.crm.common.aspect.exception.WebException;
 import com.linkknown.crm.common.enums.ResponseEnum;
+import com.linkknown.crm.mapper.CustomerIncomeMapper;
 import com.linkknown.crm.mapper.CustomerMapper;
 import com.linkknown.crm.mapper.CustomerRechargeMapper;
 import com.linkknown.crm.mapper.EmployeeMapper;
 import com.linkknown.crm.service.ICustomerRechargeService;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,6 +25,7 @@ import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -41,6 +45,12 @@ public class CustomerRechargeServiceImpl implements ICustomerRechargeService {
 
     @Resource
     private EmployeeMapper employeeMapper;
+
+    @Value("${customer.income.point}")
+    private String incomePoint;
+
+    @Resource
+    private CustomerIncomeMapper customerIncomeMapper;
 
 
     /**
@@ -134,6 +144,40 @@ public class CustomerRechargeServiceImpl implements ICustomerRechargeService {
         customerRecharge.setCreateBy(employee.getEmployeeName());
         customerRecharge.setCreateTime(LocalDateTime.now());
         customerRechargeMapper.insertCustomerRecharge(customerRecharge);
+
+        //判断该笔充值是否需要分润
+        if (customer.getIntroducedByCustomerId()!=null){
+            //需要分润
+            Integer introducedByCustomerId = customer.getIntroducedByCustomerId();
+            Customer introduceCustomer = customerMapper.selectCustomerById(introducedByCustomerId);
+            //插入收益记录表
+            CustomerIncome customerIncome = new CustomerIncome();
+            customerIncome.setShopId(introduceCustomer.getShopId());
+            customerIncome.setCustomerId(introduceCustomer.getCustomerId());
+            customerIncome.setIntroduceCustomerId(customer.getCustomerId());
+            customerIncome.setIntroduceCustomerRechargeId(customerRecharge.getRechargeId());
+            customerIncome.setIncomePoint(Integer.valueOf(incomePoint));
+            //点数转为百分比
+            BigDecimal pointPercent = new BigDecimal(incomePoint).divide(new BigDecimal("100"),2,BigDecimal.ROUND_HALF_UP);
+            //收益金额
+            BigDecimal incomeAmouont = customerRecharge.getRechargeAmount().multiply(pointPercent).setScale(2, BigDecimal.ROUND_HALF_UP);
+            customerIncome.setIncomeAmount(incomeAmouont);
+            customerIncome.setCreateBy("SYSTEM");
+            customerIncome.setCreateTime(LocalDateTime.now());
+            customerIncomeMapper.insertCustomerIncome(customerIncome);
+        }
+
+    }
+
+
+    /**
+     * 根据充值ids批量查充值记录
+     * @param rechargeIds ids
+     * @return 集合
+     */
+    @Override
+    public List<CustomerRecharge> queryRechargeListByIds(String rechargeIds){
+        return customerRechargeMapper.selectRechargeListByIds(rechargeIds.split(","));
     }
 
 

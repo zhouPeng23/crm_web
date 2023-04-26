@@ -9,4 +9,6 @@ employee:
   default:
     password: '111111'
 
-
+customer:
+  income:
+    point: 10

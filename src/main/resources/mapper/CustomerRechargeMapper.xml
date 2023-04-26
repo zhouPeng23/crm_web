@@ -37,6 +37,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectCustomerRechargeVo"/>
         where recharge_id = #{rechargeId}
     </select>
+
+    <select id="selectRechargeListByIds" parameterType="String" resultMap="CustomerRechargeResult">
+        <include refid="selectCustomerRechargeVo"/>
+        where recharge_id in
+        <foreach item="rechargeId" collection="array" open="(" separator="," close=")">
+            #{rechargeId}
+        </foreach>
+    </select>
         
     <insert id="insertCustomerRecharge" parameterType="com.linkknown.crm.bean.dos.CustomerRecharge" useGeneratedKeys="true" keyProperty="rechargeId">
         insert into customer_recharge

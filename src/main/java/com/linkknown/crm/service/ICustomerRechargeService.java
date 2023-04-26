@@ -36,4 +36,10 @@ public interface ICustomerRechargeService {
     public void addCustomerRecharge(AddCustomerRechargeReq addCustomerRechargeReq);
 
 
+    /**
+     * 根据充值ids批量查充值记录
+     * @param rechargeIds ids
+     * @return 集合
+     */
+    public List<CustomerRecharge> queryRechargeListByIds(String rechargeIds);
 }

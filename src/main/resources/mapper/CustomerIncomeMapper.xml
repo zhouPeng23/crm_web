@@ -9,7 +9,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="customerIncomeId"    column="customer_income_id"    />
         <result property="customerId"    column="customer_id"    />
         <result property="introduceCustomerId"    column="introduce_customer_id"    />
-        <result property="introduceCustomerAppointmentId"    column="introduce_customer_appointment_id"    />
+        <result property="introduceCustomerRechargeId"    column="introduce_customer_recharge_id"    />
+        <result property="incomePoint"    column="income_point"    />
+        <result property="incomeAmount"    column="income_amount"    />
         <result property="createBy"    column="create_by"    />
         <result property="createTime"    column="create_time"    />
         <result property="updateBy"    column="update_by"    />
@@ -17,7 +19,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectCustomerIncomeVo">
-        select shop_id, customer_income_id, customer_id, introduce_customer_id, introduce_customer_appointment_id, create_by, create_time, update_by, update_time from customer_income
+        select shop_id, customer_income_id, customer_id, introduce_customer_id, introduce_customer_recharge_id,income_point,income_amount, create_by, create_time, update_by, update_time from customer_income
     </sql>
 
     <select id="selectCustomerIncomeList" parameterType="com.linkknown.crm.bean.dos.CustomerIncome" resultMap="CustomerIncomeResult">
@@ -26,7 +28,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="shopId != null "> and shop_id = #{shopId}</if>
             <if test="customerId != null "> and customer_id = #{customerId}</if>
             <if test="introduceCustomerId != null "> and introduce_customer_id = #{introduceCustomerId}</if>
-            <if test="introduceCustomerAppointmentId != null "> and introduce_customer_appointment_id = #{introduceCustomerAppointmentId}</if>
+            <if test="introduceCustomerRechargeId != null "> and introduce_customer_recharge_id = #{introduceCustomerRechargeId}</if>
+            <if test="incomePoint != null "> and income_point = #{incomePoint}</if>
+            <if test="incomeAmount != null "> and income_amount = #{incomeAmount}</if>
         </where>
     </select>
     
@@ -41,7 +45,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="shopId != null ">shop_id,</if>
             <if test="customerId != null ">customer_id,</if>
             <if test="introduceCustomerId != null ">introduce_customer_id,</if>
-            <if test="introduceCustomerAppointmentId != null ">introduce_customer_appointment_id,</if>
+            <if test="introduceCustomerRechargeId != null ">introduce_customer_recharge_id,</if>
+            <if test="incomePoint != null ">income_point,</if>
+            <if test="incomeAmount != null ">income_amount,</if>
             <if test="createBy != null  and createBy != ''">create_by,</if>
             <if test="createTime != null ">create_time,</if>
             <if test="updateBy != null  and updateBy != ''">update_by,</if>
@@ -51,7 +57,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="shopId != null ">#{shopId},</if>
             <if test="customerId != null ">#{customerId},</if>
             <if test="introduceCustomerId != null ">#{introduceCustomerId},</if>
-            <if test="introduceCustomerAppointmentId != null ">#{introduceCustomerAppointmentId},</if>
+            <if test="introduceCustomerRechargeId != null ">#{introduceCustomerRechargeId},</if>
+            <if test="incomePoint != null ">#{incomePoint},</if>
+            <if test="incomeAmount != null ">#{incomeAmount},</if>
             <if test="createBy != null  and createBy != ''">#{createBy},</if>
             <if test="createTime != null ">#{createTime},</if>
             <if test="updateBy != null  and updateBy != ''">#{updateBy},</if>
@@ -65,7 +73,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="shopId != null ">shop_id = #{shopId},</if>
             <if test="customerId != null ">customer_id = #{customerId},</if>
             <if test="introduceCustomerId != null ">introduce_customer_id = #{introduceCustomerId},</if>
-            <if test="introduceCustomerAppointmentId != null ">introduce_customer_appointment_id = #{introduceCustomerAppointmentId},</if>
+            <if test="introduceCustomerRechargeId != null ">introduce_customer_recharge_id = #{introduceCustomerRechargeId},</if>
+            <if test="incomePoint != null ">income_point = #{incomePoint},</if>
+            <if test="incomeAmount != null ">income_amount = #{incomeAmount},</if>
             <if test="createBy != null  and createBy != ''">create_by = #{createBy},</if>
             <if test="createTime != null ">create_time = #{createTime},</if>
             <if test="updateBy != null  and updateBy != ''">update_by = #{updateBy},</if>
