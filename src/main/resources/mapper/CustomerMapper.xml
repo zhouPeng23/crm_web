@@ -42,7 +42,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectCustomerVo"/>
         where customer_id = #{customerId}
     </select>
-        
+
+    <select id="selectCustomerListByIds" parameterType="String" resultMap="CustomerResult">
+        <include refid="selectCustomerVo"/>
+        where customer_id in
+        <foreach item="customerId" collection="array" open="(" separator="," close=")">
+            #{customerId}
+        </foreach>
+    </select>
+
     <insert id="insertCustomer" parameterType="com.linkknown.crm.bean.dos.Customer" useGeneratedKeys="true" keyProperty="customerId">
         insert into customer
         <trim prefix="(" suffix=")" suffixOverrides=",">

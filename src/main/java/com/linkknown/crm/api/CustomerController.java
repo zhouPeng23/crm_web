@@ -73,6 +73,7 @@ public class CustomerController {
         return BaseResponse.success(ResponseEnum.delete_success);
     }
 
+
     @PostMapping(value = "/queryShopAllCustomer")
     @WebParamsLog(description = "查询门店所有顾客")
     public BaseResponse<List<Customer>> queryShopAllCustomer(Customer customer){
@@ -81,12 +82,31 @@ public class CustomerController {
         return BaseResponse.success(customerList);
     }
 
+
     @PostMapping(value = "/queryCustomerByPhoneNumber")
     @WebParamsLog(description = "根据手机号查询顾客")
     public BaseResponse<Customer> queryCustomerByPhoneNumber(Customer customer){
         CustomerParamUtils.queryCustomerByPhoneNumber(customer);
         Customer customerDb = customService.queryCustomerByPhoneNumber(customer);
         return BaseResponse.success(customerDb);
+    }
+
+
+    @PostMapping(value = "/queryCustomerListByAppointmentIds")
+    @WebParamsLog(description = "根据预约单ids查询顾客集合")
+    public BaseResponse<List<Customer>> queryCustomerListByAppointmentIds(String appointmentIds){
+        CustomerParamUtils.queryCustomerListByAppointmentIds(appointmentIds);
+        List<Customer> customerList = customService.queryCustomerListByAppointmentIds(appointmentIds);
+        return BaseResponse.success(customerList);
+    }
+
+
+    @PostMapping(value = "/queryCustomerListByIds")
+    @WebParamsLog(description = "根据顾客ids查顾客集合")
+    public BaseResponse<List<Customer>> queryCustomerListByIds(String customerIds){
+        CustomerParamUtils.queryCustomerListByIds(customerIds);
+        List<Customer> customerList = customService.queryCustomerListByIds(customerIds);
+        return BaseResponse.success(customerList);
     }
 
 

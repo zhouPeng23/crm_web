@@ -2,6 +2,7 @@ package com.linkknown.crm.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.linkknown.crm.bean.dos.Appointment;
+import com.linkknown.crm.bean.dos.Customer;
 import com.linkknown.crm.bean.req.AddAppointmentReq;
 import com.linkknown.crm.bean.req.QueryAppointmentPage;
 import com.linkknown.crm.bean.req.UpdateAppointmentReq;

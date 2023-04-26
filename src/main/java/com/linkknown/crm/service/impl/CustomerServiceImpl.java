@@ -2,7 +2,9 @@ package com.linkknown.crm.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.linkknown.crm.bean.dos.Appointment;
 import com.linkknown.crm.bean.dos.Customer;
+import com.linkknown.crm.bean.dos.CustomerRecharge;
 import com.linkknown.crm.bean.req.AddCustomerReq;
 import com.linkknown.crm.bean.req.UpdateCustomerReq;
 import com.linkknown.crm.common.enums.EnumsObject;
@@ -10,7 +12,10 @@ import com.linkknown.crm.bean.req.QueryCustomerPage;
 import com.linkknown.crm.common.aspect.exception.WebException;
 import com.linkknown.crm.common.enums.CustomerMassLevelEnum;
 import com.linkknown.crm.common.enums.ResponseEnum;
+import com.linkknown.crm.common.util.MyStringUtils;
+import com.linkknown.crm.mapper.AppointmentMapper;
 import com.linkknown.crm.mapper.CustomerMapper;
+import com.linkknown.crm.mapper.CustomerRechargeMapper;
 import com.linkknown.crm.service.ICustomerService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -24,6 +29,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author zhoupeng
@@ -34,6 +40,12 @@ public class CustomerServiceImpl implements ICustomerService {
 
     @Resource
     private CustomerMapper customerMapper;
+
+    @Resource
+    private AppointmentMapper appointmentMapper;
+
+    @Resource
+    private CustomerRechargeMapper customerRechargeMapper;
 
 
     /**
@@ -223,6 +235,35 @@ public class CustomerServiceImpl implements ICustomerService {
         }
         return customerList.get(0);
 
+    }
+
+
+    /**
+     * 根据预约单ids查询顾客集合
+     * @param appointmentIds 预约单ids
+     * @return 集合
+     */
+    @Override
+    public List<Customer> queryCustomerListByAppointmentIds(String appointmentIds){
+        List<Integer> customerIds = appointmentMapper.selectAppointmentByIds(appointmentIds.split(",")).stream()
+                .map(Appointment::getCustomerId).collect(Collectors.toList());
+
+        if (!CollectionUtils.isEmpty(customerIds)){
+            return customerMapper.selectCustomerListByIds(MyStringUtils.integerList2Array(customerIds));
+        }
+
+        return new ArrayList<>();
+    }
+
+
+    /**
+     * 根据顾客ids查询顾客集合
+     * @param customerIds ids
+     * @return 集合
+     */
+    @Override
+    public List<Customer> queryCustomerListByIds(String customerIds){
+        return customerMapper.selectCustomerListByIds(customerIds.split(","));
     }
 
 
