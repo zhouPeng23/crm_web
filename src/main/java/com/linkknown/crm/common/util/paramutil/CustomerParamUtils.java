@@ -10,6 +10,8 @@ import com.linkknown.crm.common.enums.ResponseEnum;
 import com.linkknown.crm.common.util.RegexUtils;
 import org.springframework.util.StringUtils;
 
+import java.util.List;
+
 /**
  * @author zhoupeng
  * @date 2023/4/4 14:55
@@ -168,4 +170,29 @@ public class CustomerParamUtils {
             throw new WebException(ResponseEnum.customer_phone_number_style_error);
         }
     }
+
+
+    /**
+     * 根据预约单ids查询顾客集合
+     * @param appointmentIds ids
+     */
+    public static void queryCustomerListByAppointmentIds(String appointmentIds) {
+        if (StringUtils.isEmpty(appointmentIds)){
+            throw new WebException(ResponseEnum.appointment_id_can_not_be_empty);
+        }
+    }
+
+
+    /**
+     * 根据顾客ids查询顾客集合
+     * @param customerIds ids
+     */
+    public static void queryCustomerListByIds(String customerIds) {
+        if (StringUtils.isEmpty(customerIds)){
+            throw new WebException(ResponseEnum.customer_id_can_not_be_empty);
+        }
+    }
+
+
+
 }

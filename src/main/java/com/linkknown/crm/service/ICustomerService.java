@@ -65,4 +65,22 @@ public interface ICustomerService {
      * @return 顾客
      */
     Customer queryCustomerByPhoneNumber(Customer customer);
+
+
+    /**
+     * 根据预约单ids查询顾客集合
+     * @param appointmentIds 预约单ids
+     * @return 集合
+     */
+    List<Customer> queryCustomerListByAppointmentIds(String appointmentIds);
+
+
+    /**
+     * 根据顾客ids查询顾客集合
+     * @param customerIds ids
+     * @return 集合
+     */
+    List<Customer> queryCustomerListByIds(String customerIds);
+
+
 }

@@ -16,6 +16,8 @@ public interface CustomerMapper extends BaseMapper<Customer> {
 
     public List<Customer> selectCustomerList(Customer customer);
 
+    public List<Customer> selectCustomerListByIds(String[] customerIds);
+
     public int insertCustomer(Customer customer);
 
     public int updateCustomer(Customer customer);

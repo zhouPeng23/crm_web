@@ -6,25 +6,25 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 /**
- * 顾客收益
+ * 顾客充值表
  * @author zhoupeng
  */
 @Data
-public class CustomerIncome {
+public class CustomerRecharge{
 
     private Integer shopId;
 
-    private Integer customerIncomeId;
+    private Integer rechargeId;
 
     private Integer customerId;
 
-    private Integer introduceCustomerId;
+    private BigDecimal rechargeAmount;
 
-    private Integer introduceCustomerRechargeId;
+    private String rechargeForProject;
 
-    private Integer incomePoint;
+    private String rechargeForProduct;
 
-    private BigDecimal incomeAmount;
+    private String remark;
 
     private String createBy;
 

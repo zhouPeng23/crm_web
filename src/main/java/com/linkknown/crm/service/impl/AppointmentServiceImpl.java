@@ -11,6 +11,7 @@ import com.linkknown.crm.common.enums.AppointmentStatusEnum;
 import com.linkknown.crm.common.enums.CustomerMassLevelEnum;
 import com.linkknown.crm.common.enums.EnumsObject;
 import com.linkknown.crm.common.enums.ResponseEnum;
+import com.linkknown.crm.common.util.MyStringUtils;
 import com.linkknown.crm.mapper.*;
 import com.linkknown.crm.service.IAppointmentService;
 import org.springframework.beans.BeanUtils;
