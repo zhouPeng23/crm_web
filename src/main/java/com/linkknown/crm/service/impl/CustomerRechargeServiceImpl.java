@@ -2,18 +2,12 @@ package com.linkknown.crm.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.linkknown.crm.bean.dos.Customer;
-import com.linkknown.crm.bean.dos.CustomerIncome;
-import com.linkknown.crm.bean.dos.CustomerRecharge;
-import com.linkknown.crm.bean.dos.Employee;
+import com.linkknown.crm.bean.dos.*;
 import com.linkknown.crm.bean.req.AddCustomerRechargeReq;
 import com.linkknown.crm.bean.req.QueryCustomerRechargePage;
 import com.linkknown.crm.common.aspect.exception.WebException;
 import com.linkknown.crm.common.enums.ResponseEnum;
-import com.linkknown.crm.mapper.CustomerIncomeMapper;
-import com.linkknown.crm.mapper.CustomerMapper;
-import com.linkknown.crm.mapper.CustomerRechargeMapper;
-import com.linkknown.crm.mapper.EmployeeMapper;
+import com.linkknown.crm.mapper.*;
 import com.linkknown.crm.service.ICustomerRechargeService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Value;
@@ -46,11 +40,11 @@ public class CustomerRechargeServiceImpl implements ICustomerRechargeService {
     @Resource
     private EmployeeMapper employeeMapper;
 
-    @Value("${customer.income.point}")
-    private String incomePoint;
-
     @Resource
     private CustomerIncomeMapper customerIncomeMapper;
+
+    @Resource
+    private ShopCustomerIncomeSetterMapper shopCustomerIncomeSetterMapper;
 
 
     /**
@@ -111,6 +105,9 @@ public class CustomerRechargeServiceImpl implements ICustomerRechargeService {
     @Override
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public void addCustomerRecharge(AddCustomerRechargeReq addCustomerRechargeReq){
+        //店铺id
+        Integer shopId = addCustomerRechargeReq.getShopId();
+
         //入参 - 操作员
         String loginUserPhoneNumber = addCustomerRechargeReq.getLoginUserPhoneNumber();
         String password = addCustomerRechargeReq.getPassword();
@@ -147,26 +144,61 @@ public class CustomerRechargeServiceImpl implements ICustomerRechargeService {
 
         //判断该笔充值是否需要分润
         if (customer.getIntroducedByCustomerId()!=null){
-            //需要分润
-            Integer introducedByCustomerId = customer.getIntroducedByCustomerId();
-            Customer introduceCustomer = customerMapper.selectCustomerById(introducedByCustomerId);
-            //插入收益记录表
-            CustomerIncome customerIncome = new CustomerIncome();
-            customerIncome.setShopId(introduceCustomer.getShopId());
-            customerIncome.setCustomerId(introduceCustomer.getCustomerId());
-            customerIncome.setIntroduceCustomerId(customer.getCustomerId());
-            customerIncome.setIntroduceCustomerRechargeId(customerRecharge.getRechargeId());
-            customerIncome.setIncomePoint(Integer.valueOf(incomePoint));
-            //点数转为百分比
-            BigDecimal pointPercent = new BigDecimal(incomePoint).divide(new BigDecimal("100"),2,BigDecimal.ROUND_HALF_UP);
-            //收益金额
-            BigDecimal incomeAmouont = customerRecharge.getRechargeAmount().multiply(pointPercent).setScale(2, BigDecimal.ROUND_HALF_UP);
-            customerIncome.setIncomeAmount(incomeAmouont);
-            customerIncome.setCreateBy("SYSTEM");
-            customerIncome.setCreateTime(LocalDateTime.now());
-            customerIncomeMapper.insertCustomerIncome(customerIncome);
+            //分润规则查询
+            ShopCustomerIncomeSetter shopCustomerIncomeSetter = new ShopCustomerIncomeSetter();
+            shopCustomerIncomeSetter.setShopId(shopId);
+            List<ShopCustomerIncomeSetter> shopCustomerIncomeSetterList = shopCustomerIncomeSetterMapper.selectShopCustomerIncomeSetterList(shopCustomerIncomeSetter);
+
+            if (shopCustomerIncomeSetterList.size()==1){
+                //需要分润
+                Integer introducedByCustomerId = customer.getIntroducedByCustomerId();
+                Customer introduceCustomer = customerMapper.selectCustomerById(introducedByCustomerId);
+
+                //分润规则
+                ShopCustomerIncomeSetter customerIncomeSetter = shopCustomerIncomeSetterList.get(0);
+
+                //查询充值记录
+                CustomerRecharge recharge = new CustomerRecharge();
+                recharge.setCustomerId(customer.getCustomerId());
+                List<CustomerRecharge> customerRechargeList = customerRechargeMapper.selectCustomerRechargeList(recharge);
+
+                //判断是不是首单
+                if (customerRechargeList.size()==1){
+                    //首单分润
+                    this.addCustomerIncome(customer, customerRecharge, introduceCustomer, customerIncomeSetter.getFirstIncomePoint());
+
+                }else{
+                    //非首单分润
+                    this.addCustomerIncome(customer, customerRecharge, introduceCustomer, customerIncomeSetter.getForeverIncomePoint());
+                }
+            }
         }
 
+    }
+
+
+    /**
+     * 添加分润记录
+     * @param customer 顾客
+     * @param customerRecharge 充值数据
+     * @param introduceCustomer 介绍人
+     * @param incomePoint 收益点数
+     */
+    private void addCustomerIncome(Customer customer, CustomerRecharge customerRecharge, Customer introduceCustomer, Integer incomePoint) {
+        CustomerIncome customerIncome = new CustomerIncome();
+        customerIncome.setShopId(introduceCustomer.getShopId());
+        customerIncome.setCustomerId(introduceCustomer.getCustomerId());
+        customerIncome.setIntroduceCustomerId(customer.getCustomerId());
+        customerIncome.setIntroduceCustomerRechargeId(customerRecharge.getRechargeId());
+        customerIncome.setIncomePoint(incomePoint);
+        //点数转为百分比
+        BigDecimal pointPercent = new BigDecimal(incomePoint).divide(new BigDecimal("100"), 2, BigDecimal.ROUND_HALF_UP);
+        //收益金额
+        BigDecimal incomeAmouont = customerRecharge.getRechargeAmount().multiply(pointPercent).setScale(2, BigDecimal.ROUND_HALF_UP);
+        customerIncome.setIncomeAmount(incomeAmouont);
+        customerIncome.setCreateBy("SYSTEM");
+        customerIncome.setCreateTime(LocalDateTime.now());
+        customerIncomeMapper.insertCustomerIncome(customerIncome);
     }
 
 
