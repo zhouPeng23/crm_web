@@ -19,4 +19,6 @@ public interface ShopCustomerIncomeSetterMapper extends BaseMapper<ShopCustomerI
 
     public int updateShopCustomerIncomeSetter(ShopCustomerIncomeSetter shopCustomerIncomeSetter);
 
+    public void deleteBySetterId(Integer setterId);
+
 }

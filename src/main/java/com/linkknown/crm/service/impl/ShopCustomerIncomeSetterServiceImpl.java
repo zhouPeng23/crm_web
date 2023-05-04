@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -83,6 +84,8 @@ public class ShopCustomerIncomeSetterServiceImpl implements IShopCustomerIncomeS
         //添加
         ShopCustomerIncomeSetter shopCustomerIncomeSetter = new ShopCustomerIncomeSetter();
         BeanUtils.copyProperties(addShopCustomerIncomeSetterReq,shopCustomerIncomeSetter);
+        shopCustomerIncomeSetter.setCreateBy(employee.getEmployeeName());
+        shopCustomerIncomeSetter.setCreateTime(LocalDateTime.now());
         shopCustomerIncomeSetterMapper.insertShopCustomerIncomeSetter(shopCustomerIncomeSetter);
     }
 
@@ -109,6 +112,8 @@ public class ShopCustomerIncomeSetterServiceImpl implements IShopCustomerIncomeS
         //更新
         ShopCustomerIncomeSetter shopCustomerIncomeSetter = new ShopCustomerIncomeSetter();
         BeanUtils.copyProperties(updateShopCustomerIncomeSetterReq,shopCustomerIncomeSetter);
+        shopCustomerIncomeSetter.setUpdateBy(employee.getEmployeeName());
+        shopCustomerIncomeSetter.setUpdateTime(LocalDateTime.now());
         shopCustomerIncomeSetterMapper.updateShopCustomerIncomeSetter(shopCustomerIncomeSetter);
     }
 
@@ -133,7 +138,7 @@ public class ShopCustomerIncomeSetterServiceImpl implements IShopCustomerIncomeS
         }
 
         //删除
-        shopCustomerIncomeSetterMapper.deleteById(deleteShopCustomerIncomeSetterReq.getSetterId());
+        shopCustomerIncomeSetterMapper.deleteBySetterId(deleteShopCustomerIncomeSetterReq.getSetterId());
     }
 
 
