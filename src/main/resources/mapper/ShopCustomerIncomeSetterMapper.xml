@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.linkknown.crm.mapper.ShopCustomerIncomeSetterMapper">
+    
+    <resultMap type="com.linkknown.crm.bean.dos.ShopCustomerIncomeSetter" id="ShopCustomerIncomeSetterResult">
+        <result property="shopId"    column="shop_id"    />
+        <result property="setterId"    column="setter_id"    />
+        <result property="firstIncomePoint"    column="first_income_point"    />
+        <result property="foreverIncomePoint"    column="forever_income_point"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <sql id="selectShopCustomerIncomeSetterVo">
+        select shop_id, setter_id, first_income_point, forever_income_point, create_by, create_time, update_by, update_time from shop_customer_income_setter
+    </sql>
+
+    <select id="selectShopCustomerIncomeSetterList" parameterType="com.linkknown.crm.bean.dos.ShopCustomerIncomeSetter" resultMap="ShopCustomerIncomeSetterResult">
+        <include refid="selectShopCustomerIncomeSetterVo"/>
+        <where>  
+            <if test="shopId != null "> and shop_id = #{shopId}</if>
+            <if test="firstIncomePoint != null "> and first_income_point = #{firstIncomePoint}</if>
+            <if test="foreverIncomePoint != null "> and forever_income_point = #{foreverIncomePoint}</if>
+        </where>
+    </select>
+    
+    <select id="selectShopCustomerIncomeSetterById" parameterType="Integer" resultMap="ShopCustomerIncomeSetterResult">
+        <include refid="selectShopCustomerIncomeSetterVo"/>
+        where setter_id = #{setterId}
+    </select>
+        
+    <insert id="insertShopCustomerIncomeSetter" parameterType="com.linkknown.crm.bean.dos.ShopCustomerIncomeSetter" useGeneratedKeys="true" keyProperty="setterId">
+        insert into shop_customer_income_setter
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="shopId != null ">shop_id,</if>
+            <if test="firstIncomePoint != null ">first_income_point,</if>
+            <if test="foreverIncomePoint != null ">forever_income_point,</if>
+            <if test="createBy != null  and createBy != ''">create_by,</if>
+            <if test="createTime != null ">create_time,</if>
+            <if test="updateBy != null  and updateBy != ''">update_by,</if>
+            <if test="updateTime != null ">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="shopId != null ">#{shopId},</if>
+            <if test="firstIncomePoint != null ">#{firstIncomePoint},</if>
+            <if test="foreverIncomePoint != null ">#{foreverIncomePoint},</if>
+            <if test="createBy != null  and createBy != ''">#{createBy},</if>
+            <if test="createTime != null ">#{createTime},</if>
+            <if test="updateBy != null  and updateBy != ''">#{updateBy},</if>
+            <if test="updateTime != null ">#{updateTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateShopCustomerIncomeSetter" parameterType="com.linkknown.crm.bean.dos.ShopCustomerIncomeSetter">
+        update shop_customer_income_setter
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="shopId != null ">shop_id = #{shopId},</if>
+            <if test="firstIncomePoint != null ">first_income_point = #{firstIncomePoint},</if>
+            <if test="foreverIncomePoint != null ">forever_income_point = #{foreverIncomePoint},</if>
+            <if test="createBy != null  and createBy != ''">create_by = #{createBy},</if>
+            <if test="createTime != null ">create_time = #{createTime},</if>
+            <if test="updateBy != null  and updateBy != ''">update_by = #{updateBy},</if>
+            <if test="updateTime != null ">update_time = #{updateTime},</if>
+        </trim>
+        where setter_id = #{setterId}
+    </update>
+    
+</mapper>

@@ -31,6 +31,12 @@ public enum ResponseEnum {
     shop_leader_phone_number_style_error                                ("0212", "手机号格式错误"),
     shop_has_employee_can_not_delete                                     ("0213", "门店下有员工，无法删除"),
     shop_has_project_can_not_delete                                     ("0214", "门店下有项目，无法删除"),
+    shop_customer_first_income_point_cannot_be_empty                   ("0215", "顾客首单收益点数不能为空"),
+    shop_customer_forever_income_point_cannot_be_empty                 ("0216", "顾客永久收益点数不能为空"),
+    shop_customer_setter_id_cannot_be_empty                             ("0217", "顾客收益设置id不能为空"),
+    shop_can_only_have_one_income_method                                ("0218", "一个门店只能有一种顾客收益方案"),
+    login_user_phone_number_cannot_be_empty                             ("0219", "操作员手机号不能为空"),
+    password_cannot_be_empty                                              ("0220", "密码不能为空"),
 
     //================================================员工==============================================================
     employee_name_can_not_be_empty                                       ("0301", "员工姓名不能为空"),
@@ -85,13 +91,11 @@ public enum ResponseEnum {
     //================================================充值==============================================================
     amount_style_is_error                                                   ("0425", "金额格式错误"),
     remark_cannot_be_empty                                                  ("0426", "备注不能为空"),
-    login_user_phone_number_cannot_be_empty                               ("0427", "操作员手机号不能为空"),
-    password_cannot_be_empty                                                ("0428", "密码不能为空"),
     not_this_shop_employee_cannot_do_this                                 ("0429", "非本店员工无法操作"),
     customer_is_not_exist                                                   ("0430", "顾客不存在"),
     password_is_wrong                                                        ("0431", "密码错误"),
     customer_phone_number_and_name_is_error                               ("0432", "顾客姓名与手机号不匹配"),
-    recharge_ids_cannot_be_empty                                           ("0433", "充值ids不能为空"),
+    recharge_ids_cannot_be_empty                                            ("0433", "充值ids不能为空"),
 
     //================================================角色==============================================================
     role_shop_id_can_not_be_empty                                         ("0501", "门店id不能为空"),
