@@ -2,6 +2,8 @@ package com.linkknown.crm.api;
 
 import com.linkknown.crm.bean.dos.Project;
 import com.linkknown.crm.bean.dos.Role;
+import com.linkknown.crm.bean.req.ThisProjectDownReq;
+import com.linkknown.crm.bean.req.ThisProjectUpReq;
 import com.linkknown.crm.common.aspect.exception.WebExceptionService;
 import com.linkknown.crm.common.aspect.paramslog.WebParamsLog;
 import com.linkknown.crm.common.enums.ResponseEnum;
@@ -64,6 +66,24 @@ public class ProjectController {
         ProjectParamUtils.deleteProject(project);
         projectService.deleteProject(project);
         return BaseResponse.success(ResponseEnum.delete_success);
+    }
+
+
+    @PostMapping(value = "/thisProjectUp")
+    @WebParamsLog(description = "上移项目")
+    public BaseResponse<Object> thisProjectUp(ThisProjectUpReq thisProjectUpReq){
+        ProjectParamUtils.thisProjectUp(thisProjectUpReq);
+        projectService.thisProjectUp(thisProjectUpReq);
+        return BaseResponse.success(ResponseEnum.web_success);
+    }
+
+
+    @PostMapping(value = "/thisProjectDown")
+    @WebParamsLog(description = "下移项目")
+    public BaseResponse<Object> thisProjectDown(ThisProjectDownReq thisProjectDownReq){
+        ProjectParamUtils.thisProjectDown(thisProjectDownReq);
+        projectService.thisProjectDown(thisProjectDownReq);
+        return BaseResponse.success(ResponseEnum.web_success);
     }
 
 
