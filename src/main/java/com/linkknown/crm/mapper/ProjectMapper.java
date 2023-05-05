@@ -14,6 +14,8 @@ public interface ProjectMapper extends BaseMapper<Project> {
 
     public Project selectProjectById(Integer projectId);
 
+    public int selectMaxOrderId(Integer shopId);
+
     public List<Project> selectProjectList(Project project);
 
     public int insertProject(Project project);

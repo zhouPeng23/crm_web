@@ -8,10 +8,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="shopId"    column="shop_id"    />
         <result property="projectId"    column="project_id"    />
         <result property="projectName"    column="project_name"    />
+        <result property="orderId"    column="order_id"    />
     </resultMap>
 
     <sql id="selectProjectVo">
-        select shop_id, project_id, project_name from project
+        select shop_id, project_id, project_name,order_id from project
     </sql>
 
     <select id="selectProjectList" parameterType="com.linkknown.crm.bean.dos.Project" resultMap="ProjectResult">
@@ -19,6 +20,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <where>  
             <if test="shopId != null "> and shop_id = #{shopId}</if>
             <if test="projectName != null  and projectName != ''"> and project_name like concat('%', #{projectName}, '%')</if>
+            <if test="orderId != null "> and order_id = #{orderId}</if>
         </where>
     </select>
     
@@ -26,16 +28,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectProjectVo"/>
         where project_id = #{projectId}
     </select>
+
+    <select id="selectMaxOrderId" parameterType="Integer" resultType="Integer">
+        select max(order_id) from project
+        where shop_id = #{shopId}
+    </select>
         
     <insert id="insertProject" parameterType="com.linkknown.crm.bean.dos.Project" useGeneratedKeys="true" keyProperty="projectId">
         insert into project
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="shopId != null ">shop_id,</if>
             <if test="projectName != null  and projectName != ''">project_name,</if>
+            <if test="orderId != null ">order_id,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="shopId != null ">#{shopId},</if>
             <if test="projectName != null  and projectName != ''">#{projectName},</if>
+            <if test="orderId != null ">#{orderId},</if>
          </trim>
     </insert>
 
@@ -44,6 +53,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <trim prefix="SET" suffixOverrides=",">
             <if test="shopId != null ">shop_id = #{shopId},</if>
             <if test="projectName != null  and projectName != ''">project_name = #{projectName},</if>
+            <if test="orderId != null ">order_id = #{orderId},</if>
         </trim>
         where project_id = #{projectId}
     </update>

@@ -17,4 +17,6 @@ public class Project {
 
     private String projectName;
 
+    private Integer orderId;
+
 }

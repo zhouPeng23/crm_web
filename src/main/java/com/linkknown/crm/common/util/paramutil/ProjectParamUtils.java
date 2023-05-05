@@ -1,6 +1,8 @@
 package com.linkknown.crm.common.util.paramutil;
 
 import com.linkknown.crm.bean.dos.Project;
+import com.linkknown.crm.bean.req.ThisProjectDownReq;
+import com.linkknown.crm.bean.req.ThisProjectUpReq;
 import com.linkknown.crm.common.aspect.exception.WebException;
 import com.linkknown.crm.common.enums.ResponseEnum;
 import com.linkknown.crm.common.util.RegexUtils;
@@ -70,6 +72,47 @@ public class ProjectParamUtils {
             throw new WebException(ResponseEnum.project_project_id_can_not_be_empty);
         }
     }
+
+
+    /**
+     * 上移项目
+     * @param thisProjectUpReq 请求
+     */
+    public static void thisProjectUp(ThisProjectUpReq thisProjectUpReq) {
+        //门店id不能为空
+        if (StringUtils.isEmpty(thisProjectUpReq.getShopId())){
+            throw new WebException(ResponseEnum.project_shop_id_can_not_be_empty);
+        }
+        //项目id不能为空
+        if (StringUtils.isEmpty(thisProjectUpReq.getCurrentProjectId())){
+            throw new WebException(ResponseEnum.project_project_id_can_not_be_empty);
+        }
+        //项目id不能为空
+        if (StringUtils.isEmpty(thisProjectUpReq.getUpperProjectId())){
+            throw new WebException(ResponseEnum.project_project_id_can_not_be_empty);
+        }
+    }
+
+
+    /**
+     * 下移项目
+     * @param thisProjectDownReq 请求
+     */
+    public static void thisProjectDown(ThisProjectDownReq thisProjectDownReq) {
+        //门店id不能为空
+        if (StringUtils.isEmpty(thisProjectDownReq.getShopId())){
+            throw new WebException(ResponseEnum.project_shop_id_can_not_be_empty);
+        }
+        //项目id不能为空
+        if (StringUtils.isEmpty(thisProjectDownReq.getCurrentProjectId())){
+            throw new WebException(ResponseEnum.project_project_id_can_not_be_empty);
+        }
+        //项目id不能为空
+        if (StringUtils.isEmpty(thisProjectDownReq.getDownerProjectId())){
+            throw new WebException(ResponseEnum.project_project_id_can_not_be_empty);
+        }
+    }
+
 
 
 

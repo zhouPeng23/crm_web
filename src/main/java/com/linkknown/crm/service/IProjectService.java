@@ -2,6 +2,8 @@ package com.linkknown.crm.service;
 
 
 import com.linkknown.crm.bean.dos.Project;
+import com.linkknown.crm.bean.req.ThisProjectDownReq;
+import com.linkknown.crm.bean.req.ThisProjectUpReq;
 
 import java.util.List;
 
@@ -38,5 +40,21 @@ public interface IProjectService {
      * @param project 项目
      */
     void deleteProject(Project project);
+
+
+    /**
+     * 上移项目
+     * @param thisProjectUpReq 请求
+     */
+    void thisProjectUp(ThisProjectUpReq thisProjectUpReq);
+
+
+    /**
+     * 下移项目
+     * @param thisProjectDownReq 请求
+     */
+    void thisProjectDown(ThisProjectDownReq thisProjectDownReq);
+
+
 
 }
