@@ -3,9 +3,11 @@ package com.linkknown.crm.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.linkknown.crm.bean.dos.*;
+import com.linkknown.crm.bean.req.AddCustomerConsumeReq;
 import com.linkknown.crm.bean.req.AddCustomerRechargeReq;
 import com.linkknown.crm.bean.req.QueryCustomerRechargePage;
 import com.linkknown.crm.common.aspect.exception.WebException;
+import com.linkknown.crm.common.enums.OperateTypeEnum;
 import com.linkknown.crm.common.enums.ResponseEnum;
 import com.linkknown.crm.mapper.*;
 import com.linkknown.crm.service.ICustomerRechargeService;
@@ -116,6 +118,10 @@ public class CustomerRechargeServiceImpl implements ICustomerRechargeService {
         String phoneNumber = addCustomerRechargeReq.getPhoneNumber();
         String customerName = addCustomerRechargeReq.getCustomerName();
 
+        //充值金额
+        BigDecimal rechargeAmount = addCustomerRechargeReq.getRechargeAmount();
+        BigDecimal rechargeCoupon = addCustomerRechargeReq.getRechargeCoupon();
+
         //校验操作员密码
         Employee employee = employeeMapper.selectEmployeeByPhoneNumber(loginUserPhoneNumber);
         if (employee==null){
@@ -134,10 +140,22 @@ public class CustomerRechargeServiceImpl implements ICustomerRechargeService {
             throw new WebException(ResponseEnum.customer_phone_number_and_name_is_error);
         }
 
-        //插入操作
+        //更新顾客表金额字段
+        Customer updateAmountCustomer = new Customer();
+        updateAmountCustomer.setCustomerId(customer.getCustomerId());
+        updateAmountCustomer.setTotalCashAmount(customer.getTotalCashAmount().add(rechargeAmount));
+        updateAmountCustomer.setTotalCouponAmount(customer.getTotalCouponAmount().add(rechargeCoupon));
+        customerMapper.updateCustomerAmount(updateAmountCustomer);
+
+        //查询最新顾客信息
+        customer = customerMapper.selectCustomerByPhoneNumber(phoneNumber);
+
+        //插入充值记录
         CustomerRecharge customerRecharge = new CustomerRecharge();
         BeanUtils.copyProperties(addCustomerRechargeReq,customerRecharge);
         customerRecharge.setCustomerId(customer.getCustomerId());
+        customerRecharge.setOperateType(OperateTypeEnum.recharge.getCode());
+        customerRecharge.setCurrentCardTotalAmount(customer.getTotalCashAmount().add(customer.getTotalCouponAmount()));
         customerRecharge.setCreateBy(employee.getEmployeeName());
         customerRecharge.setCreateTime(LocalDateTime.now());
         customerRechargeMapper.insertCustomerRecharge(customerRecharge);
@@ -199,6 +217,78 @@ public class CustomerRechargeServiceImpl implements ICustomerRechargeService {
         customerIncome.setCreateBy("SYSTEM");
         customerIncome.setCreateTime(LocalDateTime.now());
         customerIncomeMapper.insertCustomerIncome(customerIncome);
+    }
+
+
+    /**
+     * 添加消费
+     * @param addCustomerConsumeReq 请求
+     */
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+    public void addCustomerConsume(AddCustomerConsumeReq addCustomerConsumeReq){
+        //店铺id
+        Integer shopId = addCustomerConsumeReq.getShopId();
+
+        //入参 - 操作员
+        String loginUserPhoneNumber = addCustomerConsumeReq.getLoginUserPhoneNumber();
+        String password = addCustomerConsumeReq.getPassword();
+
+        //入参 - 顾客手机号
+        String phoneNumber = addCustomerConsumeReq.getPhoneNumber();
+        String customerName = addCustomerConsumeReq.getCustomerName();
+
+        //消费金额
+        BigDecimal consumeAmount = addCustomerConsumeReq.getConsumeAmount();
+
+        //校验操作员密码
+        Employee employee = employeeMapper.selectEmployeeByPhoneNumber(loginUserPhoneNumber);
+        if (employee==null){
+            throw new WebException(ResponseEnum.not_this_shop_employee_cannot_do_this);
+        }
+        if (!employee.getPassword().equals(password)){
+            throw new WebException(ResponseEnum.password_is_wrong);
+        }
+
+        //查询顾客信息
+        Customer customer = customerMapper.selectCustomerByPhoneNumber(phoneNumber);
+        if (customer==null){
+            throw new WebException(ResponseEnum.customer_is_not_exist);
+        }
+        if (!customer.getCustomerName().equals(customerName)){
+            throw new WebException(ResponseEnum.customer_phone_number_and_name_is_error);
+        }
+
+        //更新顾客表金额字段
+        Customer updateAmountCustomer = new Customer();
+        updateAmountCustomer.setCustomerId(customer.getCustomerId());
+        if (customer.getTotalCashAmount().compareTo(consumeAmount)>0){
+            //从现金扣款
+            updateAmountCustomer.setTotalCashAmount(customer.getTotalCashAmount().subtract(consumeAmount));
+
+        }else{
+            //现金设置为0，多余的从代金券扣
+            updateAmountCustomer.setTotalCashAmount(BigDecimal.ZERO);
+            BigDecimal needSubFromCoupon = consumeAmount.subtract(customer.getTotalCashAmount());
+            if (needSubFromCoupon.compareTo(customer.getTotalCouponAmount())>0){
+                throw new WebException(ResponseEnum.balance_not_enough);
+            }
+            updateAmountCustomer.setTotalCouponAmount(customer.getTotalCouponAmount().subtract(needSubFromCoupon));
+        }
+        customerMapper.updateCustomerAmount(updateAmountCustomer);
+
+        //查询最新顾客信息
+        customer = customerMapper.selectCustomerByPhoneNumber(phoneNumber);
+
+        //插入消费记录
+        CustomerRecharge customerRecharge = new CustomerRecharge();
+        BeanUtils.copyProperties(addCustomerConsumeReq,customerRecharge);
+        customerRecharge.setCustomerId(customer.getCustomerId());
+        customerRecharge.setOperateType(OperateTypeEnum.consume.getCode());
+        customerRecharge.setCurrentCardTotalAmount(customer.getTotalCashAmount().add(customer.getTotalCouponAmount()));
+        customerRecharge.setCreateBy(employee.getEmployeeName());
+        customerRecharge.setCreateTime(LocalDateTime.now());
+        customerRechargeMapper.insertCustomerRecharge(customerRecharge);
     }
 
 

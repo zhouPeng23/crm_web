@@ -11,6 +11,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="sex"    column="sex"    />
         <result property="phoneNumber"    column="phone_number"    />
         <result property="birthday"    column="birthday"    />
+        <result property="totalCashAmount"    column="total_cash_amount"    />
+        <result property="totalCouponAmount"    column="total_coupon_amount"    />
         <result property="customerMassLevel"    column="customer_mass_level"    />
         <result property="belongToEmployeeId"    column="belong_to_employee_id"    />
         <result property="introducedByCustomerId"    column="introduced_by_customer_id"    />
@@ -21,7 +23,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectCustomerVo">
-        select shop_id, customer_id, customer_name, sex, phone_number, birthday, customer_mass_level, belong_to_employee_id,introduced_by_customer_id, create_by, create_time, update_by, update_time from customer
+        select shop_id, customer_id, customer_name, sex, phone_number, birthday,total_cash_amount,total_coupon_amount, customer_mass_level, belong_to_employee_id,introduced_by_customer_id, create_by, create_time, update_by, update_time from customer
     </sql>
 
     <select id="selectCustomerList" parameterType="com.linkknown.crm.bean.dos.Customer" resultMap="CustomerResult">
@@ -32,6 +34,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="sex != null "> and sex = #{sex}</if>
             <if test="phoneNumber != null  and phoneNumber != ''"> and phone_number = #{phoneNumber}</if>
             <if test="birthday != null "> and birthday = #{birthday}</if>
+            <if test="totalCashAmount != null "> and total_cash_amount = #{totalCashAmount}</if>
+            <if test="totalCouponAmount != null "> and total_coupon_amount = #{totalCouponAmount}</if>
             <if test="customerMassLevel != null "> and customer_mass_level = #{customerMassLevel}</if>
             <if test="belongToEmployeeId != null "> and belong_to_employee_id = #{belongToEmployeeId}</if>
             <if test="introducedByCustomerId != null "> and introduced_by_customer_id = #{introducedByCustomerId}</if>
@@ -59,6 +63,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="sex != null ">sex,</if>
             <if test="phoneNumber != null  and phoneNumber != ''">phone_number,</if>
             <if test="birthday != null ">birthday,</if>
+            <if test="totalCashAmount != null ">total_cash_amount,</if>
+            <if test="totalCouponAmount != null ">total_coupon_amount,</if>
             <if test="customerMassLevel != null ">customer_mass_level,</if>
             <if test="belongToEmployeeId != null ">belong_to_employee_id,</if>
             <if test="introducedByCustomerId != null ">introduced_by_customer_id,</if>
@@ -73,6 +79,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="sex != null ">#{sex},</if>
             <if test="phoneNumber != null  and phoneNumber != ''">#{phoneNumber},</if>
             <if test="birthday != null ">#{birthday},</if>
+            <if test="totalCashAmount != null ">#{totalCashAmount},</if>
+            <if test="totalCouponAmount != null ">#{totalCouponAmount},</if>
             <if test="customerMassLevel != null ">#{customerMassLevel},</if>
             <if test="belongToEmployeeId != null ">#{belongToEmployeeId},</if>
             <if test="introducedByCustomerId != null ">#{introducedByCustomerId},</if>
@@ -91,6 +99,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="sex != null ">sex = #{sex},</if>
             <if test="phoneNumber != null  and phoneNumber != ''">phone_number = #{phoneNumber},</if>
             <if test="birthday != null ">birthday = #{birthday},</if>
+            <if test="totalCashAmount != null ">total_cash_amount = #{totalCashAmount},</if>
+            <if test="totalCouponAmount != null ">total_coupon_amount = #{totalCouponAmount},</if>
             <if test="customerMassLevel != null ">customer_mass_level = #{customerMassLevel},</if>
             <if test="belongToEmployeeId != null ">belong_to_employee_id = #{belongToEmployeeId},</if>
             <if test="true">introduced_by_customer_id = #{introducedByCustomerId},</if>
@@ -117,5 +127,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectCustomerVo"/>
         where phone_number = #{phoneNumber}
     </select>
+
+    <update id="updateCustomerAmount" parameterType="com.linkknown.crm.bean.dos.Customer">
+        update customer
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="totalCashAmount != null ">total_cash_amount = #{totalCashAmount},</if>
+            <if test="totalCouponAmount != null ">total_coupon_amount = #{totalCouponAmount},</if>
+        </trim>
+        where customer_id = #{customerId}
+    </update>
     
 </mapper>

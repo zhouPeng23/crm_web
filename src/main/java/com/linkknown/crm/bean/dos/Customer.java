@@ -2,6 +2,7 @@ package com.linkknown.crm.bean.dos;
 
 import lombok.Data;
 
+import java.math.BigDecimal;
 import java.sql.Date;
 import java.time.LocalDateTime;
 
@@ -23,6 +24,10 @@ public class Customer {
     private String phoneNumber;
 
     private Date birthday;
+
+    private BigDecimal totalCashAmount;
+
+    private BigDecimal totalCouponAmount;
 
     private Integer customerMassLevel;
 

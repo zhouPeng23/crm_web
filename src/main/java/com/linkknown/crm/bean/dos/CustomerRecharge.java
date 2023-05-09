@@ -18,13 +18,19 @@ public class CustomerRecharge{
 
     private Integer customerId;
 
+    private Integer operateType;
+
     private BigDecimal rechargeAmount;
 
-    private String rechargeForProject;
+    private BigDecimal rechargeCoupon;
 
-    private String rechargeForProduct;
+    private BigDecimal consumeAmount;
 
-    private String remark;
+    private String consumeForProject;
+
+    private String consumeForProduct;
+
+    private BigDecimal currentCardTotalAmount;
 
     private String createBy;
 

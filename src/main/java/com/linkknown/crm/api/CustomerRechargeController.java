@@ -2,6 +2,7 @@ package com.linkknown.crm.api;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.linkknown.crm.bean.dos.CustomerRecharge;
+import com.linkknown.crm.bean.req.AddCustomerConsumeReq;
 import com.linkknown.crm.bean.req.AddCustomerRechargeReq;
 import com.linkknown.crm.bean.req.QueryCustomerRechargePage;
 import com.linkknown.crm.common.aspect.exception.WebExceptionService;
@@ -51,6 +52,15 @@ public class CustomerRechargeController{
     public BaseResponse<Object> addCustomerRecharge(AddCustomerRechargeReq addCustomerRechargeReq){
         CustomerRechargeParamUtils.addCustomerRecharge(addCustomerRechargeReq);
         customerRechargeService.addCustomerRecharge(addCustomerRechargeReq);
+        return BaseResponse.success(ResponseEnum.add_success);
+    }
+
+
+    @PostMapping(value = "/addCustomerConsume")
+    @WebParamsLog(description = "添加消费")
+    public BaseResponse<Object> addCustomerConsume(AddCustomerConsumeReq addCustomerConsumeReq){
+        CustomerRechargeParamUtils.addCustomerConsume(addCustomerConsumeReq);
+        customerRechargeService.addCustomerConsume(addCustomerConsumeReq);
         return BaseResponse.success(ResponseEnum.add_success);
     }
 
