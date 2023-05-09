@@ -27,4 +27,6 @@ public interface CustomerMapper extends BaseMapper<Customer> {
     public int deleteCustomerByIds(String[] customerIds);
 
     public Customer selectCustomerByPhoneNumber(String phoneNumber);
+
+    void updateCustomerAmount(Customer updateAmountCustomer);
 }

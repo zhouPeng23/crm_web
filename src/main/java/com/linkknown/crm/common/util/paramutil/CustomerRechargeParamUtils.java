@@ -9,6 +9,7 @@ import com.linkknown.crm.common.enums.ResponseEnum;
 import com.linkknown.crm.common.util.RegexUtils;
 import org.springframework.util.StringUtils;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -61,9 +62,13 @@ public class CustomerRechargeParamUtils {
         if (!RegexUtils.validateAmount(String.valueOf(addCustomerRechargeReq.getRechargeAmount()))){
             throw new WebException(ResponseEnum.amount_style_is_error);
         }
-        //备注不能为空
-        if (StringUtils.isEmpty(addCustomerRechargeReq.getRemark())){
-            throw new WebException(ResponseEnum.remark_cannot_be_empty);
+        //如果代金券不为空，那么需要校验金额格式/ 否则设置为0元
+        if (!StringUtils.isEmpty(addCustomerRechargeReq.getRechargeCoupon())){
+            if (!RegexUtils.validateAmount(String.valueOf(addCustomerRechargeReq.getRechargeCoupon()))){
+                throw new WebException(ResponseEnum.coupon_style_is_error);
+            }
+        }else{
+            addCustomerRechargeReq.setRechargeCoupon(BigDecimal.ZERO);
         }
         //操作员手机号
         if (StringUtils.isEmpty(addCustomerRechargeReq.getLoginUserPhoneNumber())){
@@ -78,6 +83,48 @@ public class CustomerRechargeParamUtils {
 
 
     /**
+     * 添加消费
+     * @param addCustomerConsumeReq 添加消费
+     */
+    public static void addCustomerConsume(AddCustomerConsumeReq addCustomerConsumeReq) {
+        //门店id不能为空
+        if (StringUtils.isEmpty(addCustomerConsumeReq.getShopId())){
+            throw new WebException(ResponseEnum.shop_id_can_not_be_empty);
+        }
+        //手机号需校验格式
+        if (!RegexUtils.validatePhoneNumber(addCustomerConsumeReq.getPhoneNumber())){
+            throw new WebException(ResponseEnum.phone_number_style_error);
+        }
+        //顾客姓名不能为空
+        if (StringUtils.isEmpty(addCustomerConsumeReq.getCustomerName())){
+            throw new WebException(ResponseEnum.customer_name_can_not_be_empty);
+        }
+        //顾客性别不能为空
+        if (StringUtils.isEmpty(addCustomerConsumeReq.getSex())){
+            throw new WebException(ResponseEnum.customer_sex_can_not_be_empty);
+        }
+        //消费金额格式校验
+        if (!RegexUtils.validateAmount(String.valueOf(addCustomerConsumeReq.getConsumeAmount()))){
+            throw new WebException(ResponseEnum.amount_style_is_error);
+        }
+
+        //购买的项目和产品不能同时为空
+        if (StringUtils.isEmpty(addCustomerConsumeReq.getConsumeForProject()) && StringUtils.isEmpty(addCustomerConsumeReq.getConsumeForProduct())){
+            throw new WebException(ResponseEnum.consume_project_and_product_cannot_be_empty_same_time);
+        }
+
+        //操作员手机号
+        if (StringUtils.isEmpty(addCustomerConsumeReq.getLoginUserPhoneNumber())){
+            throw new WebException(ResponseEnum.login_user_phone_number_cannot_be_empty);
+        }
+        //密码不能为空
+        if (StringUtils.isEmpty(addCustomerConsumeReq.getPassword())){
+            throw new WebException(ResponseEnum.password_cannot_be_empty);
+        }
+    }
+
+
+    /**
      * 查询充值记录
      * @param rechargeIds ids
      */
@@ -86,7 +133,6 @@ public class CustomerRechargeParamUtils {
             throw new WebException(ResponseEnum.recharge_ids_cannot_be_empty);
         }
     }
-
 
 
 

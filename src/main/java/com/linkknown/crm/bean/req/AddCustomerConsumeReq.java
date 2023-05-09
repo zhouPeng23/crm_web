@@ -9,15 +9,16 @@ import java.math.BigDecimal;
  * @date 2023/4/5 19:46
  */
 @Data
-public class AddCustomerRechargeReq {
+public class AddCustomerConsumeReq {
 
     private Integer shopId;
 
     private String phoneNumber;
     private String customerName;
     private Integer sex;
-    private BigDecimal rechargeAmount;
-    private BigDecimal rechargeCoupon;
+    private BigDecimal consumeAmount;
+    private String consumeForProject;
+    private String consumeForProduct;
 
     private String loginUserPhoneNumber;
     private String password;

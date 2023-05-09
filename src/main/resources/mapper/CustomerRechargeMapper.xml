@@ -8,10 +8,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="shopId"    column="shop_id"    />
         <result property="rechargeId"    column="recharge_id"    />
         <result property="customerId"    column="customer_id"    />
+        <result property="operateType"    column="operate_type"    />
         <result property="rechargeAmount"    column="recharge_amount"    />
-        <result property="rechargeForProject"    column="recharge_for_project"    />
-        <result property="rechargeForProduct"    column="recharge_for_product"    />
-        <result property="remark"    column="remark"    />
+        <result property="rechargeCoupon"    column="recharge_coupon"    />
+        <result property="consumeAmount"    column="consume_amount"    />
+        <result property="consumeForProject"    column="consume_for_project"    />
+        <result property="consumeForProduct"    column="consume_for_product"    />
+        <result property="currentCardTotalAmount"    column="current_card_total_amount"    />
         <result property="createBy"    column="create_by"    />
         <result property="createTime"    column="create_time"    />
         <result property="updateBy"    column="update_by"    />
@@ -19,7 +22,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectCustomerRechargeVo">
-        select shop_id, recharge_id, customer_id, recharge_amount, recharge_for_project, recharge_for_product, remark, create_by, create_time, update_by, update_time from customer_recharge
+        select shop_id, recharge_id, customer_id, operate_type,recharge_amount,recharge_coupon,consume_amount, consume_for_project, consume_for_product,current_card_total_amount, create_by, create_time, update_by, update_time from customer_recharge
     </sql>
 
     <select id="selectCustomerRechargeList" parameterType="com.linkknown.crm.bean.dos.CustomerRecharge" resultMap="CustomerRechargeResult">
@@ -27,9 +30,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <where>  
             <if test="shopId != null "> and shop_id = #{shopId}</if>
             <if test="customerId != null "> and customer_id = #{customerId}</if>
+            <if test="operateType != null "> and operate_type = #{operateType}</if>
             <if test="rechargeAmount != null "> and recharge_amount = #{rechargeAmount}</if>
-            <if test="rechargeForProject != null  and rechargeForProject != ''"> and recharge_for_project = #{rechargeForProject}</if>
-            <if test="rechargeForProduct != null  and rechargeForProduct != ''"> and recharge_for_product = #{rechargeForProduct}</if>
+            <if test="rechargeCoupon != null "> and recharge_coupon = #{rechargeCoupon}</if>
+            <if test="consumeAmount != null "> and consume_amount = #{consumeAmount}</if>
+            <if test="consumeForProject != null  and consumeForProject != ''"> and consume_for_project = #{consumeForProject}</if>
+            <if test="consumeForProduct != null  and consumeForProduct != ''"> and consume_for_product = #{consumeForProduct}</if>
+            <if test="currentCardTotalAmount != null "> and current_card_total_amount = #{currentCardTotalAmount}</if>
         </where>
     </select>
     
@@ -51,10 +58,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="shopId != null ">shop_id,</if>
             <if test="customerId != null ">customer_id,</if>
+            <if test="operateType != null ">operate_type,</if>
             <if test="rechargeAmount != null ">recharge_amount,</if>
-            <if test="rechargeForProject != null  and rechargeForProject != ''">recharge_for_project,</if>
-            <if test="rechargeForProduct != null  and rechargeForProduct != ''">recharge_for_product,</if>
-            <if test="remark != null  and remark != ''">remark,</if>
+            <if test="rechargeCoupon != null ">recharge_coupon,</if>
+            <if test="consumeAmount != null ">consume_amount,</if>
+            <if test="consumeForProject != null  and consumeForProject != ''">consume_for_project,</if>
+            <if test="consumeForProduct != null  and consumeForProduct != ''">consume_for_product,</if>
+            <if test="currentCardTotalAmount != null ">current_card_total_amount,</if>
             <if test="createBy != null  and createBy != ''">create_by,</if>
             <if test="createTime != null ">create_time,</if>
             <if test="updateBy != null  and updateBy != ''">update_by,</if>
@@ -63,10 +73,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="shopId != null ">#{shopId},</if>
             <if test="customerId != null ">#{customerId},</if>
+            <if test="operateType != null ">#{operateType},</if>
             <if test="rechargeAmount != null ">#{rechargeAmount},</if>
-            <if test="rechargeForProject != null  and rechargeForProject != ''">#{rechargeForProject},</if>
-            <if test="rechargeForProduct != null  and rechargeForProduct != ''">#{rechargeForProduct},</if>
-            <if test="remark != null  and remark != ''">#{remark},</if>
+            <if test="rechargeCoupon != null ">#{rechargeCoupon},</if>
+            <if test="consumeAmount != null ">#{consumeAmount},</if>
+            <if test="consumeForProject != null  and consumeForProject != ''">#{consumeForProject},</if>
+            <if test="consumeForProduct != null  and consumeForProduct != ''">#{consumeForProduct},</if>
+            <if test="currentCardTotalAmount != null ">#{currentCardTotalAmount},</if>
             <if test="createBy != null  and createBy != ''">#{createBy},</if>
             <if test="createTime != null ">#{createTime},</if>
             <if test="updateBy != null  and updateBy != ''">#{updateBy},</if>
@@ -79,10 +92,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <trim prefix="SET" suffixOverrides=",">
             <if test="shopId != null ">shop_id = #{shopId},</if>
             <if test="customerId != null ">customer_id = #{customerId},</if>
+            <if test="operateType != null ">operate_type = #{operateType},</if>
             <if test="rechargeAmount != null ">recharge_amount = #{rechargeAmount},</if>
-            <if test="rechargeForProject != null  and rechargeForProject != ''">recharge_for_project = #{rechargeForProject},</if>
-            <if test="rechargeForProduct != null  and rechargeForProduct != ''">recharge_for_product = #{rechargeForProduct},</if>
-            <if test="remark != null  and remark != ''">remark = #{remark},</if>
+            <if test="rechargeCoupon != null ">recharge_coupon = #{rechargeCoupon},</if>
+            <if test="consumeAmount != null ">consume_amount = #{consumeAmount},</if>
+            <if test="consumeForProject != null  and consumeForProject != ''">consume_for_project = #{consumeForProject},</if>
+            <if test="consumeForProduct != null  and consumeForProduct != ''">consume_for_product = #{consumeForProduct},</if>
+            <if test="currentCardTotalAmount != null ">current_card_total_amount = #{currentCardTotalAmount},</if>
             <if test="createBy != null  and createBy != ''">create_by = #{createBy},</if>
             <if test="createTime != null ">create_time = #{createTime},</if>
             <if test="updateBy != null  and updateBy != ''">update_by = #{updateBy},</if>

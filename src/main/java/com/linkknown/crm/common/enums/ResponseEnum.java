@@ -90,12 +90,14 @@ public enum ResponseEnum {
 
     //================================================充值==============================================================
     amount_style_is_error                                                   ("0425", "金额格式错误"),
-    remark_cannot_be_empty                                                  ("0426", "备注不能为空"),
+    balance_not_enough                                                      ("0426", "余额不足"),
     not_this_shop_employee_cannot_do_this                                 ("0429", "非本店员工无法操作"),
     customer_is_not_exist                                                   ("0430", "顾客不存在"),
     password_is_wrong                                                        ("0431", "密码错误"),
     customer_phone_number_and_name_is_error                               ("0432", "顾客姓名与手机号不匹配"),
     recharge_ids_cannot_be_empty                                            ("0433", "充值ids不能为空"),
+    coupon_style_is_error                                                   ("0434", "代金券金额格式错误"),
+    consume_project_and_product_cannot_be_empty_same_time                ("0435", "购买的项目和产品不能同时为空"),
 
     //================================================角色==============================================================
     role_shop_id_can_not_be_empty                                         ("0501", "门店id不能为空"),

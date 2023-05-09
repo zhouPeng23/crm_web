@@ -2,6 +2,7 @@ package com.linkknown.crm.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.linkknown.crm.bean.dos.CustomerRecharge;
+import com.linkknown.crm.bean.req.AddCustomerConsumeReq;
 import com.linkknown.crm.bean.req.AddCustomerRechargeReq;
 import com.linkknown.crm.bean.req.QueryCustomerRechargePage;
 
@@ -37,9 +38,19 @@ public interface ICustomerRechargeService {
 
 
     /**
+     * 添加消费
+     * @param addCustomerConsumeReq 请求
+     */
+    void addCustomerConsume(AddCustomerConsumeReq addCustomerConsumeReq);
+
+
+    /**
      * 根据充值ids批量查充值记录
      * @param rechargeIds ids
      * @return 集合
      */
     public List<CustomerRecharge> queryRechargeListByIds(String rechargeIds);
+
+
+
 }
