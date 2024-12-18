@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.linkknown.crm.mapper.EmployeeShiftMapper">
+    
+    <resultMap type="com.linkknown.crm.bean.dos.EmployeeShift" id="EmployeeShiftResult">
+        <result property="shopId"    column="shop_id"    />
+        <result property="shiftId"    column="shift_id"    />
+        <result property="shiftName"    column="shift_name"    />
+    </resultMap>
+
+    <sql id="selectEmployeeShiftVo">
+        select shop_id, shift_id, shift_name from employee_shift
+    </sql>
+
+    <select id="selectEmployeeShiftList" parameterType="com.linkknown.crm.bean.dos.EmployeeShift" resultMap="EmployeeShiftResult">
+        <include refid="selectEmployeeShiftVo"/>
+        <where>  
+            <if test="shopId != null "> and shop_id = #{shopId}</if>
+            <if test="shiftName != null  and shiftName != ''"> and shift_name like concat('%', #{shiftName}, '%')</if>
+        </where>
+    </select>
+    
+    <select id="selectEmployeeShiftById" parameterType="Integer" resultMap="EmployeeShiftResult">
+        <include refid="selectEmployeeShiftVo"/>
+        where shift_id = #{shiftId}
+    </select>
+        
+    <insert id="insertEmployeeShift" parameterType="com.linkknown.crm.bean.dos.EmployeeShift" useGeneratedKeys="true" keyProperty="shiftId">
+        insert into employee_shift
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="shopId != null ">shop_id,</if>
+            <if test="shiftName != null  and shiftName != ''">shift_name,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="shopId != null ">#{shopId},</if>
+            <if test="shiftName != null  and shiftName != ''">#{shiftName},</if>
+         </trim>
+    </insert>
+
+    <update id="updateEmployeeShift" parameterType="com.linkknown.crm.bean.dos.EmployeeShift">
+        update employee_shift
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="shopId != null ">shop_id = #{shopId},</if>
+            <if test="shiftName != null  and shiftName != ''">shift_name = #{shiftName},</if>
+        </trim>
+        where shift_id = #{shiftId}
+    </update>
+
+    <delete id="deleteEmployeeShiftById" parameterType="Integer">
+        delete from employee_shift where shift_id = #{shiftId}
+    </delete>
+    
+</mapper>

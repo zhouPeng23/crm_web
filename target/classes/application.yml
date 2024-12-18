@@ -1,0 +1,9 @@
+server:
+  port: 5002
+
+spring:
+  application:
+    name: crm_web
+  profiles:
+      active: dev
+

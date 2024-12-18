@@ -1,0 +1,10 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://139.224.222.104:3306/crm_web?serverTimezone=UTC
+    username: linker
+    password: Linker2020**
+
+employee:
+  default:
+    password: '111111'
